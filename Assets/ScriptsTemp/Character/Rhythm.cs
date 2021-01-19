@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Rhythm : Character
 {
+    float startTime;
+
     protected override void Start()
     {
         base.Start();
         force = 10;
         player = 1; //temp
+        startTime = Time.time;
     }
     
-    float startTime = Time.time;
+    
 
     void Update()   //get pull key input
     {
@@ -34,7 +37,7 @@ public class Rhythm : Character
                 {
                     force = 5;
                 }
-                else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5) || (t >= 2.5 && t < 2.75) || (t > 3.25 && t <= 3.5))      //judge great
+                else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5) || (t >= 2.5 && t < 2.75) || (t > 3.25 && t <= 3.5))       //judge great
                 {
                     force = 8;
                 }
@@ -59,7 +62,7 @@ public class Rhythm : Character
                 {
                     force = 5;
                 }
-                else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5) || (t >= 2.5 && t < 2.75) || (t > 3.25 && t <= 3.5))      //judge great
+                else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5) || (t >= 2.5 && t < 2.75) || (t > 3.25 && t <= 3.5))       //judge great
                 {
                     force = 8;
                 }
