@@ -3,7 +3,14 @@ guid: 596a563d46a20b042a4d287b7c41ed4f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - startText: {fileID: 1039635437405330057, guid: b0ab72374f10ba84bb73d912c0aaa8f6,
+      type: 3}
+  - ropePrefab: {fileID: 755553541551401454, guid: 5825ed06557339b41b7365752eedd864,
+      type: 3}
+  - character1: {instanceID: 0}
+  - character2: {instanceID: 0}
+  - character3: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
