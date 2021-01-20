@@ -9,19 +9,21 @@ public class Anubis : Character
         base.Start();
         force = 0;
         player = 1; //temp
+        changetime = Time.time;
     }
 
     int mode = 0;
     int energy = 0;
-    float changetime = Time.time;
+    float changetime;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float t = Time.time - changetime;
         if (t > 1 && mode == 1){
             mode = 0;
             force = 0;
+            energy = 0;
         }
 
         if (player == 0)    //Player1
