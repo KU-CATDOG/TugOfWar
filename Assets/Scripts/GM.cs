@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GM : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class GM : MonoBehaviour
     private float tik;
 
     public GameObject startText;
-    private GameObject tempText;
+    public GameObject scoreBoard;
     private bool isStartScreen;
 
     private GameObject rope;
@@ -50,6 +51,7 @@ public class GM : MonoBehaviour
         ropeSpeed = 1.0f;
         tikInterval = 1.0f;
         ropeInitPos = new Vector3(0, -10, 0);
+        scoreBoard.SetActive(false);
         FreezeAll();
         StartScreen();
     }
@@ -60,13 +62,14 @@ public class GM : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
-                Destroy(tempText);
+                startText.SetActive(false);
                 isStartScreen = false;
-                //Instantiate rope
                 //SetCharacter("L", character#);
                 //SetCharacter("L", character#);
                 UnfreezeAll();
                 rope = Instantiate(ropePrefab, ropeInitPos, Quaternion.identity);
+                scoreBoard.SetActive(true);
+                scoreBoard.GetComponent<Text>().text = "0 : 0";
             }
         }
         else
@@ -95,12 +98,23 @@ public class GM : MonoBehaviour
             rope.transform.position += new Vector3(ropeSpeed * (dragForceR - dragForceL) * Time.deltaTime, 0, 0);
         }
     }
+    private void ResetGame()
+    {
+        scoreL = 0;
+        scoreR = 0;
+        chanceL = 4;
+        chanceR = 4;
+        timer = 30.0f;
+        dragForceL = 0.0f;
+        dragForceR = 0.0f;
+        Destroy(rope);
+        FreezeAll();
+        StartScreen();
+    }
 
     private void StartScreen()
     {
-        //Instantiate StartScreen with "시작하기 위해 아무키나 누르시오"
-        tempText = Instantiate(startText) as GameObject;
-        tempText.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        startText.SetActive(true);
         isStartScreen = true;
     }
 
@@ -137,6 +151,26 @@ public class GM : MonoBehaviour
 
         }
 
+        if (timer <= 0.0f)
+        {
+            if (rope.transform.position.x > 0)
+            {
+                Debug.Log("1P Takes The Point!");
+                scoreL++;
+                CalScore();
+            }
+            else if (rope.transform.position.y < 0)
+            {
+                Debug.Log("2P Takes The Point!");
+                scoreR++;
+                CalScore();
+            }
+            else
+            {
+                Debug.Log("Draw! No One Takes The Point!");
+            }
+        }
+
         if (rope.transform.position.x <= -10 && chanceL == 4) //Can be reduced with "||"
         {
             chanceL--;
@@ -159,22 +193,9 @@ public class GM : MonoBehaviour
         }
         else if (rope.transform.position.x <= -50 && chanceL == 0)
         {
+            Debug.Log("1P Takes The Point!");
             scoreL++;
-            if (scoreL == winScore)
-            {
-                FreezeAll();
-                Debug.Log("1P Win!");
-                //화면 전환
-            }
-            else
-            {
-                FreezeAll();
-                timer = 30.0f;
-                tik = 0.0f;
-                rope.transform.position = ropeInitPos;
-                //Effects, texts
-                UnfreezeAll();
-            }
+            CalScore();
         }
         else if (rope.transform.position.x >= 10 && chanceR == 4)
         {
@@ -198,23 +219,37 @@ public class GM : MonoBehaviour
         }
         else if (rope.transform.position.x <= 50 && chanceR == 0)
         {
+            Debug.Log("2P Takes The Point!");
             scoreR++;
-            if (scoreR == winScore)
-            {
-                FreezeAll();
-                Debug.Log("2P Win!");
-                //화면 전환
-            }
-            else
-            {
-                FreezeAll();
-                timer = 30.0f;
-                tik = 0.0f;
-                rope.transform.position = ropeInitPos;
-                //Effects, texts
-                UnfreezeAll();
-            }
+            CalScore();
         }*/
+    }
+
+    private void CalScore()
+    {
+        scoreBoard.GetComponent<Text>().text = scoreL + " : " + scoreR;
+        if (scoreL == winScore)
+        {
+            Debug.Log("1P Win!");
+            //화면 전환
+            ResetGame();
+        }
+        else if (scoreR == winScore)
+        {
+            FreezeAll();
+            Debug.Log("2P Win!");
+            //화면 전환
+            ResetGame();
+        }
+        else
+        {
+            FreezeAll();
+            timer = 30.0f;
+            tik = 0.0f;
+            rope.transform.position = ropeInitPos;
+            //Effects, texts
+            UnfreezeAll();
+        }
     }
 
     public void SetCharacter(string pos, int character) //Can used to set or change character
