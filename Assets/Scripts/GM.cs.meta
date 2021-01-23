@@ -4,8 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - startText: {fileID: 1039635437405330057, guid: b0ab72374f10ba84bb73d912c0aaa8f6,
-      type: 3}
+  - startText: {instanceID: 0}
+  - scoreBoard: {instanceID: 0}
   - ropePrefab: {fileID: 755553541551401454, guid: 5825ed06557339b41b7365752eedd864,
       type: 3}
   - character1: {instanceID: 0}
