@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class startgamescript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class startgamescript : MonoBehaviour
     public void startgame()
     {
         Debug.Log("start!");
+        SceneManager.LoadScene("SelectMenu");
     }
     public void gotooption()
     {

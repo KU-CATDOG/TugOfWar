@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GM : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class GM : MonoBehaviour
 
     void Start()// before the first frame update
     {
+        Debug.Log(SelectMenu.selectionL);
+        Debug.Log(SelectMenu.selectionR);
         scoreL = 0;
         scoreR = 0;
         chanceL = 4;
