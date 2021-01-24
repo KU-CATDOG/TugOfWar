@@ -8,7 +8,7 @@ public class Student : Character
     {
         base.Start();
         force = 10;
-        player = 1; //temp
+        //player = 1; //temp
     }
 
     void Update()   //get pull key input
@@ -17,14 +17,14 @@ public class Student : Character
         {
             if (Input.GetKeyDown("a") && !freeze){
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
         }
         if (player == 1)    //Player2
         {
             if (Input.GetKeyDown(KeyCode.RightArrow) && !freeze){
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
         }
 

@@ -11,7 +11,7 @@ public class Rhythm : Character
     {
         base.Start();
         force = 10;
-        player = 1; //temp
+        //player = 1; //temp
         startTime = Time.time;
         keyCount = 0;
     }
@@ -52,7 +52,7 @@ public class Rhythm : Character
                     }
                     count++;
                     keyCount++;
-                    Debug.Log(returnForce());
+                    //Debug.Log(returnForce());
                 }
             }
         }
@@ -81,7 +81,7 @@ public class Rhythm : Character
                     }
                     count++;
                     keyCount++;
-                    Debug.Log(returnForce());
+                    //Debug.Log(returnForce());
                 }
             }
         }

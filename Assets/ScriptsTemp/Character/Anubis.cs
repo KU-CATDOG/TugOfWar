@@ -8,7 +8,7 @@ public class Anubis : Character
     {
         base.Start();
         force = 0;
-        player = 1; //temp
+        //player = 1; //temp
         changetime = Time.time;
     }
 
@@ -36,11 +36,11 @@ public class Anubis : Character
                     count += 2;
                     changetime = Time.time;
                 }
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
             if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && mode == 1 && !freeze){
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
         }
         if (player == 1)    //Player2
@@ -53,11 +53,11 @@ public class Anubis : Character
                     count += 2;
                     changetime = Time.time;
                 }
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
             if ((Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d") || Input.GetKeyDown("w")) && mode == 1 && !freeze){
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
         }
 
