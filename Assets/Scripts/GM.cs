@@ -21,12 +21,6 @@ public class GM : MonoBehaviour
     public float tikInterval;
     private float tik;
 
-    public GameObject startText;
-    public GameObject scoreBoard;
-    public GameObject timerBoard;
-    public GameObject proceedCheck;
-    private bool isStartScreen;
-
     private GameObject rope;
     public GameObject ropePrefab;
     private Vector3 ropeInitPos;
@@ -42,6 +36,8 @@ public class GM : MonoBehaviour
     public bool isTikStop;
     public bool isMovable;
     public bool isTimerStop;
+
+    public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
     void Start()// before the first frame update
     {
@@ -59,49 +55,40 @@ public class GM : MonoBehaviour
 
         scoreL = 0;
         scoreR = 0;
-        winScore = 3;
+        winScore = 2;
         chanceL = 4;
         chanceR = 4;
         timer = 30.0f;
         timerSpeed = 1.0f;
         dragForceL = 0.0f;
         dragForceR = 0.0f;
-        ropeSpeed = 0.1f;
+        ropeSpeed = 0.2f;
         tikInterval = 0.5f;
         ropeInitPos = new Vector3(0, -5, 0);
 
-        scoreBoard.SetActive(false);
-        timerBoard.SetActive(false);
-        proceedCheck.SetActive(false);
+        SetPhase(0);
 
         FreezeAll();
-        StartScreen();
     }
 
     void Update()// per frame
     {
-        if (isStartScreen)
+        if (phase == 0)
         {
-            if (Input.anyKeyDown)
-            {
-                startText.SetActive(false);
-                isStartScreen = false;
-
-                scoreBoard.SetActive(true);
-                scoreBoard.GetComponent<Text>().text = "0 : 0";
-
-                timerBoard.SetActive(true);
-
-                rope = Instantiate(ropePrefab, ropeInitPos, Quaternion.identity);
-                mainCamera.transform.SetParent(rope.transform, true);
-
-                SetCharacter("L", SelectMenu.selectionL);
-                SetCharacter("R", SelectMenu.selectionR);
-
-                UnfreezeAll();
-            }
+            ResetGame();
         }
-        else
+        else if (phase == 1)
+        {
+            rope = Instantiate(ropePrefab, ropeInitPos, Quaternion.identity);
+            mainCamera.transform.SetParent(rope.transform, true);
+
+            SetCharacter("L", SelectMenu.selectionL);
+            SetCharacter("R", SelectMenu.selectionR);
+
+            UnfreezeAll();
+            SetPhase(2);
+        }
+        else if (phase == 2)
         {
             EventCheck();
         }
@@ -131,8 +118,6 @@ public class GM : MonoBehaviour
         {
             rope.transform.position += new Vector3(ropeSpeed * (dragForceR - dragForceL) * Time.deltaTime, 0, 0);
         }
-
-        timerBoard.GetComponent<Text>().text = timer.ToString("N0") + " 초";
     }
 
     private void ResetGame()
@@ -147,34 +132,15 @@ public class GM : MonoBehaviour
         mainCamera.transform.parent = null;
         mainCamera.transform.position = new Vector3(0, 0, -10);
         Destroy(rope);
-        FreezeAll();
-        StartScreen();
-    }
 
-    private void StartScreen()
-    {
-        startText.SetActive(true);
-        isStartScreen = true;
+        FreezeAll();
+        SetPhase(0);
     }
 
     private void SetDragForce()
     {
         dragForceL = characterL.GetComponent<Character>().returnForce();
         dragForceR = characterR.GetComponent<Character>().returnForce();
-    }
-
-    private void FreezeAll()
-    {
-        isMovable = false;
-        isTikStop = true;
-        isTimerStop = true;
-    }
-
-    private void UnfreezeAll()
-    {
-        isMovable = true;
-        isTikStop = false;
-        isTimerStop = false;
     }
 
     private void EventCheck() //for events, freeze...
@@ -265,18 +231,17 @@ public class GM : MonoBehaviour
 
     private void CalScore()
     {
-        scoreBoard.GetComponent<Text>().text = scoreL + " : " + scoreR;
         if (scoreL == winScore)
         {
             FreezeAll();
             Debug.Log("1P Win!");
-            proceedCheck.SetActive(true);
+            SetPhase(3);
         }
         else if (scoreR == winScore)
         {
             FreezeAll();
             Debug.Log("2P Win!");
-            proceedCheck.SetActive(true);
+            SetPhase(3);
         }
         else
         {
@@ -287,6 +252,11 @@ public class GM : MonoBehaviour
             //Effects, texts
             UnfreezeAll();
         }
+    }
+
+    public void SetPhase(int i)
+    {
+        phase = i;
     }
 
     public void SetCharacter(string pos, int character) //Can used to set or change character
@@ -364,19 +334,17 @@ public class GM : MonoBehaviour
         UnfreezeAll();
     }
 
-    public void RestartB()
+    public void FreezeAll()
     {
-        proceedCheck.SetActive(false);
-        ResetGame();
+        isMovable = false;
+        isTikStop = true;
+        isTimerStop = true;
     }
 
-    public void TitleB()
+    public void UnfreezeAll()
     {
-        SceneManager.LoadScene("StartMenu");
-    }
-
-    public void GameCloseB()
-    {
-        Application.Quit();
+        isMovable = true;
+        isTikStop = false;
+        isTimerStop = false;
     }
 }
