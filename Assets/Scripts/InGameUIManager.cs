@@ -65,6 +65,15 @@ public class InGameUIManager : MonoBehaviour
             startUI.SetActive(false);
             inGameUI.SetActive(false);
             endUI.SetActive(true);
+
+            if (gm.scoreL == gm.winScore)
+            {
+
+            }
+            else if (gm.scoreR == gm.winScore)
+            {
+
+            }
         }
     }
 
