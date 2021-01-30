@@ -163,15 +163,17 @@ public class GM : MonoBehaviour
             UnfreezeAll();
         }
 
+        float comPos = rope.transform.position.x * 2f;
+
         if (timer <= 0.0f)
         {
-            if (rope.transform.position.x < 0)
+            if (comPos < 0)
             {
                 Debug.Log("1P Takes The Point!");
                 scoreL++;
                 CalScore();
             }
-            else if (rope.transform.position.x > 0)
+            else if (comPos > 0)
             {
                 Debug.Log("2P Takes The Point!");
                 scoreR++;
@@ -185,53 +187,53 @@ public class GM : MonoBehaviour
         }
         else
         {
-            if (rope.transform.position.x <= -10 && chanceL == 4) //Can be reduced with "||"
+            if (comPos <= -10 && chanceL == 4) //Can be reduced with "||"
             {
                 chanceL--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x <= -20 && chanceL == 3)
+            else if (comPos <= -20 && chanceL == 3)
             {
                 chanceL--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x <= -30 && chanceL == 2)
+            else if (comPos <= -30 && chanceL == 2)
             {
                 chanceL--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x <= -40 && chanceL == 1)
+            else if (comPos <= -40 && chanceL == 1)
             {
                 chanceL--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x <= -50 && chanceL == 0)
+            else if (comPos <= -50 && chanceL == 0)
             {
                 Debug.Log("1P Takes The Point!");
                 scoreL++;
                 CalScore();
             }
-            else if (rope.transform.position.x >= 10 && chanceR == 4)
+            else if (comPos >= 10 && chanceR == 4)
             {
                 chanceR--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x >= 20 && chanceR == 3)
+            else if (comPos >= 20 && chanceR == 3)
             {
                 chanceR--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x >= 30 && chanceR == 2)
+            else if (comPos >= 30 && chanceR == 2)
             {
                 chanceR--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x >= 40 && chanceR == 1)
+            else if (comPos >= 40 && chanceR == 1)
             {
                 chanceR--;
                 //Instantiate random minigame
             }
-            else if (rope.transform.position.x >= 50 && chanceR == 0)
+            else if (comPos >= 50 && chanceR == 0)
             {
                 Debug.Log("2P Takes The Point!");
                 scoreR++;
