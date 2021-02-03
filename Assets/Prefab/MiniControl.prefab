@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6273437590591224629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1388516147544200926}
+  - component: {fileID: 8156997821214583628}
+  m_Layer: 0
+  m_Name: MiniControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1388516147544200926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273437590591224629}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8156997821214583628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273437590591224629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a05aa9c5041d24fafc2133a108c240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  r: 0
+  miniWin: 0
+  pressT: {fileID: 0}
+  pressY: {fileID: 0}
+  pressU: {fileID: 0}
+  pressG: {fileID: 0}
+  pressH: {fileID: 0}
+  pressJ: {fileID: 0}
+  pressB: {fileID: 0}
+  pressN: {fileID: 0}
+  pressM: {fileID: 0}
+  pressOne: {fileID: 0}
+  pressTwo: {fileID: 0}
+  pressThree: {fileID: 0}
+  pressFour: {fileID: 0}
+  pressFive: {fileID: 0}
+  pressSix: {fileID: 0}
+  pressSeven: {fileID: 0}
+  pressEight: {fileID: 0}
+  pressNine: {fileID: 0}
+  pressLeft: {fileID: 6039590504650226567, guid: adad00da8c553ea478b0c6305a208d4b,
+    type: 3}
+  pressRight: {fileID: 5825530557843399108, guid: eff5d1a795147714dae834282b7cba5b,
+    type: 3}

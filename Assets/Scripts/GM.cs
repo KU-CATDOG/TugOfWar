@@ -16,7 +16,8 @@ public class GM : MonoBehaviour
     public float dragForceR;
     public float ropeSpeed;
 
-    public float timer;
+    public float timer; //Main Timer
+    public float timer2; //Extra Timer for MiniGame
     public float timerSpeed;
     public float tikInterval;
     private float tik;
@@ -34,6 +35,8 @@ public class GM : MonoBehaviour
     private GameObject characterL;
     private GameObject characterR;
     List<GameObject> characterList;
+
+    public GameObject miniControl;
 
     public bool isTikStop;
     public bool isMovable;
@@ -68,6 +71,7 @@ public class GM : MonoBehaviour
         chanceL = 4;
         chanceR = 4;
         timer = 30.0f;
+        timer2 = 0.0f;
         timerSpeed = 1.0f;
         dragForceL = 0.0f;
         dragForceR = 0.0f;
@@ -78,6 +82,8 @@ public class GM : MonoBehaviour
         SetPhase(0);
 
         FreezeAll();
+
+        miniControl.SetActive(false);
     }
 
     void Update()// per frame
@@ -105,6 +111,19 @@ public class GM : MonoBehaviour
         if (!isTimerStop)
         {
             timer -= timerSpeed * Time.deltaTime;
+        }
+
+        if (timer2 > 0.0f)
+        {
+            timer2 -= Time.deltaTime;
+            if (timer2 < 0.0f)
+            {
+                timer2 = 0.0f;
+                if (miniControl.activeSelf)
+                {
+                    miniControl.SetActive(false);
+                }
+            }
         }
 
         if (!isTikStop)
@@ -156,16 +175,12 @@ public class GM : MonoBehaviour
     {
         if (characterL.GetComponent<Character>().freeze || characterR.GetComponent<Character>().freeze)//Freeze 받아오기
         {
-            FreezeAll();
-        }
-        else
-        {
-            UnfreezeAll();
+            FreezeAll(); //FreezeAllFor()?
         }
 
         float comPos = rope.transform.position.x * 2f;
 
-        if (timer <= 0.0f)
+        if (timer <= 0.0f) //When Times Up
         {
             if (comPos < 0)
             {
@@ -185,27 +200,13 @@ public class GM : MonoBehaviour
                 CalScore();
             }
         }
-        else
+        else //According to Distance
         {
-            if (comPos <= -10 && chanceL == 4) //Can be reduced with "||"
+            if (comPos <= -10 && chanceL == 4 || comPos <= -20 && chanceL == 3 || comPos <= -30 && chanceL == 2 || comPos <= -40 && chanceL == 1)
             {
                 chanceL--;
-                //Instantiate random minigame
-            }
-            else if (comPos <= -20 && chanceL == 3)
-            {
-                chanceL--;
-                //Instantiate random minigame
-            }
-            else if (comPos <= -30 && chanceL == 2)
-            {
-                chanceL--;
-                //Instantiate random minigame
-            }
-            else if (comPos <= -40 && chanceL == 1)
-            {
-                chanceL--;
-                //Instantiate random minigame
+                miniControl.SetActive(true);
+                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos <= -50 && chanceL == 0)
             {
@@ -213,25 +214,11 @@ public class GM : MonoBehaviour
                 scoreL++;
                 CalScore();
             }
-            else if (comPos >= 10 && chanceR == 4)
+            else if (comPos >= 10 && chanceR == 4 || comPos >= 20 && chanceR == 3 || comPos >= 30 && chanceR == 2 || comPos >= 40 && chanceR == 1)
             {
                 chanceR--;
-                //Instantiate random minigame
-            }
-            else if (comPos >= 20 && chanceR == 3)
-            {
-                chanceR--;
-                //Instantiate random minigame
-            }
-            else if (comPos >= 30 && chanceR == 2)
-            {
-                chanceR--;
-                //Instantiate random minigame
-            }
-            else if (comPos >= 40 && chanceR == 1)
-            {
-                chanceR--;
-                //Instantiate random minigame
+                miniControl.SetActive(true);
+                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos >= 50 && chanceR == 0)
             {
@@ -240,9 +227,29 @@ public class GM : MonoBehaviour
                 CalScore();
             }
         }
+
+        if (miniControl.activeSelf)
+        {
+            int winnerIdx = miniControl.GetComponent<minigame>().miniWin;
+            if (winnerIdx != 0)
+            {
+                if (winnerIdx == 1)
+                {
+                    UnityEngine.Debug.Log("미니게임의 승자는 1P!");
+                    //Add dragForce
+                    miniControl.SetActive(false);
+                }
+                else if (winnerIdx == 2)
+                {
+                    UnityEngine.Debug.Log("미니게임의 승자는 2P!");
+                    //Add dragForce
+                    miniControl.SetActive(false);
+                }
+            }
+        }
     }
 
-    private void CalScore()
+    private void CalScore() //Set Score and Manage Progression
     {
         if (scoreL == winScore)
         {
@@ -278,6 +285,7 @@ public class GM : MonoBehaviour
     {
         //destroy previous character if exists
         //Instantiate with Position, Parent(rope)
+        //Can Add FreezeTime
         FreezeAll();
 
         if (pos == "L" || pos == "Left")
@@ -345,5 +353,12 @@ public class GM : MonoBehaviour
         isMovable = true;
         isTikStop = false;
         isTimerStop = false;
+    }
+
+    public void FreezeAllFor(float time)
+    {
+        isMovable = false;
+        isTikStop = true;
+        isTimerStop = true;
     }
 }
