@@ -29,11 +29,12 @@ public class minigame : MonoBehaviour
     public GameObject pressLeft;
     public GameObject pressRight;
 
-    void Start()
+    void OnEnable()
     {
         r = Random.Range(1, 10);
         pressLeft.gameObject.SetActive(true);
         pressRight.gameObject.SetActive(true);
+        
         switch (r)
         {
             case 1:
@@ -197,5 +198,11 @@ public class minigame : MonoBehaviour
             pressLeft.gameObject.GetComponentInChildren<Image>().color = Color.white;
             pressRight.gameObject.GetComponentInChildren<Image>().color = Color.white;
         }
+    }
+
+    private void OnDisable()
+    {
+        pressLeft.gameObject.SetActive(false);
+        pressRight.gameObject.SetActive(false);
     }
 }
