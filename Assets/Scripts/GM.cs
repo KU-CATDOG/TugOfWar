@@ -44,8 +44,9 @@ public class GM : MonoBehaviour
 
     public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
-    void Start()// before the first frame update
+    void Awake()// before the first frame update
     {
+        ropeInitPos = new Vector3(0, -5, 0);
         characterCnt = 3;
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
@@ -65,23 +66,7 @@ public class GM : MonoBehaviour
         characterList.Add(character2);
         characterList.Add(character3);
 
-        scoreL = 0;
-        scoreR = 0;
-        winScore = 2;
-        chanceL = 4;
-        chanceR = 4;
-        timer = 30.0f;
-        timer2 = 0.0f;
-        timerSpeed = 1.0f;
-        dragForceL = 0.0f;
-        dragForceR = 0.0f;
-        ropeSpeed = 0.2f;
-        tikInterval = 0.5f;
-        ropeInitPos = new Vector3(0, -5, 0);
-
-        SetPhase(0);
-
-        FreezeAll();
+        ResetGame();
 
         miniControl.SetActive(false);
     }
@@ -100,6 +85,9 @@ public class GM : MonoBehaviour
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
 
+            SetExtra("L", 1);
+            SetExtra("R", 2);
+
             UnfreezeAll();
             SetPhase(2);
         }
@@ -111,19 +99,6 @@ public class GM : MonoBehaviour
         if (!isTimerStop)
         {
             timer -= timerSpeed * Time.deltaTime;
-        }
-
-        if (timer2 > 0.0f)
-        {
-            timer2 -= Time.deltaTime;
-            if (timer2 < 0.0f)
-            {
-                timer2 = 0.0f;
-                if (miniControl.activeSelf)
-                {
-                    miniControl.SetActive(false);
-                }
-            }
         }
 
         if (!isTikStop)
@@ -152,14 +127,22 @@ public class GM : MonoBehaviour
     {
         scoreL = 0;
         scoreR = 0;
+        winScore = 2;
         chanceL = 4;
         chanceR = 4;
         timer = 30.0f;
+        timer2 = 0.0f;
+        timerSpeed = 1.0f;
         dragForceL = 0.0f;
         dragForceR = 0.0f;
+        ropeSpeed = 0.2f;
+        tikInterval = 0.5f;
         mainCamera.transform.parent = null;
         mainCamera.transform.position = new Vector3(0, 0, -10);
-        Destroy(rope);
+        if (rope != null)
+        {
+            Destroy(rope);
+        }
 
         FreezeAll();
         SetPhase(0);
@@ -268,6 +251,8 @@ public class GM : MonoBehaviour
             FreezeAll();
             timer = 30.0f;
             tik = 0.0f;
+            chanceL = 4;
+            chanceR = 4;
             rope.transform.position = ropeInitPos;
             //Effects, texts
             UnfreezeAll();
@@ -279,6 +264,68 @@ public class GM : MonoBehaviour
     public void SetPhase(int i)
     {
         phase = i;
+    }
+
+    public void SetExtra(string pos, int extraNum)
+    {
+        if (pos == "L" || pos == "Left")
+        {
+            if (characterL != null)
+            {
+                switch (extraNum)
+                {
+                    case 1:
+                        characterL.AddComponent<Extra1>();
+                        break;
+                    case 2:
+                        characterL.AddComponent<Extra2>();
+                        break;
+                    case 3:
+                        characterL.AddComponent<Extra3>();
+                        break;
+                    case 4:
+                        characterL.AddComponent<Extra4>();
+                        break;
+                    case 5:
+                        characterL.AddComponent<Extra5>();
+                        break;
+                    case 6:
+                        characterL.AddComponent<Extra6>();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (pos == "R" || pos == "Right")
+        {
+            if (characterR != null)
+            {
+                switch (extraNum)
+                {
+                    case 1:
+                        characterR.AddComponent<Extra1>();
+                        break;
+                    case 2:
+                        characterR.AddComponent<Extra2>();
+                        break;
+                    case 3:
+                        characterR.AddComponent<Extra3>();
+                        break;
+                    case 4:
+                        characterR.AddComponent<Extra4>();
+                        break;
+                    case 5:
+                        characterR.AddComponent<Extra5>();
+                        break;
+                    case 6:
+                        characterR.AddComponent<Extra6>();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     public void SetCharacter(string pos, int character) //Can used to set or change character

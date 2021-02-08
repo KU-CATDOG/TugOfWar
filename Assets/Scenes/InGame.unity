@@ -1361,6 +1361,7 @@ MonoBehaviour:
   dragForceR: 0
   ropeSpeed: 0
   timer: 0
+  timer2: 0
   timerSpeed: 0
   tikInterval: 0
   ropePrefab: {fileID: 755553541551401454, guid: 5825ed06557339b41b7365752eedd864,
@@ -1373,7 +1374,7 @@ MonoBehaviour:
     type: 3}
   character3: {fileID: 978599480784639651, guid: f10cdce63b9e226498297af40ecf89b5,
     type: 3}
-  miniControl: {fileID: 0}
+  miniControl: {fileID: 1805438103}
   isTikStop: 0
   isMovable: 0
   isTimerStop: 0
@@ -1684,6 +1685,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738119485}
   m_CullTransparentMesh: 0
+--- !u!1 &1805438103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6273437590591224629, guid: f25fed03ea974e6439f1d20815d58e28,
+    type: 3}
+  m_PrefabInstance: {fileID: 250537394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1816122426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5825530557843399108, guid: eff5d1a795147714dae834282b7cba5b,
