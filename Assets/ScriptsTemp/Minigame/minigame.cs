@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class minigame : MonoBehaviour
 {
     public int r = 0;
-    public int miniWin = 0;     //Left win: 1, Right win: 2
-    private int count = 0;
+    public int miniWin;     //Left win: 1, Right win: 2
+    private int count;
     public Button pressT;
     public Button pressY;
     public Button pressU;
@@ -31,6 +31,8 @@ public class minigame : MonoBehaviour
 
     void OnEnable()
     {
+        count = 0;
+        miniWin = 0;
         r = Random.Range(1, 10);
         pressLeft.gameObject.SetActive(true);
         pressRight.gameObject.SetActive(true);
