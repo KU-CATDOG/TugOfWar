@@ -44,10 +44,13 @@ public class GM : MonoBehaviour
 
     public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
+    private bool isPlayerFreeze;
+
     void Awake()// before the first frame update
     {
         ropeInitPos = new Vector3(0, -3.5f, 0);
         characterCnt = 3;
+        isPlayerFreeze = false;
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
         {
@@ -144,6 +147,7 @@ public class GM : MonoBehaviour
             Destroy(rope);
         }
 
+        isPlayerFreeze = false;
         FreezeAll();
         SetPhase(0);
     }
@@ -159,6 +163,12 @@ public class GM : MonoBehaviour
         if (characterL.GetComponent<Character>().freeze || characterR.GetComponent<Character>().freeze)//Freeze 받아오기
         {
             FreezeAll(); //FreezeAllFor()?
+            isPlayerFreeze = true;
+        }
+        else if (isPlayerFreeze)
+        {
+            UnfreezeAll();
+            isPlayerFreeze = false;
         }
 
         float comPos = rope.transform.position.x * 2f;
@@ -221,13 +231,19 @@ public class GM : MonoBehaviour
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");
                     //Add dragForce
                     miniControl.SetActive(false);
+                    UnfreezeAll();
                 }
                 else if (winnerIdx == 2)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 2P!");
                     //Add dragForce
                     miniControl.SetActive(false);
+                    UnfreezeAll();
                 }
+            }
+            else
+            {
+                FreezeAll();
             }
         }
     }

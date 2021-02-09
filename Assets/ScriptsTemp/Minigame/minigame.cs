@@ -8,15 +8,15 @@ public class minigame : MonoBehaviour
     public int r = 0;
     public int miniWin;     //Left win: 1, Right win: 2
     private int count;
-    public Button pressT;
-    public Button pressY;
-    public Button pressU;
-    public Button pressG;
-    public Button pressH;
-    public Button pressJ;
     public Button pressB;
     public Button pressN;
     public Button pressM;
+    public Button pressG;
+    public Button pressH;
+    public Button pressJ;
+    public Button pressT;
+    public Button pressY;
+    public Button pressU;
     public Button pressOne;
     public Button pressTwo;
     public Button pressThree;
@@ -36,48 +36,8 @@ public class minigame : MonoBehaviour
         r = Random.Range(1, 10);
         pressLeft.gameObject.SetActive(true);
         pressRight.gameObject.SetActive(true);
-        
-        switch (r)
-        {
-            case 1:
-                pressB.gameObject.GetComponent<Image>().color = Color.red;
-                pressOne.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 2:
-                pressN.gameObject.GetComponent<Image>().color = Color.red;
-                pressTwo.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 3:
-                pressM.gameObject.GetComponent<Image>().color = Color.red;
-                pressThree.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 4:
-                pressG.gameObject.GetComponent<Image>().color = Color.red;
-                pressFour.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 5:
-                pressH.gameObject.GetComponent<Image>().color = Color.red;
-                pressFive.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 6:
-                pressJ.gameObject.GetComponent<Image>().color = Color.red;
-                pressSix.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 7:
-                pressT.gameObject.GetComponent<Image>().color = Color.red;
-                pressSeven.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 8:
-                pressY.gameObject.GetComponent<Image>().color = Color.red;
-                pressEight.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            case 9:
-                pressU.gameObject.GetComponent<Image>().color = Color.red;
-                pressNine.gameObject.GetComponent<Image>().color = Color.red;
-                break;
-            default:
-                break;
-        }
+
+        ChangeChildColor(Color.red, r);
     }
 
     void Update()
@@ -87,118 +47,71 @@ public class minigame : MonoBehaviour
             switch (r)
                 {
                 case 1:
-                    if (Input.GetKeyDown("b"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[1]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("b", "[1]");
                     break;
                 case 2:
-                    if (Input.GetKeyDown("n"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[2]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("n", "[2]");
                     break;
                 case 3:
-                    if (Input.GetKeyDown("m"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[3]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("m", "[3]");
                     break;
                 case 4:
-                    if (Input.GetKeyDown("g"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[4]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("g", "[4]");
                     break;
                 case 5:
-                    if (Input.GetKeyDown("h"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[5]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("h", "[5]");
                     break;
                 case 6:
-                    if (Input.GetKeyDown("j"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[6]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("j", "[6]");
                     break;
                 case 7:
-                    if (Input.GetKeyDown("t"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[7]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("t", "[7]");
                     break;
                 case 8:
-                    if (Input.GetKeyDown("y"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[8]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("y", "[8]");
                     break;
                 case 9:
-                    if (Input.GetKeyDown("u"))
-                    {
-                        miniWin = 1;
-                        count++;
-                    }
-                    else if (Input.GetKeyDown("[9]"))
-                    {
-                        miniWin = 2;
-                        count++;
-                    }
+                    CheckInput("u", "[9]");
                     break;
                 default:
                     break;
             }
-            pressLeft.gameObject.GetComponentInChildren<Image>().color = Color.white;
-            pressRight.gameObject.GetComponentInChildren<Image>().color = Color.white;
+        }
+    }
+
+    private void CheckInput(string leftKey, string rightKey)
+    {
+        if (Input.GetKeyDown(leftKey))
+        {
+            ChangeChildColor(Color.white);
+            count++;
+            miniWin = 1;
+        }
+        else if (Input.GetKeyDown(rightKey))
+        {
+            ChangeChildColor(Color.white);
+            count++;
+            miniWin = 2;
+        }
+    }
+
+    private void ChangeChildColor(UnityEngine.Color col, int i = 0)
+    {
+        List<Image> imgLst = new List<Image>();
+        imgLst.AddRange(pressLeft.transform.GetComponentsInChildren<Image>());
+        imgLst.AddRange(pressRight.transform.GetComponentsInChildren<Image>());
+
+        if (i == 0)
+        {
+            foreach (Image img in imgLst)
+            {
+                img.color = col;
+            }
+        }
+        else
+        {
+            imgLst[i - 1].color = col;
+            imgLst[imgLst.Count / 2 + i - 1].color = col;
         }
     }
 
