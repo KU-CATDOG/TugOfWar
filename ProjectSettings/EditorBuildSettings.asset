@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SelectMenu.unity
     guid: 6139b5904c6615946af1d970e523bd55
   - enabled: 1
+    path: Assets/Scenes/SelectExtra.unity
+    guid: 4ff914fecedc1c04d9414db8c09678c9
+  - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 000f5f701dfd5da4a8400fe04b44e8f7
   m_configObjects: {}

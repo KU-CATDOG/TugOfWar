@@ -16,16 +16,11 @@ public class GM : MonoBehaviour
     public float dragForceR;
     public float ropeSpeed;
 
-    public float timer;
+    public float timer; //Main Timer
+    public float timer2; //Extra Timer
     public float timerSpeed;
     public float tikInterval;
     private float tik;
-
-    public GameObject startText;
-    public GameObject scoreBoard;
-    public GameObject timerBoard;
-    public GameObject proceedCheck;
-    private bool isStartScreen;
 
     private GameObject rope;
     public GameObject ropePrefab;
@@ -33,75 +28,89 @@ public class GM : MonoBehaviour
 
     public GameObject mainCamera;
 
+    public int characterCnt;
     public GameObject character1;
     public GameObject character2;
     public GameObject character3;
-    private GameObject characterL;
-    private GameObject characterR;
+    public GameObject characterL;
+    public GameObject characterR;
+    List<GameObject> characterList;
+
+    public GameObject miniControl;
 
     public bool isTikStop;
     public bool isMovable;
     public bool isTimerStop;
 
-    void Start()// before the first frame update
+    public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
+
+    private bool isPlayerFreeze;
+    private bool isGameFreeze;
+
+    List<int> extraLstL = new List<int>();
+    List<int> extraLstR = new List<int>();
+
+    void Awake()// before the first frame update
     {
-        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > 3)
+        ropeInitPos = new Vector3(0, -3.5f, 0);
+        characterCnt = 3;
+        isPlayerFreeze = false;
+        isGameFreeze = false;
+
+        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
         {
             SelectMenu.selectionL = 1;
         }
-        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > 3)
+        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterCnt)
         {
-            SelectMenu.selectionR = 1;
+            SelectMenu.selectionR = 3;
         }
 
-        Debug.Log(SelectMenu.selectionL);
-        Debug.Log(SelectMenu.selectionR);
+        characterList = new List<GameObject>();
+        characterList.Add(character1); //Student
+        characterList.Add(character2); //Rhythm
+        characterList.Add(character3); //Anubis
 
-        scoreL = 0;
-        scoreR = 0;
-        winScore = 3;
-        chanceL = 4;
-        chanceR = 4;
-        timer = 30.0f;
-        timerSpeed = 1.0f;
-        dragForceL = 0.0f;
-        dragForceR = 0.0f;
-        ropeSpeed = 0.1f;
-        tikInterval = 0.5f;
-        ropeInitPos = new Vector3(0, -5, 0);
+        if (SelectExtra.extraL1 == 0 || SelectExtra.extraL1 > 6)
+        {
+            SelectExtra.extraL1 = 1;
+        }
+        if (SelectExtra.extraL2 == 0 || SelectExtra.extraL2 > 6)
+        {
+            SelectExtra.extraL2 = 2;
+        }
+        if (SelectExtra.extraR1 == 0 || SelectExtra.extraR1 > 6)
+        {
+            SelectExtra.extraR1 = 1;
+        }
+        if (SelectExtra.extraR2 == 0 || SelectExtra.extraR2 > 6)
+        {
+            SelectExtra.extraR2 = 2;
+        }
 
-        scoreBoard.SetActive(false);
-        timerBoard.SetActive(false);
-        proceedCheck.SetActive(false);
+        ResetGame();
 
-        FreezeAll();
-        StartScreen();
+        miniControl.SetActive(false);
     }
 
     void Update()// per frame
     {
-        if (isStartScreen)
+        if (phase == 0)
         {
-            if (Input.anyKeyDown)
-            {
-                startText.SetActive(false);
-                isStartScreen = false;
-
-                scoreBoard.SetActive(true);
-                scoreBoard.GetComponent<Text>().text = "0 : 0";
-
-                timerBoard.SetActive(true);
-
-                rope = Instantiate(ropePrefab, ropeInitPos, Quaternion.identity);
-                mainCamera.transform.SetParent(rope.transform, true);
-
-                SetCharacter("L", SelectMenu.selectionL);
-                SetCharacter("R", SelectMenu.selectionR);
-
-                UnfreezeAll();
-            }
+            ResetGame();
         }
-        else
+        else if (phase == 1)
+        {
+            rope = Instantiate(ropePrefab, ropeInitPos, Quaternion.identity);
+            mainCamera.transform.SetParent(rope.transform, true);
+
+            SetCharacter("L", SelectMenu.selectionL);
+            SetCharacter("R", SelectMenu.selectionR);
+
+            UnfreezeAll();
+            SetPhase(2);
+        }
+        else if (phase == 2)
         {
             EventCheck();
         }
@@ -121,40 +130,71 @@ public class GM : MonoBehaviour
             tik = 0.0f;
             Debug.Log("SetDragForce!");
             SetDragForce();
-            Debug.Log("1P Force : " + dragForceL.ToString("N2"));
-            Debug.Log("2P Force : " + dragForceR.ToString("N2"));
-            Debug.Log("1P : " + characterL.GetComponent<Character>().player);
-            Debug.Log("2P : " + characterR.GetComponent<Character>().player);
+            //Debug.Log("1P Force : " + dragForceL.ToString("N2"));
+            //Debug.Log("2P Force : " + dragForceR.ToString("N2"));
+        }
+
+        if (timer2 > 0.0f)
+        {
+            timer2 -= Time.deltaTime;
+            if (timer2 <= 0.0f)
+            {
+                timer2 = 0.0f;
+                if (phase == 2)
+                {
+                    UnfreezeAll();
+                }
+            }
         }
 
         if (isMovable)
         {
             rope.transform.position += new Vector3(ropeSpeed * (dragForceR - dragForceL) * Time.deltaTime, 0, 0);
         }
-
-        timerBoard.GetComponent<Text>().text = timer.ToString("N0") + " 초";
     }
 
-    private void ResetGame()
+    private void ResetGame(int i = 0)
     {
-        scoreL = 0;
-        scoreR = 0;
-        chanceL = 4;
-        chanceR = 4;
-        timer = 30.0f;
-        dragForceL = 0.0f;
-        dragForceR = 0.0f;
-        mainCamera.transform.parent = null;
-        mainCamera.transform.position = new Vector3(0, 0, -10);
-        Destroy(rope);
-        FreezeAll();
-        StartScreen();
-    }
+        if (!isGameFreeze)
+        {
+            isPlayerFreeze = false;
+            FreezeAll();
 
-    private void StartScreen()
-    {
-        startText.SetActive(true);
-        isStartScreen = true;
+            winScore = 2;
+            chanceL = 4;
+            chanceR = 4;
+            timer = 30.0f;
+            timer2 = 0.0f;
+            timerSpeed = 1.0f;
+            dragForceL = 0.0f;
+            dragForceR = 0.0f;
+            ropeSpeed = 0.2f;
+            tikInterval = 0.5f;
+            mainCamera.transform.parent = null;
+            mainCamera.transform.position = new Vector3(0, 0, -10);
+            if (rope != null)
+            {
+                Destroy(rope);
+            }
+
+            extraLstL = new List<int>();
+            extraLstR = new List<int>();
+            extraLstL.Add(SelectExtra.extraL1);
+            extraLstL.Add(SelectExtra.extraL2);
+            extraLstR.Add(SelectExtra.extraR1);
+            extraLstR.Add(SelectExtra.extraR2);
+
+            if (i == 0)
+            {
+                scoreL = 0;
+                scoreR = 0;
+                SetPhase(0);
+            }
+            else if (i == 1)
+            {
+                SetPhase(1);
+            }
+        }
     }
 
     private void SetDragForce()
@@ -163,40 +203,33 @@ public class GM : MonoBehaviour
         dragForceR = characterR.GetComponent<Character>().returnForce();
     }
 
-    private void FreezeAll()
-    {
-        isMovable = false;
-        isTikStop = true;
-        isTimerStop = true;
-    }
-
-    private void UnfreezeAll()
-    {
-        isMovable = true;
-        isTikStop = false;
-        isTimerStop = false;
-    }
-
     private void EventCheck() //for events, freeze...
     {
         if (characterL.GetComponent<Character>().freeze || characterR.GetComponent<Character>().freeze)//Freeze 받아오기
         {
-            FreezeAll();
+            if (!isPlayerFreeze && !isGameFreeze)
+            {
+                FreezeAll(); //FreezeAllFor()?
+                isPlayerFreeze = true;
+            }
         }
-        else
+        else if (isPlayerFreeze)
         {
             UnfreezeAll();
+            isPlayerFreeze = false;
         }
 
-        if (timer <= 0.0f)
+        float comPos = rope.transform.position.x * 2.5f;
+
+        if (timer <= 0.0f) //When Times Up
         {
-            if (rope.transform.position.x < 0)
+            if (comPos < 0)
             {
                 Debug.Log("1P Takes The Point!");
                 scoreL++;
                 CalScore();
             }
-            else if (rope.transform.position.x > 0)
+            else if (comPos > 0)
             {
                 Debug.Log("2P Takes The Point!");
                 scoreR++;
@@ -208,84 +241,226 @@ public class GM : MonoBehaviour
                 CalScore();
             }
         }
+        else //According to Distance
+        {
+            if (comPos <= -10 && chanceL == 4 || comPos <= -20 && chanceL == 3 || comPos <= -30 && chanceL == 2 || comPos <= -40 && chanceL == 1)
+            {
+                chanceL--;
+                miniControl.SetActive(true);
+                timer2 = 2.0f; //Timer for Auto-Disable
+            }
+            else if (comPos <= -50 && chanceL == 0)
+            {
+                Debug.Log("1P Takes The Point!");
+                scoreL++;
+                CalScore();
+            }
+            else if (comPos >= 10 && chanceR == 4 || comPos >= 20 && chanceR == 3 || comPos >= 30 && chanceR == 2 || comPos >= 40 && chanceR == 1)
+            {
+                chanceR--;
+                miniControl.SetActive(true);
+                timer2 = 2.0f; //Timer for Auto-Disable
+            }
+            else if (comPos >= 50 && chanceR == 0)
+            {
+                Debug.Log("2P Takes The Point!");
+                scoreR++;
+                CalScore();
+            }
+        }
 
-        if (rope.transform.position.x <= -10 && chanceL == 4) //Can be reduced with "||"
+        if (miniControl.activeSelf)
         {
-            chanceL--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x <= -20 && chanceL == 3)
-        {
-            chanceL--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x <= -30 && chanceL == 2)
-        {
-            chanceL--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x <= -40 && chanceL == 1)
-        {
-            chanceL--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x <= -50 && chanceL == 0)
-        {
-            Debug.Log("1P Takes The Point!");
-            scoreL++;
-            CalScore();
-        }
-        else if (rope.transform.position.x >= 10 && chanceR == 4)
-        {
-            chanceR--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x >= 20 && chanceR == 3)
-        {
-            chanceR--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x >= 30 && chanceR == 2)
-        {
-            chanceR--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x >= 40 && chanceR == 1)
-        {
-            chanceR--;
-            //Instantiate random minigame
-        }
-        else if (rope.transform.position.x >= 50 && chanceR == 0)
-        {
-            Debug.Log("2P Takes The Point!");
-            scoreR++;
-            CalScore();
+            int winnerIdx = miniControl.GetComponent<minigame>().miniWin;
+            if (winnerIdx != 0)
+            {
+                if (winnerIdx == 1)
+                {
+                    UnityEngine.Debug.Log("미니게임의 승자는 1P!");
+                    
+                    for (int i = Random.Range(1,7); ; i = Random.Range(1,7))
+                    {
+                        if (!extraLstL.Contains(i))
+                        {
+                            extraLstL.Add(i);
+                            SetExtra("L", i);
+                            break;
+                        }
+                    }
+
+
+                    miniControl.SetActive(false);
+                    UnfreezeAll();
+                }
+                else if (winnerIdx == 2)
+                {
+                    UnityEngine.Debug.Log("미니게임의 승자는 2P!");
+
+                    for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
+                    {
+                        if (!extraLstR.Contains(i))
+                        {
+                            extraLstR.Add(i);
+                            SetExtra("R", i);
+                            break;
+                        }
+                    }
+
+                    miniControl.SetActive(false);
+                    UnfreezeAll();
+                }
+            }
+            else if (!isGameFreeze)
+            {
+                FreezeAll();
+            }
         }
     }
 
-    private void CalScore()
+    private void CalScore() //Set Score and Manage Progression
     {
-        scoreBoard.GetComponent<Text>().text = scoreL + " : " + scoreR;
         if (scoreL == winScore)
         {
             FreezeAll();
             Debug.Log("1P Win!");
-            proceedCheck.SetActive(true);
+            SetPhase(3);
         }
         else if (scoreR == winScore)
         {
             FreezeAll();
             Debug.Log("2P Win!");
-            proceedCheck.SetActive(true);
+            SetPhase(3);
         }
         else
         {
-            FreezeAll();
-            timer = 30.0f;
-            tik = 0.0f;
-            rope.transform.position = ropeInitPos;
+            ResetGame(1);
+            FreezeAllFor(3.0f);
+
             //Effects, texts
-            UnfreezeAll();
+            UnityEngine.Debug.Log("준비하시고...");
+        }
+    }
+
+    /*==============================Can be used in other scripts=====================================*/
+
+    public void SetPhase(int i)
+    {
+        phase = i;
+    }
+
+    public void SetExtra(string pos, int extraNum)
+    {
+        if (pos == "L" || pos == "Left")
+        {
+            if (characterL != null)
+            {
+                switch (extraNum)
+                {
+                    case 0:
+                        if (extraLstL.Count != 0)
+                        {
+                            foreach (int i in extraLstL)
+                            {
+                                SetExtra("L", i);
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (characterL.GetComponent<Extra1>() == null)
+                        {
+                            characterL.AddComponent<Extra1>();
+                        }
+                        break;
+                    case 2:
+                        if (characterL.GetComponent<Extra2>() == null)
+                        {
+                            characterL.AddComponent<Extra2>();
+                        }
+                        break;
+                    case 3:
+                        if (characterL.GetComponent<Extra3>() == null)
+                        {
+                            characterL.AddComponent<Extra3>();
+                        }
+                        break;
+                    case 4:
+                        if (characterL.GetComponent<Extra4>() == null)
+                        {
+                            characterL.AddComponent<Extra4>();
+                        }
+                        break;
+                    case 5:
+                        if (characterL.GetComponent<Extra5>() == null)
+                        {
+                            characterL.AddComponent<Extra5>();
+                        }
+                        break;
+                    case 6:
+                        if (characterL.GetComponent<Extra6>() == null)
+                        {
+                            characterL.AddComponent<Extra6>();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (pos == "R" || pos == "Right")
+        {
+            if (characterR != null)
+            {
+                switch (extraNum)
+                {
+                    case 0:
+                        if (extraLstR.Count != 0)
+                        {
+                            foreach (int i in extraLstR)
+                            {
+                                SetExtra("R", i);
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (characterR.GetComponent<Extra1>() == null)
+                        {
+                            characterR.AddComponent<Extra1>();
+                        }
+                        break;
+                    case 2:
+                        if (characterR.GetComponent<Extra2>() == null)
+                        {
+                            characterR.AddComponent<Extra2>();
+                        }
+                        break;
+                    case 3:
+                        if (characterR.GetComponent<Extra3>() == null)
+                        {
+                            characterR.AddComponent<Extra3>();
+                        }
+                        break;
+                    case 4:
+                        if (characterR.GetComponent<Extra4>() == null)
+                        {
+                            characterR.AddComponent<Extra4>();
+                        }
+                        break;
+                    case 5:
+                        if (characterR.GetComponent<Extra5>() == null)
+                        {
+                            characterR.AddComponent<Extra5>();
+                        }
+                        break;
+                    case 6:
+                        if (characterR.GetComponent<Extra6>() == null)
+                        {
+                            characterR.AddComponent<Extra6>();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 
@@ -293,90 +468,89 @@ public class GM : MonoBehaviour
     {
         //destroy previous character if exists
         //Instantiate with Position, Parent(rope)
+        //Can Add FreezeTime
         FreezeAll();
 
         if (pos == "L" || pos == "Left")
         {
-            SelectMenu.selectionL = character;
+            if (0 < character && character <= characterCnt)
+            {
+                SelectMenu.selectionL = character;
 
-            if (character == 1)
-            {
                 if (characterL != null)
                 {
                     Destroy(characterL);
                 }
-                characterL = Instantiate(character1);
+
+                characterL = Instantiate(characterList[character - 1]);
+
+                SetExtra("L", 0);
+
+                Debug.Log("1P Character: " + SelectMenu.selectionL);
+
+                characterL.transform.SetParent(rope.transform, false);
+                characterL.transform.localPosition = new Vector3(-5, 0.62f, 0);
+                characterL.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterL.GetComponent<Character>().player = 0;
             }
-            else if (character == 2)
-            {
-                if (characterL != null)
-                {
-                    Destroy(characterL);
-                }
-                characterL = Instantiate(character2);
-            }
-            else if (character == 3)
-            {
-                if (characterL != null)
-                {
-                    Destroy(characterL);
-                }
-                characterL = Instantiate(character3);
-            }
-            characterL.transform.SetParent(rope.transform, false);
-            characterL.transform.localPosition = new Vector3(-5, 0.36f, 0);
-            characterL.GetComponent<Character>().player = 0;
         }
         else if (pos == "R" || pos == "Right")
         {
-            SelectMenu.selectionR = character;
+            if (0 < character && character <= characterCnt)
+            {
+                SelectMenu.selectionR = character;
 
-            if (character == 1)
-            {
                 if (characterR != null)
                 {
                     Destroy(characterR);
                 }
-                characterR = Instantiate(character1);
+
+                characterR = Instantiate(characterList[character - 1]);
+
+                SetExtra("R", 0);
+
+                Debug.Log("2P Character: " + SelectMenu.selectionR);
+
+                characterR.transform.SetParent(rope.transform, false);
+                characterR.transform.localPosition = new Vector3(5, 0.62f, 0);
+                characterR.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterR.GetComponent<SpriteRenderer>().flipX = true;
+                characterR.GetComponent<Character>().player = 1;
             }
-            else if (character == 2)
-            {
-                if (characterR != null)
-                {
-                    Destroy(characterR);
-                }
-                characterR = Instantiate(character2);
-            }
-            else if (character == 3)
-            {
-                if (characterR != null)
-                {
-                    Destroy(characterR);
-                }
-                characterR = Instantiate(character3);
-            }
-            characterR.transform.SetParent(rope.transform, false);
-            characterR.transform.localPosition = new Vector3(5, 0.36f, 0);
-            characterR.GetComponent<SpriteRenderer>().flipX = true;
-            characterR.GetComponent<Character>().player = 1;
         }
 
         UnfreezeAll();
     }
 
-    public void RestartB()
+    public void FreezeAll()
     {
-        proceedCheck.SetActive(false);
-        ResetGame();
+        isMovable = false;
+        isTikStop = true;
+        isTimerStop = true;
+        isGameFreeze = true;
+        if (characterL != null && characterR != null)
+        {
+            characterL.GetComponent<Character>().freeze = true;
+            characterR.GetComponent<Character>().freeze = true;
+        }
     }
 
-    public void TitleB()
+    public void UnfreezeAll()
     {
-        SceneManager.LoadScene("StartMenu");
+        isMovable = true;
+        isTikStop = false;
+        isTimerStop = false;
+        isGameFreeze = false;
+        if (characterL != null && characterR != null)
+        {
+            characterL.GetComponent<Character>().freeze = false;
+            characterR.GetComponent<Character>().freeze = false;
+        }
     }
 
-    public void GameCloseB()
+    public void FreezeAllFor(float time)
     {
-        Application.Quit();
+        FreezeAll();
+        timer2 = time;
     }
 }
