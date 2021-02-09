@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectExtra : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class SelectExtra : MonoBehaviour
     public static int extraR2;
     private int CountL = 1;
     private int CountR = 1;
+
+    public GameObject selectionCheck;
 
     public void button11()
     {
@@ -100,4 +103,32 @@ public class SelectExtra : MonoBehaviour
         Debug.Log("P2 Extra4 Selected");
     }
 
+    private void Start()
+    {
+        extraL1 = 0;
+        extraL2 = 0;
+        extraR1 = 0;
+        extraR2 = 0;
+        selectionCheck.SetActive(false);
+    }
+    private void Update()
+    {
+        if (extraL2 != 0 && extraR2 != 0)
+        {
+            selectionCheck.SetActive(true);
+        }
+    }
+    public void ReSelectB()
+    {
+        CountL--;
+        CountR--;
+        extraL1 = 0;
+        extraL2 = 0;
+        extraR1 = 0;
+        extraR2 = 0;
+    }
+    public void GameStartB()
+    {
+        SceneManager.LoadScene("InGame");
+    }
 }

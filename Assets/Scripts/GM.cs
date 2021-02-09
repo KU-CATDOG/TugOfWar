@@ -32,8 +32,8 @@ public class GM : MonoBehaviour
     public GameObject character1;
     public GameObject character2;
     public GameObject character3;
-    private GameObject characterL;
-    private GameObject characterR;
+    public GameObject characterL;
+    public GameObject characterR;
     List<GameObject> characterList;
 
     public GameObject miniControl;
@@ -46,6 +46,9 @@ public class GM : MonoBehaviour
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
+
+    List<int> extraLstL = new List<int>();
+    List<int> extraLstR = new List<int>();
 
     void Awake()// before the first frame update
     {
@@ -68,6 +71,23 @@ public class GM : MonoBehaviour
         characterList.Add(character2); //Rhythm
         characterList.Add(character3); //Anubis
 
+        if (SelectExtra.extraL1 == 0 || SelectExtra.extraL1 > 6)
+        {
+            SelectExtra.extraL1 = 1;
+        }
+        if (SelectExtra.extraL2 == 0 || SelectExtra.extraL2 > 6)
+        {
+            SelectExtra.extraL2 = 2;
+        }
+        if (SelectExtra.extraR1 == 0 || SelectExtra.extraR1 > 6)
+        {
+            SelectExtra.extraR1 = 1;
+        }
+        if (SelectExtra.extraR2 == 0 || SelectExtra.extraR2 > 6)
+        {
+            SelectExtra.extraR2 = 2;
+        }
+
         ResetGame();
 
         miniControl.SetActive(false);
@@ -86,9 +106,6 @@ public class GM : MonoBehaviour
 
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
-
-            SetExtra("L", 1);
-            SetExtra("R", 2);
 
             UnfreezeAll();
             SetPhase(2);
@@ -136,15 +153,13 @@ public class GM : MonoBehaviour
         }
     }
 
-    private void ResetGame()
+    private void ResetGame(int i = 0)
     {
         if (!isGameFreeze)
         {
             isPlayerFreeze = false;
             FreezeAll();
 
-            scoreL = 0;
-            scoreR = 0;
             winScore = 2;
             chanceL = 4;
             chanceR = 4;
@@ -162,7 +177,23 @@ public class GM : MonoBehaviour
                 Destroy(rope);
             }
 
-            SetPhase(0);
+            extraLstL = new List<int>();
+            extraLstR = new List<int>();
+            extraLstL.Add(SelectExtra.extraL1);
+            extraLstL.Add(SelectExtra.extraL2);
+            extraLstR.Add(SelectExtra.extraR1);
+            extraLstR.Add(SelectExtra.extraR2);
+
+            if (i == 0)
+            {
+                scoreL = 0;
+                scoreR = 0;
+                SetPhase(0);
+            }
+            else if (i == 1)
+            {
+                SetPhase(1);
+            }
         }
     }
 
@@ -246,14 +277,35 @@ public class GM : MonoBehaviour
                 if (winnerIdx == 1)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");
-                    //Add Extra
+                    
+                    for (int i = Random.Range(1,7); ; i = Random.Range(1,7))
+                    {
+                        if (!extraLstL.Contains(i))
+                        {
+                            extraLstL.Add(i);
+                            SetExtra("L", i);
+                            break;
+                        }
+                    }
+
+
                     miniControl.SetActive(false);
                     UnfreezeAll();
                 }
                 else if (winnerIdx == 2)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 2P!");
-                    //Add Extra
+
+                    for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
+                    {
+                        if (!extraLstR.Contains(i))
+                        {
+                            extraLstR.Add(i);
+                            SetExtra("R", i);
+                            break;
+                        }
+                    }
+
                     miniControl.SetActive(false);
                     UnfreezeAll();
                 }
@@ -281,14 +333,11 @@ public class GM : MonoBehaviour
         }
         else
         {
+            ResetGame(1);
             FreezeAllFor(3.0f);
-            timer = 30.0f;
-            tik = 0.0f;
-            chanceL = 4;
-            chanceR = 4;
-            rope.transform.position = ropeInitPos;
 
             //Effects, texts
+            UnityEngine.Debug.Log("준비하시고...");
         }
     }
 
@@ -307,23 +356,50 @@ public class GM : MonoBehaviour
             {
                 switch (extraNum)
                 {
+                    case 0:
+                        if (extraLstL.Count != 0)
+                        {
+                            foreach (int i in extraLstL)
+                            {
+                                SetExtra("L", i);
+                            }
+                        }
+                        break;
                     case 1:
-                        characterL.AddComponent<Extra1>();
+                        if (characterL.GetComponent<Extra1>() == null)
+                        {
+                            characterL.AddComponent<Extra1>();
+                        }
                         break;
                     case 2:
-                        characterL.AddComponent<Extra2>();
+                        if (characterL.GetComponent<Extra2>() == null)
+                        {
+                            characterL.AddComponent<Extra2>();
+                        }
                         break;
                     case 3:
-                        characterL.AddComponent<Extra3>();
+                        if (characterL.GetComponent<Extra3>() == null)
+                        {
+                            characterL.AddComponent<Extra3>();
+                        }
                         break;
                     case 4:
-                        characterL.AddComponent<Extra4>();
+                        if (characterL.GetComponent<Extra4>() == null)
+                        {
+                            characterL.AddComponent<Extra4>();
+                        }
                         break;
                     case 5:
-                        characterL.AddComponent<Extra5>();
+                        if (characterL.GetComponent<Extra5>() == null)
+                        {
+                            characterL.AddComponent<Extra5>();
+                        }
                         break;
                     case 6:
-                        characterL.AddComponent<Extra6>();
+                        if (characterL.GetComponent<Extra6>() == null)
+                        {
+                            characterL.AddComponent<Extra6>();
+                        }
                         break;
                     default:
                         break;
@@ -336,23 +412,50 @@ public class GM : MonoBehaviour
             {
                 switch (extraNum)
                 {
+                    case 0:
+                        if (extraLstR.Count != 0)
+                        {
+                            foreach (int i in extraLstR)
+                            {
+                                SetExtra("R", i);
+                            }
+                        }
+                        break;
                     case 1:
-                        characterR.AddComponent<Extra1>();
+                        if (characterR.GetComponent<Extra1>() == null)
+                        {
+                            characterR.AddComponent<Extra1>();
+                        }
                         break;
                     case 2:
-                        characterR.AddComponent<Extra2>();
+                        if (characterR.GetComponent<Extra2>() == null)
+                        {
+                            characterR.AddComponent<Extra2>();
+                        }
                         break;
                     case 3:
-                        characterR.AddComponent<Extra3>();
+                        if (characterR.GetComponent<Extra3>() == null)
+                        {
+                            characterR.AddComponent<Extra3>();
+                        }
                         break;
                     case 4:
-                        characterR.AddComponent<Extra4>();
+                        if (characterR.GetComponent<Extra4>() == null)
+                        {
+                            characterR.AddComponent<Extra4>();
+                        }
                         break;
                     case 5:
-                        characterR.AddComponent<Extra5>();
+                        if (characterR.GetComponent<Extra5>() == null)
+                        {
+                            characterR.AddComponent<Extra5>();
+                        }
                         break;
                     case 6:
-                        characterR.AddComponent<Extra6>();
+                        if (characterR.GetComponent<Extra6>() == null)
+                        {
+                            characterR.AddComponent<Extra6>();
+                        }
                         break;
                     default:
                         break;
@@ -379,13 +482,9 @@ public class GM : MonoBehaviour
                     Destroy(characterL);
                 }
 
-                for (int i = 0; i < characterCnt; i++)
-                {
-                    if (character == (i + 1))
-                    {
-                        characterL = Instantiate(characterList[i]);
-                    }
-                }
+                characterL = Instantiate(characterList[character - 1]);
+
+                SetExtra("L", 0);
 
                 Debug.Log("1P Character: " + SelectMenu.selectionL);
 
@@ -406,14 +505,10 @@ public class GM : MonoBehaviour
                     Destroy(characterR);
                 }
 
-                for (int i = 0; i < characterCnt; i++)
-                {
-                    if (character == (i + 1))
-                    {
-                        characterR = Instantiate(characterList[i]);
-                    }
-                }
-                
+                characterR = Instantiate(characterList[character - 1]);
+
+                SetExtra("R", 0);
+
                 Debug.Log("2P Character: " + SelectMenu.selectionR);
 
                 characterR.transform.SetParent(rope.transform, false);

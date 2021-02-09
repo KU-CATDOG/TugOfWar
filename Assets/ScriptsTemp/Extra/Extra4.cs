@@ -10,6 +10,7 @@ public class Extra4 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        blind = GameObject.Find("InGameUIObject").GetComponent<InGameUIManager>().blindImage;
         startTime = Time.time;
         blind.SetActive(false);
     }
@@ -30,5 +31,10 @@ public class Extra4 : MonoBehaviour
             blind.SetActive(true);
         }
         
+    }
+
+    void OnDisable()
+    {
+        blind.SetActive(false);
     }
 }

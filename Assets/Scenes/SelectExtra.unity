@@ -203,8 +203,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ReSelect
+      - m_Target: {fileID: 823027423}
+        m_MethodName: ReSelectB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1562,6 +1562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e403a9ee87e30fc42b594d4f14616051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionCheck: {fileID: 1017173553}
 --- !u!1 &938387607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,8 +2843,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: GameStart
+      - m_Target: {fileID: 823027423}
+        m_MethodName: GameStartB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

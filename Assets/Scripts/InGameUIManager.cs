@@ -18,10 +18,14 @@ public class InGameUIManager : MonoBehaviour
     public GameObject scoreBoard;
     public GameObject timerBoard;
 
+    public GameObject blindImage;
+
     void Start()
     {
         gm = gameManager.GetComponent<GM>();
         tempPhase = -1;
+
+        blindImage.SetActive(false);
     }
 
     void Update()

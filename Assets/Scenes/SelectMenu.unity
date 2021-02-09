@@ -2556,7 +2556,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAC8C\uC784 \uC2DC\uC791"
+  m_Text: "\uC5D1\uC2A4\uD2B8\uB77C \uC120\uD0DD"
 --- !u!222 &1248318798
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3535,7 +3535,7 @@ GameObject:
   - component: {fileID: 2072702091}
   - component: {fileID: 2072702090}
   m_Layer: 5
-  m_Name: GameStart
+  m_Name: ExtraSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3605,7 +3605,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 823027423}
-        m_MethodName: GameStart
+        m_MethodName: ExtraSelectB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

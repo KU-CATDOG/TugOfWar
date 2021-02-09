@@ -152,8 +152,8 @@ public class SelectMenu : MonoBehaviour
         player2.SetActive(true);
         selectionCheck.SetActive(false);
     }
-    public void GameStart()
+    public void ExtraSelectB()
     {
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("SelectExtra");
     }
 }

@@ -11,8 +11,15 @@ public class Extra6 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        count = GetComponent<Character>().count;
         player = GetComponent<Character>().player;
+        if (player == 0)
+        {
+            count = GameObject.Find("GMObject").GetComponent<GM>().characterR.GetComponent<Character>().count;
+        }
+        else
+        {
+            count = GameObject.Find("GMObject").GetComponent<GM>().characterL.GetComponent<Character>().count;
+        }
         startTime = Time.time;
     }
 
