@@ -45,12 +45,14 @@ public class GM : MonoBehaviour
     public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
     private bool isPlayerFreeze;
+    private bool isGameFreeze;
 
     void Awake()// before the first frame update
     {
         ropeInitPos = new Vector3(0, -3.5f, 0);
         characterCnt = 3;
         isPlayerFreeze = false;
+        isGameFreeze = false;
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
         {
@@ -60,9 +62,6 @@ public class GM : MonoBehaviour
         {
             SelectMenu.selectionR = 3;
         }
-
-        Debug.Log(SelectMenu.selectionL);
-        Debug.Log(SelectMenu.selectionR);
 
         characterList = new List<GameObject>();
         characterList.Add(character1); //Student
@@ -114,10 +113,21 @@ public class GM : MonoBehaviour
             tik = 0.0f;
             Debug.Log("SetDragForce!");
             SetDragForce();
-            Debug.Log("1P Force : " + dragForceL.ToString("N2"));
-            Debug.Log("2P Force : " + dragForceR.ToString("N2"));
-            Debug.Log("1P : " + characterL.GetComponent<Character>().player);
-            Debug.Log("2P : " + characterR.GetComponent<Character>().player);
+            //Debug.Log("1P Force : " + dragForceL.ToString("N2"));
+            //Debug.Log("2P Force : " + dragForceR.ToString("N2"));
+        }
+
+        if (timer2 > 0.0f)
+        {
+            timer2 -= Time.deltaTime;
+            if (timer2 <= 0.0f)
+            {
+                timer2 = 0.0f;
+                if (phase == 2)
+                {
+                    UnfreezeAll();
+                }
+            }
         }
 
         if (isMovable)
@@ -128,28 +138,32 @@ public class GM : MonoBehaviour
 
     private void ResetGame()
     {
-        scoreL = 0;
-        scoreR = 0;
-        winScore = 2;
-        chanceL = 4;
-        chanceR = 4;
-        timer = 30.0f;
-        timer2 = 0.0f;
-        timerSpeed = 1.0f;
-        dragForceL = 0.0f;
-        dragForceR = 0.0f;
-        ropeSpeed = 0.2f;
-        tikInterval = 0.5f;
-        mainCamera.transform.parent = null;
-        mainCamera.transform.position = new Vector3(0, 0, -10);
-        if (rope != null)
+        if (!isGameFreeze)
         {
-            Destroy(rope);
-        }
+            isPlayerFreeze = false;
+            FreezeAll();
 
-        isPlayerFreeze = false;
-        FreezeAll();
-        SetPhase(0);
+            scoreL = 0;
+            scoreR = 0;
+            winScore = 2;
+            chanceL = 4;
+            chanceR = 4;
+            timer = 30.0f;
+            timer2 = 0.0f;
+            timerSpeed = 1.0f;
+            dragForceL = 0.0f;
+            dragForceR = 0.0f;
+            ropeSpeed = 0.2f;
+            tikInterval = 0.5f;
+            mainCamera.transform.parent = null;
+            mainCamera.transform.position = new Vector3(0, 0, -10);
+            if (rope != null)
+            {
+                Destroy(rope);
+            }
+
+            SetPhase(0);
+        }
     }
 
     private void SetDragForce()
@@ -162,8 +176,11 @@ public class GM : MonoBehaviour
     {
         if (characterL.GetComponent<Character>().freeze || characterR.GetComponent<Character>().freeze)//Freeze 받아오기
         {
-            FreezeAll(); //FreezeAllFor()?
-            isPlayerFreeze = true;
+            if (!isPlayerFreeze && !isGameFreeze)
+            {
+                FreezeAll(); //FreezeAllFor()?
+                isPlayerFreeze = true;
+            }
         }
         else if (isPlayerFreeze)
         {
@@ -171,7 +188,7 @@ public class GM : MonoBehaviour
             isPlayerFreeze = false;
         }
 
-        float comPos = rope.transform.position.x * 2f;
+        float comPos = rope.transform.position.x * 2.5f;
 
         if (timer <= 0.0f) //When Times Up
         {
@@ -229,19 +246,19 @@ public class GM : MonoBehaviour
                 if (winnerIdx == 1)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");
-                    //Add dragForce
+                    //Add Extra
                     miniControl.SetActive(false);
                     UnfreezeAll();
                 }
                 else if (winnerIdx == 2)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 2P!");
-                    //Add dragForce
+                    //Add Extra
                     miniControl.SetActive(false);
                     UnfreezeAll();
                 }
             }
-            else
+            else if (!isGameFreeze)
             {
                 FreezeAll();
             }
@@ -264,14 +281,14 @@ public class GM : MonoBehaviour
         }
         else
         {
-            FreezeAll();
+            FreezeAllFor(3.0f);
             timer = 30.0f;
             tik = 0.0f;
             chanceL = 4;
             chanceR = 4;
             rope.transform.position = ropeInitPos;
+
             //Effects, texts
-            UnfreezeAll();
         }
     }
 
@@ -370,6 +387,8 @@ public class GM : MonoBehaviour
                     }
                 }
 
+                Debug.Log("1P Character: " + SelectMenu.selectionL);
+
                 characterL.transform.SetParent(rope.transform, false);
                 characterL.transform.localPosition = new Vector3(-5, 0.62f, 0);
                 characterL.transform.localScale = new Vector3(2.2f, 2.2f, 1);
@@ -394,6 +413,8 @@ public class GM : MonoBehaviour
                         characterR = Instantiate(characterList[i]);
                     }
                 }
+                
+                Debug.Log("2P Character: " + SelectMenu.selectionR);
 
                 characterR.transform.SetParent(rope.transform, false);
                 characterR.transform.localPosition = new Vector3(5, 0.62f, 0);
@@ -411,6 +432,12 @@ public class GM : MonoBehaviour
         isMovable = false;
         isTikStop = true;
         isTimerStop = true;
+        isGameFreeze = true;
+        if (characterL != null && characterR != null)
+        {
+            characterL.GetComponent<Character>().freeze = true;
+            characterR.GetComponent<Character>().freeze = true;
+        }
     }
 
     public void UnfreezeAll()
@@ -418,12 +445,17 @@ public class GM : MonoBehaviour
         isMovable = true;
         isTikStop = false;
         isTimerStop = false;
+        isGameFreeze = false;
+        if (characterL != null && characterR != null)
+        {
+            characterL.GetComponent<Character>().freeze = false;
+            characterR.GetComponent<Character>().freeze = false;
+        }
     }
 
     public void FreezeAllFor(float time)
     {
-        isMovable = false;
-        isTikStop = true;
-        isTimerStop = true;
+        FreezeAll();
+        timer2 = time;
     }
 }
