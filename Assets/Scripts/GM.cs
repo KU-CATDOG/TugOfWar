@@ -17,7 +17,7 @@ public class GM : MonoBehaviour
     public float ropeSpeed;
 
     public float timer; //Main Timer
-    public float timer2; //Extra Timer for MiniGame
+    public float timer2; //Extra Timer
     public float timerSpeed;
     public float tikInterval;
     private float tik;
@@ -46,7 +46,7 @@ public class GM : MonoBehaviour
 
     void Awake()// before the first frame update
     {
-        ropeInitPos = new Vector3(0, -5, 0);
+        ropeInitPos = new Vector3(0, -3.5f, 0);
         characterCnt = 3;
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
@@ -55,16 +55,16 @@ public class GM : MonoBehaviour
         }
         if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterCnt)
         {
-            SelectMenu.selectionR = 1;
+            SelectMenu.selectionR = 3;
         }
 
         Debug.Log(SelectMenu.selectionL);
         Debug.Log(SelectMenu.selectionR);
 
         characterList = new List<GameObject>();
-        characterList.Add(character1);
-        characterList.Add(character2);
-        characterList.Add(character3);
+        characterList.Add(character1); //Student
+        characterList.Add(character2); //Rhythm
+        characterList.Add(character3); //Anubis
 
         ResetGame();
 
@@ -355,7 +355,8 @@ public class GM : MonoBehaviour
                 }
 
                 characterL.transform.SetParent(rope.transform, false);
-                characterL.transform.localPosition = new Vector3(-5, 0.36f, 0);
+                characterL.transform.localPosition = new Vector3(-5, 0.62f, 0);
+                characterL.transform.localScale = new Vector3(2.2f, 2.2f, 1);
                 characterL.GetComponent<Character>().player = 0;
             }
         }
@@ -379,7 +380,8 @@ public class GM : MonoBehaviour
                 }
 
                 characterR.transform.SetParent(rope.transform, false);
-                characterR.transform.localPosition = new Vector3(5, 0.36f, 0);
+                characterR.transform.localPosition = new Vector3(5, 0.62f, 0);
+                characterR.transform.localScale = new Vector3(2.2f, 2.2f, 1);
                 characterR.GetComponent<SpriteRenderer>().flipX = true;
                 characterR.GetComponent<Character>().player = 1;
             }

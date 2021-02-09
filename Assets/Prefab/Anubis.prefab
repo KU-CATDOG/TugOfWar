@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4692066158559616766}
   - component: {fileID: 7734885602594996094}
   - component: {fileID: 6723680480517295807}
+  - component: {fileID: 8816226406783725279}
   m_Layer: 0
   m_Name: Anubis
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -3092310648418517906, guid: c707be0a602484547b6e138f4b843963,
+  m_Sprite: {fileID: 6937817954938267909, guid: 0a786f3955231a94789a5d1b393000cc,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,3 +97,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeze: 0
+--- !u!95 &8816226406783725279
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978599480784639651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6ed24947f8f8dc4691a8c2b2a2ea2b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
