@@ -20,12 +20,16 @@ public class InGameUIManager : MonoBehaviour
 
     public GameObject blindImage;
 
+    private float endTimer;
+
     void Start()
     {
         gm = gameManager.GetComponent<GM>();
         tempPhase = -1;
 
         blindImage.SetActive(false);
+
+        endTimer = 0.0f;
     }
 
     void Update()
@@ -50,7 +54,7 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
-    private void SetBoolean()
+    private void SetBoolean() //Called When Phase Changes
     {
         if (gm.phase == 0) //StartScreen
         {
@@ -72,12 +76,19 @@ public class InGameUIManager : MonoBehaviour
 
             if (gm.scoreL == gm.winScore)
             {
-
+                endUI.transform.GetChild(0).gameObject.SetActive(true);
+                endUI.transform.GetChild(1).gameObject.SetActive(false);
             }
             else if (gm.scoreR == gm.winScore)
             {
-
+                endUI.transform.GetChild(0).gameObject.SetActive(false);
+                endUI.transform.GetChild(1).gameObject.SetActive(true);
             }
+
+            endUI.transform.GetChild(2).gameObject.SetActive(false);
+            endUI.transform.GetChild(3).gameObject.SetActive(false);
+
+            endTimer = 3.0f;
         }
     }
 
@@ -97,14 +108,23 @@ public class InGameUIManager : MonoBehaviour
 
     private void EndScreenUI()
     {
-
+        if (endTimer > 0.0f)
+        {
+            endTimer -= Time.deltaTime;
+            if (endTimer <= 0.0f)
+            {
+                endTimer = 0.0f;
+                endUI.transform.GetChild(2).gameObject.SetActive(true);
+                endUI.transform.GetChild(3).gameObject.SetActive(true);
+            }
+        }
     }
 
     private void SetScoreBoard()
     {
         if (scoreBoard.activeSelf)
         {
-            scoreBoard.GetComponent<Text>().text = gm.scoreL + " : " + gm.scoreR;
+            scoreBoard.GetComponent<Text>().text = "<color=#ffffff>" + gm.scoreL + " : " + gm.scoreR + "</color>";
         }
     }
 
@@ -112,13 +132,23 @@ public class InGameUIManager : MonoBehaviour
     {
         if (timerBoard.activeSelf)
         {
-            timerBoard.GetComponent<Text>().text = gm.timer.ToString("N0") + " 초";
+            int sec = Mathf.RoundToInt(gm.timer * 100) - Mathf.FloorToInt(gm.timer) * 100;
+            string tempStr = gm.timer.ToString("00") + " : " + sec.ToString("00");
+            if (gm.timer < 10.0f)
+            {
+                tempStr = "<color=#ff0000>" + tempStr + "</color>";
+            }
+            else
+            {
+                tempStr = "<color=#ffffff>" + tempStr + "</color>";
+            }
+            timerBoard.GetComponent<Text>().text = tempStr;
         }
     }
 
     public void RestartB()
     {
-        gm.SetPhase(0);
+        gm.SetPhase(-1);
     }
 
     public void TitleB()

@@ -42,7 +42,7 @@ public class GM : MonoBehaviour
     public bool isMovable;
     public bool isTimerStop;
 
-    public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
+    public int phase; // -1:ResetGame 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
@@ -88,14 +88,14 @@ public class GM : MonoBehaviour
             SelectExtra.extraR2 = 2;
         }
 
-        ResetGame();
+        SetPhase(-1);
 
         miniControl.SetActive(false);
     }
 
     void Update()// per frame
     {
-        if (phase == 0)
+        if (phase == -1)
         {
             ResetGame();
         }
@@ -155,45 +155,41 @@ public class GM : MonoBehaviour
 
     private void ResetGame(int i = 0)
     {
-        if (!isGameFreeze)
+        FreezeAll();
+
+        winScore = 2;
+        chanceL = 4;
+        chanceR = 4;
+        timer = 30.0f;
+        timer2 = 0.0f;
+        timerSpeed = 1.0f;
+        dragForceL = 0.0f;
+        dragForceR = 0.0f;
+        ropeSpeed = 0.2f;
+        tikInterval = 0.5f;
+        mainCamera.transform.parent = null;
+        mainCamera.transform.position = new Vector3(0, 0, -10);
+        if (rope != null)
         {
-            isPlayerFreeze = false;
-            FreezeAll();
+            Destroy(rope);
+        }
 
-            winScore = 2;
-            chanceL = 4;
-            chanceR = 4;
-            timer = 30.0f;
-            timer2 = 0.0f;
-            timerSpeed = 1.0f;
-            dragForceL = 0.0f;
-            dragForceR = 0.0f;
-            ropeSpeed = 0.2f;
-            tikInterval = 0.5f;
-            mainCamera.transform.parent = null;
-            mainCamera.transform.position = new Vector3(0, 0, -10);
-            if (rope != null)
-            {
-                Destroy(rope);
-            }
+        extraLstL = new List<int>();
+        extraLstR = new List<int>();
+        extraLstL.Add(SelectExtra.extraL1);
+        extraLstL.Add(SelectExtra.extraL2);
+        extraLstR.Add(SelectExtra.extraR1);
+        extraLstR.Add(SelectExtra.extraR2);
 
-            extraLstL = new List<int>();
-            extraLstR = new List<int>();
-            extraLstL.Add(SelectExtra.extraL1);
-            extraLstL.Add(SelectExtra.extraL2);
-            extraLstR.Add(SelectExtra.extraR1);
-            extraLstR.Add(SelectExtra.extraR2);
-
-            if (i == 0)
-            {
-                scoreL = 0;
-                scoreR = 0;
-                SetPhase(0);
-            }
-            else if (i == 1)
-            {
-                SetPhase(1);
-            }
+        if (i == 0)
+        {
+            scoreL = 0;
+            scoreR = 0;
+            SetPhase(0);
+        }
+        else if (i == 1)
+        {
+            SetPhase(1);
         }
     }
 
