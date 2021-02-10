@@ -15,7 +15,8 @@ public class InGameUIManager : MonoBehaviour
     public GameObject inGameUI;
     public GameObject endUI;
 
-    public GameObject scoreBoard;
+    public GameObject scoreBoard1;
+    public GameObject scoreBoard2;
     public GameObject timerBoard;
 
     public GameObject blindImage;
@@ -122,9 +123,10 @@ public class InGameUIManager : MonoBehaviour
 
     private void SetScoreBoard()
     {
-        if (scoreBoard.activeSelf)
+        if (scoreBoard1.activeSelf)
         {
-            scoreBoard.GetComponent<Text>().text = "<color=#ffffff>" + gm.scoreL + " : " + gm.scoreR + "</color>";
+            scoreBoard1.GetComponent<Text>().text = gm.scoreL.ToString("0");
+            scoreBoard2.GetComponent<Text>().text = gm.scoreR.ToString("0");
         }
     }
 
