@@ -50,20 +50,20 @@ public class InGameUIManager : MonoBehaviour
         extraObjLstR = new List<GameObject>();
 
         extraPosL = new List<Vector3>();
+        extraPosL.Add(new Vector3(-400, -200, 0));
+        extraPosL.Add(new Vector3(-300, -200, 0));
+        extraPosL.Add(new Vector3(-400, 200, 0));
+        extraPosL.Add(new Vector3(-300, 200, 0));
+        extraPosL.Add(new Vector3(-200, 200, 0));
         extraPosL.Add(new Vector3(0, 0, 0));
-        extraPosL.Add(new Vector3(1, 0, 0));
-        extraPosL.Add(new Vector3(2, 0, 0));
-        extraPosL.Add(new Vector3(3, 0, 0));
-        extraPosL.Add(new Vector3(4, 0, 0));
-        extraPosL.Add(new Vector3(5, 0, 0));
 
         extraPosR = new List<Vector3>();
-        extraPosR.Add(new Vector3(0, 1, 0));
-        extraPosR.Add(new Vector3(1, 1, 0));
-        extraPosR.Add(new Vector3(2, 1, 0));
-        extraPosR.Add(new Vector3(3, 1, 0));
-        extraPosR.Add(new Vector3(4, 1, 0));
-        extraPosR.Add(new Vector3(5, 1, 0));
+        extraPosR.Add(new Vector3(400, -200, 0));
+        extraPosR.Add(new Vector3(300, -200, 0));
+        extraPosR.Add(new Vector3(400, 200, 0));
+        extraPosR.Add(new Vector3(300, 200, 0));
+        extraPosR.Add(new Vector3(200, 200, 0));
+        extraPosR.Add(new Vector3(0, 0, 0));
     }
 
     void Update()
@@ -218,7 +218,10 @@ public class InGameUIManager : MonoBehaviour
                     if (!tempExtraLstL.Contains(extra))
                     {
                         tempExtraLstL.Add(extra);
-                        extraObjLstL.Add(Instantiate(extraPrefabLst[extra - 1], extraPosL[extraObjLstL.Count], Quaternion.identity));
+                        GameObject tempObj = Instantiate(extraPrefabLst[extra - 1]);
+                        tempObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+                        tempObj.transform.localPosition = extraPosL[extraObjLstL.Count];
+                        extraObjLstL.Add(tempObj);
                     }
                 }
             }
@@ -237,7 +240,10 @@ public class InGameUIManager : MonoBehaviour
                     if (!tempExtraLstR.Contains(extra))
                     {
                         tempExtraLstR.Add(extra);
-                        extraObjLstR.Add(Instantiate(extraPrefabLst[extra - 1], extraPosR[extraObjLstR.Count], Quaternion.identity));
+                        GameObject tempObj = Instantiate(extraPrefabLst[extra - 1]);
+                        tempObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+                        tempObj.transform.localPosition = extraPosR[extraObjLstR.Count];
+                        extraObjLstR.Add(tempObj);
                     }
                 }
             }
