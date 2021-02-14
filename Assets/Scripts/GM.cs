@@ -47,8 +47,8 @@ public class GM : MonoBehaviour
     private bool isPlayerFreeze;
     private bool isGameFreeze;
 
-    List<int> extraLstL = new List<int>();
-    List<int> extraLstR = new List<int>();
+    public List<int> extraLstL = new List<int>();
+    public List<int> extraLstR = new List<int>();
 
     void Awake()// before the first frame update
     {
@@ -107,7 +107,7 @@ public class GM : MonoBehaviour
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
 
-            UnfreezeAll();
+            FreezeAllFor(3.0f);
             SetPhase(2);
         }
         else if (phase == 2)
@@ -359,7 +359,6 @@ public class GM : MonoBehaviour
         else
         {
             ResetGame(1);
-            FreezeAllFor(3.0f);
 
             //Effects, texts
             UnityEngine.Debug.Log("준비하시고...");

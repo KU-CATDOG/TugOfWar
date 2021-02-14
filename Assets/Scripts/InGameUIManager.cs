@@ -23,6 +23,17 @@ public class InGameUIManager : MonoBehaviour
 
     private float endTimer;
 
+    private List<int> tempExtraLstL;
+    private List<int> tempExtraLstR;
+
+    private List<GameObject> extraObjLstL;
+    private List<GameObject> extraObjLstR;
+
+    public List<GameObject> extraPrefabLst;
+
+    private List<Vector3> extraPosL;
+    private List<Vector3> extraPosR;
+
     void Start()
     {
         gm = gameManager.GetComponent<GM>();
@@ -31,6 +42,28 @@ public class InGameUIManager : MonoBehaviour
         blindImage.SetActive(false);
 
         endTimer = 0.0f;
+
+        tempExtraLstL = new List<int>();
+        tempExtraLstR = new List<int>();
+
+        extraObjLstL = new List<GameObject>();
+        extraObjLstR = new List<GameObject>();
+
+        extraPosL = new List<Vector3>();
+        extraPosL.Add(new Vector3(0, 0, 0));
+        extraPosL.Add(new Vector3(1, 0, 0));
+        extraPosL.Add(new Vector3(2, 0, 0));
+        extraPosL.Add(new Vector3(3, 0, 0));
+        extraPosL.Add(new Vector3(4, 0, 0));
+        extraPosL.Add(new Vector3(5, 0, 0));
+
+        extraPosR = new List<Vector3>();
+        extraPosR.Add(new Vector3(0, 1, 0));
+        extraPosR.Add(new Vector3(1, 1, 0));
+        extraPosR.Add(new Vector3(2, 1, 0));
+        extraPosR.Add(new Vector3(3, 1, 0));
+        extraPosR.Add(new Vector3(4, 1, 0));
+        extraPosR.Add(new Vector3(5, 1, 0));
     }
 
     void Update()
@@ -68,6 +101,8 @@ public class InGameUIManager : MonoBehaviour
             startUI.SetActive(false);
             inGameUI.SetActive(true);
             endUI.SetActive(false);
+
+            SetExtraBoard(0);
         }
         else if (gm.phase == 3) //EndGame
         {
@@ -105,6 +140,7 @@ public class InGameUIManager : MonoBehaviour
     {
         SetScoreBoard();
         SetTimerBoard();
+        SetExtraBoard();
     }
 
     private void EndScreenUI()
@@ -145,6 +181,66 @@ public class InGameUIManager : MonoBehaviour
                 tempStr = "<color=#ffffff>" + tempStr + "</color>";
             }
             timerBoard.GetComponent<Text>().text = tempStr;
+        }
+    }
+
+    private void SetExtraBoard(int idx = 1)
+    {
+        if (idx == 0)
+        {
+            for (int i = tempExtraLstL.Count - 1; i >= 0; i--)
+            {
+                Destroy(extraObjLstL[i]);
+            }
+            for (int i = tempExtraLstR.Count - 1; i >= 0; i--)
+            {
+                Destroy(extraObjLstR[i]);
+            }
+            extraObjLstL = new List<GameObject>();
+            extraObjLstR = new List<GameObject>();
+            tempExtraLstL = new List<int>();
+            tempExtraLstR = new List<int>();
+        }
+        else if (idx == 1)
+        {
+            if (tempExtraLstL != gm.extraLstL)
+            {
+                for (int i = tempExtraLstL.Count - 1; i >= 0; i--)
+                {
+                    if (!gm.extraLstL.Contains(tempExtraLstL[i]))
+                    {
+                        Destroy(extraObjLstL[i]);
+                        tempExtraLstL.RemoveAt(i);
+                    }
+                }
+                foreach (int extra in gm.extraLstL)
+                {
+                    if (!tempExtraLstL.Contains(extra))
+                    {
+                        tempExtraLstL.Add(extra);
+                        extraObjLstL.Add(Instantiate(extraPrefabLst[extra - 1], extraPosL[extraObjLstL.Count], Quaternion.identity));
+                    }
+                }
+            }
+            if (tempExtraLstR != gm.extraLstR)
+            {
+                for (int i = tempExtraLstR.Count - 1; i >= 0; i--)
+                {
+                    if (!gm.extraLstR.Contains(tempExtraLstR[i]))
+                    {
+                        Destroy(extraObjLstR[i]);
+                        tempExtraLstR.RemoveAt(i);
+                    }
+                }
+                foreach (int extra in gm.extraLstR)
+                {
+                    if (!tempExtraLstR.Contains(extra))
+                    {
+                        tempExtraLstR.Add(extra);
+                        extraObjLstR.Add(Instantiate(extraPrefabLst[extra - 1], extraPosR[extraObjLstR.Count], Quaternion.identity));
+                    }
+                }
+            }
         }
     }
 
