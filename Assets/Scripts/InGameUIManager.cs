@@ -219,7 +219,7 @@ public class InGameUIManager : MonoBehaviour
                     {
                         tempExtraLstL.Add(extra);
                         GameObject tempObj = Instantiate(extraPrefabLst[extra - 1]);
-                        tempObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+                        tempObj.transform.SetParent(inGameUI.transform, false);
                         tempObj.transform.localPosition = extraPosL[extraObjLstL.Count];
                         extraObjLstL.Add(tempObj);
                     }
@@ -241,7 +241,7 @@ public class InGameUIManager : MonoBehaviour
                     {
                         tempExtraLstR.Add(extra);
                         GameObject tempObj = Instantiate(extraPrefabLst[extra - 1]);
-                        tempObj.transform.SetParent(GameObject.Find("Canvas").transform, false);
+                        tempObj.transform.SetParent(inGameUI.transform, false);
                         tempObj.transform.localPosition = extraPosR[extraObjLstR.Count];
                         extraObjLstR.Add(tempObj);
                     }
