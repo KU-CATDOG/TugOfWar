@@ -47,8 +47,8 @@ public class GM : MonoBehaviour
     private bool isPlayerFreeze;
     private bool isGameFreeze;
 
-    List<int> extraLstL = new List<int>();
-    List<int> extraLstR = new List<int>();
+    public List<int> extraLstL = new List<int>();
+    public List<int> extraLstR = new List<int>();
 
     void Awake()// before the first frame update
     {

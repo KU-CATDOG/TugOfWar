@@ -856,6 +856,13 @@ MonoBehaviour:
   scoreBoard2: {fileID: 1487207161}
   timerBoard: {fileID: 295254950}
   blindImage: {fileID: 2001699807}
+  extraPrefabLst:
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
 --- !u!4 &506294918
 Transform:
   m_ObjectHideFlags: 0
@@ -1534,6 +1541,8 @@ MonoBehaviour:
   isMovable: 0
   isTimerStop: 0
   phase: 0
+  extraLstL: 
+  extraLstR: 
 --- !u!4 &1080681670
 Transform:
   m_ObjectHideFlags: 0
