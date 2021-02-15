@@ -2027,7 +2027,7 @@ MonoBehaviour:
     type: 3}
   character2: {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0,
     type: 3}
-  character3: {fileID: 978599480784639651, guid: f10cdce63b9e226498297af40ecf89b5,
+  character3: {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0,
     type: 3}
   characterL: {fileID: 0}
   characterR: {fileID: 0}
