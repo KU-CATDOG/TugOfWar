@@ -42,13 +42,13 @@ public class GM : MonoBehaviour
     public bool isMovable;
     public bool isTimerStop;
 
-    public int phase; // 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
+    public int phase; // -1:ResetGame 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
 
-    List<int> extraLstL = new List<int>();
-    List<int> extraLstR = new List<int>();
+    public List<int> extraLstL = new List<int>();
+    public List<int> extraLstR = new List<int>();
 
     void Awake()// before the first frame update
     {
@@ -88,14 +88,14 @@ public class GM : MonoBehaviour
             SelectExtra.extraR2 = 2;
         }
 
-        ResetGame();
+        SetPhase(-1);
 
         miniControl.SetActive(false);
     }
 
     void Update()// per frame
     {
-        if (phase == 0)
+        if (phase == -1)
         {
             ResetGame();
         }
@@ -107,7 +107,7 @@ public class GM : MonoBehaviour
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
 
-            UnfreezeAll();
+            FreezeAllFor(3.0f);
             SetPhase(2);
         }
         else if (phase == 2)
@@ -155,45 +155,41 @@ public class GM : MonoBehaviour
 
     private void ResetGame(int i = 0)
     {
-        if (!isGameFreeze)
+        FreezeAll();
+
+        winScore = 2;
+        chanceL = 4;
+        chanceR = 4;
+        timer = 30.0f;
+        timer2 = 0.0f;
+        timerSpeed = 1.0f;
+        dragForceL = 0.0f;
+        dragForceR = 0.0f;
+        ropeSpeed = 0.2f;
+        tikInterval = 0.5f;
+        mainCamera.transform.parent = null;
+        mainCamera.transform.position = new Vector3(0, 0, -10);
+        if (rope != null)
         {
-            isPlayerFreeze = false;
-            FreezeAll();
+            Destroy(rope);
+        }
 
-            winScore = 2;
-            chanceL = 4;
-            chanceR = 4;
-            timer = 30.0f;
-            timer2 = 0.0f;
-            timerSpeed = 1.0f;
-            dragForceL = 0.0f;
-            dragForceR = 0.0f;
-            ropeSpeed = 0.2f;
-            tikInterval = 0.5f;
-            mainCamera.transform.parent = null;
-            mainCamera.transform.position = new Vector3(0, 0, -10);
-            if (rope != null)
-            {
-                Destroy(rope);
-            }
+        extraLstL = new List<int>();
+        extraLstR = new List<int>();
+        extraLstL.Add(SelectExtra.extraL1);
+        extraLstL.Add(SelectExtra.extraL2);
+        extraLstR.Add(SelectExtra.extraR1);
+        extraLstR.Add(SelectExtra.extraR2);
 
-            extraLstL = new List<int>();
-            extraLstR = new List<int>();
-            extraLstL.Add(SelectExtra.extraL1);
-            extraLstL.Add(SelectExtra.extraL2);
-            extraLstR.Add(SelectExtra.extraR1);
-            extraLstR.Add(SelectExtra.extraR2);
-
-            if (i == 0)
-            {
-                scoreL = 0;
-                scoreR = 0;
-                SetPhase(0);
-            }
-            else if (i == 1)
-            {
-                SetPhase(1);
-            }
+        if (i == 0)
+        {
+            scoreL = 0;
+            scoreR = 0;
+            SetPhase(0);
+        }
+        else if (i == 1)
+        {
+            SetPhase(1);
         }
     }
 
@@ -278,16 +274,30 @@ public class GM : MonoBehaviour
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");
                     
-                    for (int i = Random.Range(1,7); ; i = Random.Range(1,7))
+                    if (chanceL == 0)
                     {
-                        if (!extraLstL.Contains(i))
+                        for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
                         {
-                            extraLstL.Add(i);
-                            SetExtra("L", i);
-                            break;
+                            if (extraLstR.Contains(i))
+                            {
+                                extraLstR.Remove(i);
+                                SubExtra("R", i);
+                                break;
+                            }
                         }
                     }
-
+                    else
+                    {
+                        for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
+                        {
+                            if (!extraLstL.Contains(i))
+                            {
+                                extraLstL.Add(i);
+                                SetExtra("L", i);
+                                break;
+                            }
+                        }
+                    }
 
                     miniControl.SetActive(false);
                     UnfreezeAll();
@@ -296,13 +306,28 @@ public class GM : MonoBehaviour
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 2P!");
 
-                    for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
+                    if (chanceL == 0)
                     {
-                        if (!extraLstR.Contains(i))
+                        for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
                         {
-                            extraLstR.Add(i);
-                            SetExtra("R", i);
-                            break;
+                            if (extraLstL.Contains(i))
+                            {
+                                extraLstL.Remove(i);
+                                SubExtra("L", i);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
+                        {
+                            if (!extraLstR.Contains(i))
+                            {
+                                extraLstR.Add(i);
+                                SetExtra("R", i);
+                                break;
+                            }
                         }
                     }
 
@@ -334,7 +359,6 @@ public class GM : MonoBehaviour
         else
         {
             ResetGame(1);
-            FreezeAllFor(3.0f);
 
             //Effects, texts
             UnityEngine.Debug.Log("준비하시고...");
@@ -460,6 +484,98 @@ public class GM : MonoBehaviour
                     default:
                         break;
                 }
+            }
+        }
+    }
+
+    public void SubExtra(string pos, int extraNum)
+    {
+        if (pos == "L" || pos == "Left")
+        {
+            switch (extraNum)
+            {
+                case 1:
+                    if (characterL.GetComponent<Extra1>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra1>());
+                    }
+                    break;
+                case 2:
+                    if (characterL.GetComponent<Extra2>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra2>());
+                    }
+                    break;
+                case 3:
+                    if (characterL.GetComponent<Extra3>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra3>());
+                    }
+                    break;
+                case 4:
+                    if (characterL.GetComponent<Extra4>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra4>());
+                    }
+                    break;
+                case 5:
+                    if (characterL.GetComponent<Extra5>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra5>());
+                    }
+                    break;
+                case 6:
+                    if (characterL.GetComponent<Extra6>() != null)
+                    {
+                        Destroy(characterL.GetComponent<Extra6>());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (pos == "R" || pos == "Right")
+        {
+            switch (extraNum)
+            {
+                case 1:
+                    if (characterR.GetComponent<Extra1>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra1>());
+                    }
+                    break;
+                case 2:
+                    if (characterR.GetComponent<Extra2>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra2>());
+                    }
+                    break;
+                case 3:
+                    if (characterR.GetComponent<Extra3>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra3>());
+                    }
+                    break;
+                case 4:
+                    if (characterR.GetComponent<Extra4>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra4>());
+                    }
+                    break;
+                case 5:
+                    if (characterR.GetComponent<Extra5>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra5>());
+                    }
+                    break;
+                case 6:
+                    if (characterR.GetComponent<Extra6>() != null)
+                    {
+                        Destroy(characterR.GetComponent<Extra6>());
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
