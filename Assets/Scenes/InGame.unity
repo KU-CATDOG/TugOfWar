@@ -2032,7 +2032,7 @@ MonoBehaviour:
     type: 3}
   nextPositionL: {x: 0, y: 0}
   nextPositionR: {x: 0, y: 0}
-  locateCanvas: {fileID: 0}
+  locateCanvas: {fileID: 681679245}
 --- !u!4 &1080681670
 Transform:
   m_ObjectHideFlags: 0
