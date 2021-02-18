@@ -11,6 +11,8 @@ public class SelectExtra : MonoBehaviour
     public static int extraR2;
     private int CountL = 1;
     private int CountR = 1;
+    public GameObject p1Buttons;
+    public GameObject p2Buttons;
 
     public GameObject selectionCheck;
 
@@ -24,6 +26,8 @@ public class SelectExtra : MonoBehaviour
         else extraL2 = 1;
 
         Debug.Log("P1 Extra1 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button12()
     {
@@ -35,6 +39,8 @@ public class SelectExtra : MonoBehaviour
         else extraL2 = 2;
 
         Debug.Log("P1 Extra2 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button13()
     {
@@ -46,6 +52,8 @@ public class SelectExtra : MonoBehaviour
         else extraL2 = 3;
 
         Debug.Log("P1 Extra3 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button14()
     {
@@ -57,6 +65,8 @@ public class SelectExtra : MonoBehaviour
         else extraL2 = 4;
 
         Debug.Log("P1 Extra4 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button21()
     {
@@ -68,6 +78,8 @@ public class SelectExtra : MonoBehaviour
         else extraR2 = 1;
 
         Debug.Log("P2 Extra1 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button22()
     {
@@ -79,6 +91,8 @@ public class SelectExtra : MonoBehaviour
         else extraR2 = 2;
 
         Debug.Log("P2 Extra2 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button23()
     {
@@ -90,6 +104,8 @@ public class SelectExtra : MonoBehaviour
         else extraR2 = 3;
 
         Debug.Log("P2 Extra3 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
     public void button24()
     {
@@ -101,6 +117,8 @@ public class SelectExtra : MonoBehaviour
         else extraR2 = 4;
 
         Debug.Log("P2 Extra4 Selected");
+
+        SoundManager.instance.playButtonSound();
     }
 
     private void Start()
@@ -109,12 +127,16 @@ public class SelectExtra : MonoBehaviour
         extraL2 = 0;
         extraR1 = 0;
         extraR2 = 0;
+        p1Buttons.SetActive(true);
+        p2Buttons.SetActive(true);
         selectionCheck.SetActive(false);
     }
     private void Update()
     {
         if (extraL2 != 0 && extraR2 != 0)
         {
+            p1Buttons.SetActive(false);
+            p2Buttons.SetActive(false);
             selectionCheck.SetActive(true);
         }
     }
@@ -126,9 +148,17 @@ public class SelectExtra : MonoBehaviour
         extraL2 = 0;
         extraR1 = 0;
         extraR2 = 0;
+
+        p1Buttons.SetActive(true);
+        p2Buttons.SetActive(true);
+        selectionCheck.SetActive(false);
+
+        SoundManager.instance.playButtonSound();
     }
     public void GameStartB()
     {
         SceneManager.LoadScene("InGame");
+
+        SoundManager.instance.playButtonSound();
     }
 }

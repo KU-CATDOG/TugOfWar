@@ -253,10 +253,14 @@ public class InGameUIManager : MonoBehaviour
     public void RestartB()
     {
         gm.SetPhase(-1);
+
+        SoundManager.instance.playButtonSound();
     }
 
     public void TitleB()
     {
+        SoundManager.instance.playButtonSound();
+
         SceneManager.LoadScene("StartMenu");
     }
 }
