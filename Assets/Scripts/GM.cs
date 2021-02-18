@@ -57,7 +57,7 @@ public class GM : MonoBehaviour
 
     void Awake()// before the first frame update
     {
-        ropeInitPos = new Vector3(0, -3.5f, 0);
+        ropeInitPos = new Vector3(0, -3f, 0);
         isPlayerFreeze = false;
         isGameFreeze = false;
 
@@ -602,8 +602,8 @@ public class GM : MonoBehaviour
                 Debug.Log("1P Character: " + SelectMenu.selectionL);
 
                 characterL.transform.SetParent(rope.transform, false);
-                characterL.transform.localPosition = new Vector3(-5, 0.62f, 0);
-                characterL.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterL.transform.localPosition = new Vector3(-4, 0.37f, 0);
+                characterL.transform.localScale = new Vector3(1.9f, 1.9f, 1);
                 characterL.GetComponent<Character>().player = 0;
             }
         }
@@ -625,8 +625,8 @@ public class GM : MonoBehaviour
                 Debug.Log("2P Character: " + SelectMenu.selectionR);
 
                 characterR.transform.SetParent(rope.transform, false);
-                characterR.transform.localPosition = new Vector3(5, 0.62f, 0);
-                characterR.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterR.transform.localPosition = new Vector3(4, 0.37f, 0);
+                characterR.transform.localScale = new Vector3(1.9f, 1.9f, 1);
                 characterR.GetComponent<SpriteRenderer>().flipX = true;
                 characterR.GetComponent<Character>().player = 1;
             }
