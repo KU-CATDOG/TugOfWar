@@ -15,17 +15,23 @@ public class startgamescript : MonoBehaviour
 
     public void startgame()
     {
+        SoundManager.instance.playButtonSound();
+
         Debug.Log("start!");
         SceneManager.LoadScene("SelectMenu");
     }
     public void gotooption()
     {
+        SoundManager.instance.playButtonSound();
+
         Debug.Log("option");
         buttons.SetActive(false);
         optionScreen.SetActive(true);
     }
     public void exitbutton()
     {
+        SoundManager.instance.playButtonSound();
+
         Debug.Log("Exit!");
         Application.Quit();
     #if UNITY_EDITOR
@@ -34,7 +40,14 @@ public class startgamescript : MonoBehaviour
     }
     public void closeOption()
     {
+        SoundManager.instance.playButtonSound();
+
         buttons.SetActive(true);
         optionScreen.SetActive(false);
+    }
+
+    public void volumeChangeSound()
+    {
+        SoundManager.instance.playButtonSound();
     }
 }

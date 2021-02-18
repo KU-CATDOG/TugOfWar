@@ -8,8 +8,8 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    public GameObject seVolumeSlider;
-    public GameObject bgmVolumeSlider;
+    private GameObject seVolumeSlider;
+    private GameObject bgmVolumeSlider;
 
     [HideInInspector]
     public float seVolume = 0.5f;
@@ -38,6 +38,7 @@ public class SoundManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        SetupVolumeSlider();
         SetupBGMPlayer();
         SetupSEPlayer();
 
@@ -47,6 +48,13 @@ public class SoundManager : MonoBehaviour
         {
             audioClipDic.Add(clip.name, clip);
         }
+    }
+
+    private void SetupVolumeSlider()
+    {
+        GameObject tempObj = GameObject.Find("Canvas").transform.Find("OptionScreenImage").gameObject;
+        seVolumeSlider = tempObj.transform.Find("SEVolumeSlider").gameObject;
+        bgmVolumeSlider = tempObj.transform.Find("BGMVolumeSlider").gameObject;
     }
 
     private void SetupBGMPlayer()
@@ -86,7 +94,9 @@ public class SoundManager : MonoBehaviour
     {
         if (scene.name == "StartMenu")
         {
-
+            SetupVolumeSlider();
+            SetupBGMPlayer();
+            SetupSEPlayer();
         }
         else if (scene.name == "SelectMenu")
         {
@@ -111,6 +121,8 @@ public class SoundManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+    /*===========================Can Be Used At Other Scripts==============================*/
 
     public void playSoundClip(AudioClip clip, float volumeRatio = 1f)
     {
