@@ -2026,6 +2026,13 @@ MonoBehaviour:
   phase: 0
   extraLstL: 
   extraLstR: 
+  tempTextBoxL: {fileID: 0}
+  tempTextBoxR: {fileID: 0}
+  textPrefab: {fileID: 6644235454428148233, guid: c0e4b60bb1d5ea54ba43b6b08ad53dd8,
+    type: 3}
+  nextPositionL: {x: 0, y: 0}
+  nextPositionR: {x: 0, y: 0}
+  locateCanvas: {fileID: 0}
 --- !u!4 &1080681670
 Transform:
   m_ObjectHideFlags: 0
