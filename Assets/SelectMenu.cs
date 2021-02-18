@@ -93,6 +93,8 @@ public class SelectMenu : MonoBehaviour
 
     private void ActiveL(int i)
     {
+        SoundManager.instance.playButtonSound();
+
         if (selectCntL > 0)
         {
             Debug.Log("버튼을 누른다. 캐릭터가 선택되었습니다.(1P)");
@@ -117,6 +119,8 @@ public class SelectMenu : MonoBehaviour
     }
     private void ActiveR(int i)
     {
+        SoundManager.instance.playButtonSound();
+
         if (selectCntR > 0)
         {
             Debug.Log("버튼을 누른다. 캐릭터가 선택되었습니다.(2P)");
@@ -142,6 +146,8 @@ public class SelectMenu : MonoBehaviour
     
     public void ReSelect()
     {
+        SoundManager.instance.playButtonSound();
+
         selectCntL = 1;
         selectCntR = 1;
         selectionL = 0;
@@ -154,6 +160,8 @@ public class SelectMenu : MonoBehaviour
     }
     public void ExtraSelectB()
     {
+        SoundManager.instance.playButtonSound();
+
         SceneManager.LoadScene("SelectExtra");
     }
 }

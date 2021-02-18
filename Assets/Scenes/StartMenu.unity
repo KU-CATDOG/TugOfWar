@@ -1398,9 +1398,9 @@ MonoBehaviour:
   bgmVolumeSlider: {fileID: 1835821506}
   seVolume: 0
   bgmVolume: 0
-  bgmClip1: {fileID: 0}
-  bgmClip2: {fileID: 0}
-  buttonSoundClip: {fileID: 0}
+  bgmClip: []
+  SEClip: []
+  buttonSoundClip: {fileID: 8300000, guid: f833c4e6ae96b0e4f8c2e3c71f532ccd, type: 3}
 --- !u!1 &951506178
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2614,18 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 850479989}
+        m_MethodName: playButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2088833756
 GameObject:
   m_ObjectHideFlags: 0

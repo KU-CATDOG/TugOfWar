@@ -1562,6 +1562,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e403a9ee87e30fc42b594d4f14616051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p1Buttons: {fileID: 1026799297}
+  p2Buttons: {fileID: 1789625049}
   selectionCheck: {fileID: 1017173553}
 --- !u!1 &938387607
 GameObject:
