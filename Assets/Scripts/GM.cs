@@ -55,6 +55,13 @@ public class GM : MonoBehaviour
     [HideInInspector]
     public List<int> extraLstR = new List<int>();
 
+    public Text tempTextBoxL;
+    public Text tempTextBoxR;
+    public Text textPrefab;
+    public Vector2 nextPositionL;
+    public Vector2 nextPositionR;
+    public Canvas locateCanvas;
+
     void Awake()// before the first frame update
     {
         ropeInitPos = new Vector3(0, -3f, 0);
@@ -131,6 +138,7 @@ public class GM : MonoBehaviour
             SetDragForce();
             //Debug.Log("1P Force : " + dragForceL.ToString("N2"));
             //Debug.Log("2P Force : " + dragForceR.ToString("N2"));
+            DisplayDragForce();
         }
 
         if (timer2 > 0.0f)
@@ -196,6 +204,26 @@ public class GM : MonoBehaviour
     {
         dragForceL = characterL.GetComponent<Character>().returnForce();
         dragForceR = characterR.GetComponent<Character>().returnForce();
+    }
+
+    private void DisplayDragForce()
+    {
+        nextPositionL.x = Random.Range(-450, -350);
+        nextPositionL.y = Random.Range(50, 150);
+        nextPositionR.x = Random.Range(350, 450);
+        nextPositionR.y = Random.Range(50, 150);
+
+        tempTextBoxL = Instantiate(textPrefab, nextPositionL, transform.rotation, locateCanvas.transform) as Text;
+        tempTextBoxL.transform.SetParent(locateCanvas.transform, false);
+        tempTextBoxL.GetComponent<RectTransform>().localPosition = nextPositionL;
+        tempTextBoxL.text = dragForceL.ToString();
+        Destroy(tempTextBoxL, 2f);
+
+        tempTextBoxR = Instantiate(textPrefab, nextPositionR, transform.rotation, locateCanvas.transform) as Text;
+        tempTextBoxR.transform.SetParent(locateCanvas.transform, false);
+        tempTextBoxR.GetComponent<RectTransform>().localPosition = nextPositionR;
+        tempTextBoxR.text = dragForceR.ToString();
+        Destroy(tempTextBoxR, 2f);
     }
 
     private void EventCheck() //for events, freeze...
