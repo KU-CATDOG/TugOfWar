@@ -2010,31 +2010,19 @@ MonoBehaviour:
   winScore: 0
   scoreL: 0
   scoreR: 0
-  chanceL: 0
-  chanceR: 0
-  dragForceL: 0
-  dragForceR: 0
   ropeSpeed: 0
   timer: 0
-  timer2: 0
   timerSpeed: 0
-  tikInterval: 0
   ropePrefab: {fileID: 755553541551401454, guid: 5825ed06557339b41b7365752eedd864,
     type: 3}
   mainCamera: {fileID: 727524102}
-  characterCnt: 0
-  character1: {fileID: 9112145828120910816, guid: da225a10a7cce674db2a49306377f42c,
-    type: 3}
-  character2: {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0,
-    type: 3}
-  character3: {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0,
-    type: 3}
+  characterLst:
+  - {fileID: 9112145828120910816, guid: da225a10a7cce674db2a49306377f42c, type: 3}
+  - {fileID: 978599480784639651, guid: f10cdce63b9e226498297af40ecf89b5, type: 3}
+  - {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0, type: 3}
   characterL: {fileID: 0}
   characterR: {fileID: 0}
   miniControl: {fileID: 1805438103}
-  isTikStop: 0
-  isMovable: 0
-  isTimerStop: 0
   phase: 0
   extraLstL: 
   extraLstR: 

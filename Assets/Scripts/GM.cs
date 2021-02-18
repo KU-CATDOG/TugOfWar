@@ -7,19 +7,23 @@ using UnityEngine.SceneManagement;
 public class GM : MonoBehaviour
 {
     public int winScore;
+    [HideInInspector]
     public int scoreL;
+    [HideInInspector]
     public int scoreR;
-    public int chanceL;
-    public int chanceR;
+    private int chanceL;
+    private int chanceR;
 
-    public float dragForceL;
-    public float dragForceR;
+    private float dragForceL;
+    private float dragForceR;
     public float ropeSpeed;
 
+    [HideInInspector]
     public float timer; //Main Timer
-    public float timer2; //Extra Timer
+    private float timer2; //Extra Timer
+    [HideInInspector]
     public float timerSpeed;
-    public float tikInterval;
+    private float tikInterval;
     private float tik;
 
     private GameObject rope;
@@ -28,48 +32,43 @@ public class GM : MonoBehaviour
 
     public GameObject mainCamera;
 
-    public int characterCnt;
-    public GameObject character1;
-    public GameObject character2;
-    public GameObject character3;
+    [SerializeField] GameObject[] characterLst;
+    [HideInInspector]
     public GameObject characterL;
+    [HideInInspector]
     public GameObject characterR;
-    List<GameObject> characterList;
 
     public GameObject miniControl;
 
-    public bool isTikStop;
-    public bool isMovable;
-    public bool isTimerStop;
+    private bool isTikStop;
+    private bool isMovable;
+    private bool isTimerStop;
 
+    [HideInInspector]
     public int phase; // -1:ResetGame 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
 
+    [HideInInspector]
     public List<int> extraLstL = new List<int>();
+    [HideInInspector]
     public List<int> extraLstR = new List<int>();
 
     void Awake()// before the first frame update
     {
         ropeInitPos = new Vector3(0, -3.5f, 0);
-        characterCnt = 3;
         isPlayerFreeze = false;
         isGameFreeze = false;
 
-        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
+        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterLst.Length)
         {
             SelectMenu.selectionL = 1;
         }
-        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterCnt)
+        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterLst.Length)
         {
             SelectMenu.selectionR = 3;
         }
-
-        characterList = new List<GameObject>();
-        characterList.Add(character1); //Student
-        characterList.Add(character2); //Rhythm
-        characterList.Add(character3); //Anubis
 
         if (SelectExtra.extraL1 == 0 || SelectExtra.extraL1 > 6)
         {
@@ -243,7 +242,6 @@ public class GM : MonoBehaviour
             {
                 chanceL--;
                 miniControl.SetActive(true);
-                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos <= -50 && chanceL == 0)
             {
@@ -255,7 +253,6 @@ public class GM : MonoBehaviour
             {
                 chanceR--;
                 miniControl.SetActive(true);
-                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos >= 50 && chanceR == 0)
             {
@@ -589,7 +586,7 @@ public class GM : MonoBehaviour
 
         if (pos == "L" || pos == "Left")
         {
-            if (0 < character && character <= characterCnt)
+            if (0 < character && character <= characterLst.Length)
             {
                 SelectMenu.selectionL = character;
 
@@ -598,7 +595,7 @@ public class GM : MonoBehaviour
                     Destroy(characterL);
                 }
 
-                characterL = Instantiate(characterList[character - 1]);
+                characterL = Instantiate(characterLst[character - 1]);
 
                 SetExtra("L", 0);
 
@@ -612,7 +609,7 @@ public class GM : MonoBehaviour
         }
         else if (pos == "R" || pos == "Right")
         {
-            if (0 < character && character <= characterCnt)
+            if (0 < character && character <= characterLst.Length)
             {
                 SelectMenu.selectionR = character;
 
@@ -621,7 +618,7 @@ public class GM : MonoBehaviour
                     Destroy(characterR);
                 }
 
-                characterR = Instantiate(characterList[character - 1]);
+                characterR = Instantiate(characterLst[character - 1]);
 
                 SetExtra("R", 0);
 
