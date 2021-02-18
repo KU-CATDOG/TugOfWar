@@ -620,6 +620,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 850479989}
+        m_MethodName: playButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &416595671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,6 +1045,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 850479989}
+        m_MethodName: playButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &684536667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,6 +1177,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1866573934}
         m_MethodName: startgame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 850479989}
+        m_MethodName: playButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1365,9 +1398,9 @@ MonoBehaviour:
   bgmVolumeSlider: {fileID: 1835821506}
   seVolume: 0
   bgmVolume: 0
-  bgmPlayer: {fileID: 0}
-  sePlayer1: {fileID: 0}
-  sePlayer2: {fileID: 0}
+  bgmClip1: {fileID: 0}
+  bgmClip2: {fileID: 0}
+  buttonSoundClip: {fileID: 0}
 --- !u!1 &951506178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1669,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1866573934}
         m_MethodName: exitbutton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 850479989}
+        m_MethodName: playButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
