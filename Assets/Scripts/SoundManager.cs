@@ -73,7 +73,11 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        
+        if (bgmPlayer != null)
+        {
+            bgmPlayer.clip = bgmClip[0];
+            bgmPlayer.Play();
+        }
     }
     
     void Update()
@@ -108,7 +112,12 @@ public class SoundManager : MonoBehaviour
         }
         else if (scene.name == "InGame")
         {
-
+            if (bgmPlayer != null)
+            {
+                bgmPlayer.Stop();
+                bgmPlayer.clip = bgmClip[1];
+                bgmPlayer.Play();
+            }
         }
     }
 

@@ -1373,7 +1373,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seVolume: 0
   bgmVolume: 0
-  bgmClip: []
+  bgmClip:
+  - {fileID: 8300000, guid: 8661d4a9fac34814f87ebc4d1e83b3ef, type: 3}
+  - {fileID: 8300000, guid: 9155d7a7fc5ec4e4a948d83d0324acc2, type: 3}
   SEClip: []
   buttonSoundClip: {fileID: 8300000, guid: f833c4e6ae96b0e4f8c2e3c71f532ccd, type: 3}
 --- !u!1 &951506178
