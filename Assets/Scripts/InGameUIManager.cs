@@ -15,9 +15,9 @@ public class InGameUIManager : MonoBehaviour
     public GameObject inGameUI;
     public GameObject endUI;
 
-    public GameObject scoreBoard1;
-    public GameObject scoreBoard2;
     public GameObject timerBoard;
+    public Sprite scoreOnSprite;
+    public Sprite scoreOffSprite;
 
     public GameObject blindImage;
 
@@ -159,10 +159,44 @@ public class InGameUIManager : MonoBehaviour
 
     private void SetScoreBoard()
     {
-        if (scoreBoard1.activeSelf)
+        GameObject scoreBoard = inGameUI.transform.Find("ScoreBoard").gameObject;
+        if (gm.scoreL == 0)
         {
-            scoreBoard1.GetComponent<Text>().text = gm.scoreL.ToString("0");
-            scoreBoard2.GetComponent<Text>().text = gm.scoreR.ToString("0");
+            for (int idx = 0; idx < 3; idx++)
+            {
+                scoreBoard.transform.GetChild(idx).GetComponent<Image>().sprite = scoreOffSprite;
+            }
+        }
+        else if (gm.scoreL == 1)
+        {
+            scoreBoard.transform.GetChild(0).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreL == 2)
+        {
+            scoreBoard.transform.GetChild(1).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreL == 3)
+        {
+            scoreBoard.transform.GetChild(2).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        if (gm.scoreR == 0)
+        {
+            for (int idx = 3; idx < 6; idx++)
+            {
+                scoreBoard.transform.GetChild(idx).GetComponent<Image>().sprite = scoreOffSprite;
+            }
+        }
+        else if (gm.scoreR == 1)
+        {
+            scoreBoard.transform.GetChild(3).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreR == 2)
+        {
+            scoreBoard.transform.GetChild(4).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreR == 3)
+        {
+            scoreBoard.transform.GetChild(5).GetComponent<Image>().sprite = scoreOnSprite;
         }
     }
 

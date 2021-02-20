@@ -164,7 +164,7 @@ public class GM : MonoBehaviour
     {
         FreezeAll();
 
-        winScore = 2;
+        winScore = 3;
         chanceL = 4;
         chanceR = 4;
         timer = 30.0f;
