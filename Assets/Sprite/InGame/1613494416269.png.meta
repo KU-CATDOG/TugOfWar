@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c707be0a602484547b6e138f4b843963
+guid: 3cb1443d35677284998ec2eb7109d05d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3092310648418517906
-    second: "\uC544\uB204\uBE44\uC2A41-2_0"
+      213: -1108047532826582720
+    second: 1613494416269_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -90,22 +90,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC544\uB204\uBE44\uC2A41-2_0"
+      name: 1613494416269_0
       rect:
         serializedVersion: 2
         x: 85
-        y: 64
-        width: 241
-        height: 292
+        y: 102
+        width: 300
+        height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6c3bd959d7e515d0800000000000000
-      internalID: -3092310648418517906
+      spriteID: 041af9bb3ac6f90f0800000000000000
+      internalID: -1108047532826582720
       vertices: []
       indices: 
       edges: []

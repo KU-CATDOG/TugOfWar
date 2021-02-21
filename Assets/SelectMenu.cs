@@ -64,7 +64,7 @@ public class SelectMenu : MonoBehaviour
     }
     public void button6()
     {
-        ActiveL(6);
+        UnityEngine.Debug.Log("Coming Soon!");
     }
     public void button21()
     {
@@ -88,7 +88,7 @@ public class SelectMenu : MonoBehaviour
     }
     public void button26()
     {
-        ActiveR(6);
+        UnityEngine.Debug.Log("Coming Soon!");
     }
 
     private void ActiveL(int i)

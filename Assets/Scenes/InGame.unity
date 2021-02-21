@@ -1200,9 +1200,9 @@ MonoBehaviour:
   extraPrefabLst:
   - {fileID: 9115880440775606644, guid: a6cdfd5940de1d647a3a6482af6cc0b1, type: 3}
   - {fileID: 2285681718213500905, guid: b8e4808e7d9e57d4ca8380fb8400802b, type: 3}
-  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 3471164560625244622, guid: 1d672e31a050cef4f834f669cee530ce, type: 3}
   - {fileID: 8977732804703162999, guid: 93bacaa647903a04da1c3b646352f7f5, type: 3}
-  - {fileID: 5507370258376877119, guid: 96816875e8407fa4d9cf2f61a4876806, type: 3}
+  - {fileID: 4186270891114320634, guid: 751bcd73e2c37d744b0a0c94afb67752, type: 3}
   - {fileID: 500746105894411292, guid: e8dd6c274f090a34bb13c2ab0535953b, type: 3}
 --- !u!4 &506294918
 Transform:
@@ -2314,6 +2314,8 @@ MonoBehaviour:
   - {fileID: 9112145828120910816, guid: da225a10a7cce674db2a49306377f42c, type: 3}
   - {fileID: 978599480784639651, guid: f10cdce63b9e226498297af40ecf89b5, type: 3}
   - {fileID: 3676365422635524986, guid: 7d726750040a46f48af6b0b49beb42c0, type: 3}
+  - {fileID: 805771942187932547, guid: d205aade0a229ce448516f277f4dd078, type: 3}
+  - {fileID: 1877629159976471047, guid: 5109259ed7605654cb889c0d73d705b5, type: 3}
   characterL: {fileID: 0}
   characterR: {fileID: 0}
   miniControl: {fileID: 1805438103}
