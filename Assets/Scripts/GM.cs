@@ -46,6 +46,8 @@ public class GM : MonoBehaviour
 
     [HideInInspector]
     public int phase; // -1:ResetGame 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
+    [HideInInspector]
+    public bool isReady = false;
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
@@ -113,6 +115,7 @@ public class GM : MonoBehaviour
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
 
+            isReady = true;
             FreezeAllFor(3.0f);
             SetPhase(2);
         }

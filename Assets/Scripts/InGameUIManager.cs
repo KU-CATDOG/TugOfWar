@@ -18,10 +18,13 @@ public class InGameUIManager : MonoBehaviour
     public GameObject timerBoard;
     public Sprite scoreOnSprite;
     public Sprite scoreOffSprite;
+    public Sprite readySprite;
+    public Sprite startSprite;
 
     public GameObject blindImage;
 
     private float endTimer;
+    private float readyTimer;
 
     private List<int> tempExtraLstL;
     private List<int> tempExtraLstR;
@@ -40,8 +43,10 @@ public class InGameUIManager : MonoBehaviour
         tempPhase = -1;
 
         blindImage.SetActive(false);
+        inGameUI.transform.Find("ReadyImage").gameObject.SetActive(false);
 
         endTimer = 0.0f;
+        readyTimer = 0.0f;
 
         tempExtraLstL = new List<int>();
         tempExtraLstR = new List<int>();
@@ -141,6 +146,7 @@ public class InGameUIManager : MonoBehaviour
         SetScoreBoard();
         SetTimerBoard();
         SetExtraBoard();
+        ReadyText();
     }
 
     private void EndScreenUI()
@@ -280,6 +286,32 @@ public class InGameUIManager : MonoBehaviour
                         extraObjLstR.Add(tempObj);
                     }
                 }
+            }
+        }
+    }
+
+    private void ReadyText()
+    {
+        GameObject readyImage = inGameUI.transform.Find("ReadyImage").gameObject;
+        if (gm.isReady)
+        {
+            gm.isReady = false;
+            readyTimer = 4.0f;
+            readyImage.SetActive(true);
+            readyImage.GetComponent<Image>().sprite = readySprite;
+        }
+        if (readyTimer > 0.0f)
+        {
+            readyTimer -= Time.deltaTime;
+            if (readyTimer <= 0.0f)
+            {
+                readyTimer = 0.0f;
+                readyImage.SetActive(false);
+                readyImage.GetComponent<Image>().sprite = readySprite;
+            }
+            else if (readyTimer <= 1.0f)
+            {
+                readyImage.GetComponent<Image>().sprite = startSprite;
             }
         }
     }
