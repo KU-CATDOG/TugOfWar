@@ -45,7 +45,7 @@ public class Rhythm : Character
         else
         {
             t = Time.time - startTime;
-            if (t >= 2)
+            if (t >= 1)
             {
                 startTime = Time.time;
                 t = 0;
@@ -55,28 +55,28 @@ public class Rhythm : Character
 
             if (pnt > 0)
             {
-                gage.value = t / 2.0f;
+                gage.value = t / 1.0f;
             }
             else
             {
-                gage.value = (2 - t) / 2.0f;
+                gage.value = (1 - t) / 1.0f;
             }
 
             if (player == 0)    //Player1
             {
                 if (keyCount == 0)
                 {
-                    if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")) && !freeze)
+                    if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")))
                     {
-                        if (t < 0.25 || t > 1.75)         //judge miss
+                        if (t < 0.2 || t > 0.8)         //judge miss
                         {
                             force = 0;
                         }
-                        else if ((t >= 0.25 && t < 0.5) || (t > 1.5 && t <= 1.75))       //judge good
+                        else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
                             force = 5;
                         }
-                        else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5))       //judge great
+                        else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
                             force = 8;
                         }
@@ -95,17 +95,17 @@ public class Rhythm : Character
             {
                 if (keyCount == 0)
                 {
-                    if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) && !freeze)
+                    if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
                     {
-                        if (t < 0.25 || (t > 1.75 && t < 2.25) || t > 3.75)         //judge miss
+                        if (t < 0.2 || t > 0.8)         //judge miss
                         {
                             force = 0;
                         }
-                        else if ((t >= 0.25 && t < 0.5) || (t > 1.5 && t <= 1.75) || (t >= 2.25 && t < 2.5) || (t > 3.5 && t <= 3.75))       //judge good
+                        else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
                             force = 5;
                         }
-                        else if ((t >= 0.5 && t < 0.75) || (t > 1.25 && t <= 1.5) || (t >= 2.5 && t < 2.75) || (t > 3.25 && t <= 3.5))       //judge great
+                        else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
                             force = 8;
                         }
