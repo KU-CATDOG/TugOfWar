@@ -32,7 +32,7 @@ public class Command : Character
     Combo B = new Combo();
     Combo C = new Combo();
     Combo D = new Combo();
-    private float comboLeeway = 0.2f;
+    private float comboLeeway = 0.3f;
 
     Attack curAttack = null;
     ComboInput lastInput = null;
@@ -57,6 +57,7 @@ public class Command : Character
         comboA.strength = 45f;
         comboB.strength = 65f;
         comboC.strength = 100f;
+        comboD.strength = 160f;
 
         A.inputs = new List<ComboInput>() {  
             new ComboInput(AttackType.down),
@@ -96,6 +97,23 @@ public class Command : Character
         C.onInputted = new UnityEvent();
 
         combos.Add(C);
+
+        D.inputs = new List<ComboInput>() {
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.right)
+        };
+        D.comboAttack = comboD;
+        D.onInputted = new UnityEvent();
+
+        combos.Add(D);
 
 
         PrimeCombos();
