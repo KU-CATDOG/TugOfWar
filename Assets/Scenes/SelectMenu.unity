@@ -1828,6 +1828,8 @@ MonoBehaviour:
   player1: {fileID: 1026799297}
   player2: {fileID: 1789625049}
   selectionCheck: {fileID: 1017173553}
+  frameImagePrefab: {fileID: 139826842443764080, guid: ca7a8563eef7ea14e89383d317848323,
+    type: 3}
 --- !u!1 &938387607
 GameObject:
   m_ObjectHideFlags: 0
@@ -3301,7 +3303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000076293945}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 0.1555481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972852884

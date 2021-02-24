@@ -752,7 +752,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 823027423}
-        m_MethodName: button14
+        m_MethodName: button16
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1432,7 +1432,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 823027423}
-        m_MethodName: button24
+        m_MethodName: button26
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1833,6 +1833,8 @@ MonoBehaviour:
   p1Buttons: {fileID: 1026799297}
   p2Buttons: {fileID: 1789625049}
   selectionCheck: {fileID: 1017173553}
+  frameImagePrefab: {fileID: 139826842443764080, guid: ca7a8563eef7ea14e89383d317848323,
+    type: 3}
 --- !u!1 &921770667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2291,7 +2293,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 823027423}
-        m_MethodName: button14
+        m_MethodName: button15
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2865,7 +2867,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 823027423}
-        m_MethodName: button24
+        m_MethodName: button25
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
