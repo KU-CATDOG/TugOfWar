@@ -44,6 +44,9 @@ public class Extra4 : MonoBehaviour
 
     void OnDisable()
     {
-        blind.SetActive(false);
+        if (blind != null)
+        {
+            blind.SetActive(false);
+        }
     }
 }
