@@ -112,7 +112,7 @@ public class InGameUIManager : MonoBehaviour
         else if (gm.phase == 3) //EndGame
         {
             startUI.SetActive(false);
-            inGameUI.SetActive(false);
+            inGameUI.SetActive(true);
             endUI.SetActive(true);
 
             if (gm.scoreL == gm.winScore)
@@ -130,6 +130,8 @@ public class InGameUIManager : MonoBehaviour
             endUI.transform.GetChild(3).gameObject.SetActive(false);
 
             endTimer = 3.0f;
+
+            InGameScreenUI();
         }
     }
 

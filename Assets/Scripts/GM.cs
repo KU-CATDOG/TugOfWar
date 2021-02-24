@@ -220,13 +220,13 @@ public class GM : MonoBehaviour
         tempTextBoxL.transform.SetParent(locateCanvas.transform, false);
         tempTextBoxL.GetComponent<RectTransform>().localPosition = nextPositionL;
         tempTextBoxL.text = dragForceL.ToString();
-        Destroy(tempTextBoxL, 2f);
+        Destroy(tempTextBoxL.gameObject, 2f);
 
         tempTextBoxR = Instantiate(textPrefab, nextPositionR, transform.rotation, locateCanvas.transform) as Text;
         tempTextBoxR.transform.SetParent(locateCanvas.transform, false);
         tempTextBoxR.GetComponent<RectTransform>().localPosition = nextPositionR;
         tempTextBoxR.text = dragForceR.ToString();
-        Destroy(tempTextBoxR, 2f);
+        Destroy(tempTextBoxR.gameObject, 2f);
     }
 
     private void EventCheck() //for events, freeze...
@@ -376,12 +376,14 @@ public class GM : MonoBehaviour
         {
             FreezeAll();
             Debug.Log("1P Win!");
+            timer = 0.0f;
             SetPhase(3);
         }
         else if (scoreR == winScore)
         {
             FreezeAll();
             Debug.Log("2P Win!");
+            timer = 0.0f;
             SetPhase(3);
         }
         else
