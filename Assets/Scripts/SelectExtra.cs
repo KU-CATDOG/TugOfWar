@@ -24,7 +24,6 @@ public class SelectExtra : MonoBehaviour
     private GameObject frameR2;
 
     private float t = 0;
-    private float t2 = 0;
 
     public void button11()
     {
@@ -88,12 +87,10 @@ public class SelectExtra : MonoBehaviour
         framePos = new List<Vector3>();
 
         MoveFrame(true);
-        PopUp(true);
     }
     private void Update()
     {
         SlowSelectionCheck();
-        PopUp();
         MoveFrame();
     }
     public void ReSelectB()
@@ -232,39 +229,6 @@ public class SelectExtra : MonoBehaviour
                 p1Buttons.SetActive(false);
                 p2Buttons.SetActive(false);
                 selectionCheck.SetActive(true);
-            }
-        }
-    }
-
-    private void PopUp(bool isReset = false)
-    {
-        if (isReset)
-        {
-            for (int i = 1; i <= 6; i++)
-            {
-                p1Buttons.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
-                p1Buttons.transform.GetChild(i).gameObject.SetActive(false);
-
-                p2Buttons.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
-                p2Buttons.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            t2 += Time.deltaTime;
-
-            for (int i = 1; i < 7; i++)
-            {
-                if (t2 > i * 0.5f)
-                {
-                    if (!p1Buttons.transform.GetChild(i).gameObject.activeSelf) p1Buttons.transform.GetChild(i).gameObject.SetActive(true);
-                    if (!p2Buttons.transform.GetChild(i).gameObject.activeSelf) p2Buttons.transform.GetChild(i).gameObject.SetActive(true);
-                    if (p1Buttons.transform.GetChild(i).transform.localScale.x < 1)
-                    {
-                        p1Buttons.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
-                        p2Buttons.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
-                    }
-                }
             }
         }
     }

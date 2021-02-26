@@ -72,7 +72,7 @@ public class GM : MonoBehaviour
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterLst.Length)
         {
-            SelectMenu.selectionL = 1;
+            SelectMenu.selectionL = 2;
         }
         if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterLst.Length)
         {

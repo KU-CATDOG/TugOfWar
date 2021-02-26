@@ -25,7 +25,6 @@ public class SelectMenu : MonoBehaviour
     private GameObject frameR;
 
     private float t = 0;
-    private float t2 = 0;
 
     public void Start()
     {
@@ -42,13 +41,11 @@ public class SelectMenu : MonoBehaviour
         framePos = new List<Vector3>();
 
         MoveFrame(true);
-        PopUp(true);
     }
 
     public void Update()
     {
         SlowSelectionCheck();
-        PopUp();
         MoveFrame();
     }
 
@@ -201,39 +198,6 @@ public class SelectMenu : MonoBehaviour
                 player1.SetActive(false);
                 player2.SetActive(false);
                 selectionCheck.SetActive(true);
-            }
-        }
-    }
-
-    private void PopUp(bool isReset = false)
-    {
-        if (isReset)
-        {
-            for (int i = 1; i <= 6; i++)
-            {
-                player1.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
-                player1.transform.GetChild(i).gameObject.SetActive(false);
-
-                player2.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
-                player2.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            t2 += Time.deltaTime;
-
-            for (int i = 1; i < 7; i++)
-            {
-                if (t2 > i * 0.5f)
-                {
-                    if (!player1.transform.GetChild(i).gameObject.activeSelf) player1.transform.GetChild(i).gameObject.SetActive(true);
-                    if (!player2.transform.GetChild(i).gameObject.activeSelf) player2.transform.GetChild(i).gameObject.SetActive(true);
-                    if (player1.transform.GetChild(i).transform.localScale.x < 1)
-                    {
-                        player1.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
-                        player2.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
-                    }
-                }
             }
         }
     }

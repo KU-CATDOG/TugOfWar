@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class Anubis : Character
 {
@@ -10,11 +12,28 @@ public class Anubis : Character
         force = 0;
         //player = 1; //temp
         changetime = Time.time;
+
+        if (player == 0)
+        {
+            energyBarUI.transform.localPosition = new Vector3(-250, 100, 0);
+        }
+        else
+        {
+            energyBarUI.transform.localPosition = new Vector3(250, 100, 0);
+        }
     }
 
     int mode = 0;
     int energy = 0;
     float changetime;
+
+    public SpriteAtlas spriteA;
+    public GameObject energyBarUI;
+
+    void Update()
+    {
+        energyBarUI.GetComponent<Image>().sprite = spriteA.GetSprite("anubisUIsheet_" + energy);
+    }
 
     // Update is called once per frame
     void FixedUpdate()

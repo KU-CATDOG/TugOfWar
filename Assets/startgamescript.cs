@@ -12,8 +12,31 @@ public class startgamescript : MonoBehaviour
 
     public GameObject buttons;
     public GameObject optionScreen;
-    private GameObject bgi;
-    private float t;
+    public GameObject helpScreen;
+
+    void Start()
+    {
+        buttons.SetActive(true);
+        optionScreen.SetActive(false);
+        helpScreen.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionScreen.activeSelf)
+            {
+                buttons.SetActive(true);
+                optionScreen.SetActive(false);
+            }
+            if (helpScreen.activeSelf)
+            {
+                buttons.SetActive(true);
+                helpScreen.SetActive(false);
+            }
+        }
+    }
 
     public void startgame()
     {
@@ -53,27 +76,15 @@ public class startgamescript : MonoBehaviour
         SoundManager.instance.playButtonSound();
     }
 
-    private void Start()
+    public void OpenHelpScreen()
     {
-        bgi = GameObject.Find("Canvas").transform.Find("BackGroundImage").gameObject;
-        bgi.transform.localPosition = new Vector3(0, 0, 0);
-        t = 0;
+        buttons.SetActive(false);
+        helpScreen.SetActive(true);
     }
 
-    private void Update()
+    public void CloseHelpScreen()
     {
-        t += Time.deltaTime;
-        if (t < 2 || 2.5f < t && t < 3 || 7 < t && t < 7.5f || 8 < t && t < 10)
-        {
-            bgi.transform.localPosition += 20 * Vector3.right * Time.deltaTime;
-        }
-        else
-        {
-            bgi.transform.localPosition += 20 * Vector3.left * Time.deltaTime;
-            if (t >= 10)
-            {
-                t = 0;
-            }
-        }
+        buttons.SetActive(true);
+        helpScreen.SetActive(false);
     }
 }
