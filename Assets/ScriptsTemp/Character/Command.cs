@@ -255,6 +255,11 @@ public class Command : Character
     {
         curAttack = att;
         timer = att.length;
+        if(curAttack.strength > 10f)
+        {
+            count++;
+            force = curAttack.strength;
+        }
         Debug.Log("Attack: " + curAttack.strength * force);
     }
 
