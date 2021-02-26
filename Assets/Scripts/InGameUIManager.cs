@@ -15,13 +15,16 @@ public class InGameUIManager : MonoBehaviour
     public GameObject inGameUI;
     public GameObject endUI;
 
-    public GameObject scoreBoard1;
-    public GameObject scoreBoard2;
     public GameObject timerBoard;
+    public Sprite scoreOnSprite;
+    public Sprite scoreOffSprite;
+    public Sprite readySprite;
+    public Sprite startSprite;
 
     public GameObject blindImage;
 
     private float endTimer;
+    private float readyTimer;
 
     private List<int> tempExtraLstL;
     private List<int> tempExtraLstR;
@@ -40,8 +43,10 @@ public class InGameUIManager : MonoBehaviour
         tempPhase = -1;
 
         blindImage.SetActive(false);
+        inGameUI.transform.Find("ReadyImage").gameObject.SetActive(false);
 
         endTimer = 0.0f;
+        readyTimer = 0.0f;
 
         tempExtraLstL = new List<int>();
         tempExtraLstR = new List<int>();
@@ -107,7 +112,7 @@ public class InGameUIManager : MonoBehaviour
         else if (gm.phase == 3) //EndGame
         {
             startUI.SetActive(false);
-            inGameUI.SetActive(false);
+            inGameUI.SetActive(true);
             endUI.SetActive(true);
 
             if (gm.scoreL == gm.winScore)
@@ -125,6 +130,8 @@ public class InGameUIManager : MonoBehaviour
             endUI.transform.GetChild(3).gameObject.SetActive(false);
 
             endTimer = 3.0f;
+
+            InGameScreenUI();
         }
     }
 
@@ -141,6 +148,7 @@ public class InGameUIManager : MonoBehaviour
         SetScoreBoard();
         SetTimerBoard();
         SetExtraBoard();
+        ReadyText();
     }
 
     private void EndScreenUI()
@@ -159,10 +167,44 @@ public class InGameUIManager : MonoBehaviour
 
     private void SetScoreBoard()
     {
-        if (scoreBoard1.activeSelf)
+        GameObject scoreBoard = inGameUI.transform.Find("ScoreBoard").gameObject;
+        if (gm.scoreL == 0)
         {
-            scoreBoard1.GetComponent<Text>().text = gm.scoreL.ToString("0");
-            scoreBoard2.GetComponent<Text>().text = gm.scoreR.ToString("0");
+            for (int idx = 0; idx < 3; idx++)
+            {
+                scoreBoard.transform.GetChild(idx).GetComponent<Image>().sprite = scoreOffSprite;
+            }
+        }
+        else if (gm.scoreL == 1)
+        {
+            scoreBoard.transform.GetChild(0).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreL == 2)
+        {
+            scoreBoard.transform.GetChild(1).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreL == 3)
+        {
+            scoreBoard.transform.GetChild(2).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        if (gm.scoreR == 0)
+        {
+            for (int idx = 3; idx < 6; idx++)
+            {
+                scoreBoard.transform.GetChild(idx).GetComponent<Image>().sprite = scoreOffSprite;
+            }
+        }
+        else if (gm.scoreR == 1)
+        {
+            scoreBoard.transform.GetChild(3).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreR == 2)
+        {
+            scoreBoard.transform.GetChild(4).GetComponent<Image>().sprite = scoreOnSprite;
+        }
+        else if (gm.scoreR == 3)
+        {
+            scoreBoard.transform.GetChild(5).GetComponent<Image>().sprite = scoreOnSprite;
         }
     }
 
@@ -250,13 +292,43 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
+    private void ReadyText()
+    {
+        GameObject readyImage = inGameUI.transform.Find("ReadyImage").gameObject;
+        if (gm.isReady)
+        {
+            gm.isReady = false;
+            readyTimer = 4.0f;
+            readyImage.SetActive(true);
+            readyImage.GetComponent<Image>().sprite = readySprite;
+        }
+        if (readyTimer > 0.0f)
+        {
+            readyTimer -= Time.deltaTime;
+            if (readyTimer <= 0.0f)
+            {
+                readyTimer = 0.0f;
+                readyImage.SetActive(false);
+                readyImage.GetComponent<Image>().sprite = readySprite;
+            }
+            else if (readyTimer <= 1.0f)
+            {
+                readyImage.GetComponent<Image>().sprite = startSprite;
+            }
+        }
+    }
+
     public void RestartB()
     {
         gm.SetPhase(-1);
+
+        SoundManager.instance.playButtonSound();
     }
 
     public void TitleB()
     {
+        SoundManager.instance.playButtonSound();
+
         SceneManager.LoadScene("StartMenu");
     }
 }

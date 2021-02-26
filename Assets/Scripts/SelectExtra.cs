@@ -11,96 +11,65 @@ public class SelectExtra : MonoBehaviour
     public static int extraR2;
     private int CountL = 1;
     private int CountR = 1;
+    public GameObject p1Buttons;
+    public GameObject p2Buttons;
 
     public GameObject selectionCheck;
 
+    private List<Vector3> framePos;
+    public GameObject frameImagePrefab;
+    private GameObject frameL1;
+    private GameObject frameL2;
+    private GameObject frameR1;
+    private GameObject frameR2;
+
     public void button11()
     {
-        if (CountL == 1)
-        {
-            extraL1 = 1;
-            CountL++;
-        }
-        else extraL2 = 1;
-
-        Debug.Log("P1 Extra1 Selected");
+        selectL(1);
     }
     public void button12()
     {
-        if (CountL == 1)
-        {
-            extraL1 = 2;
-            CountL++;
-        }
-        else extraL2 = 2;
-
-        Debug.Log("P1 Extra2 Selected");
+        selectL(2);
     }
     public void button13()
     {
-        if (CountL == 1)
-        {
-            extraL1 = 3;
-            CountL++;
-        }
-        else extraL2 = 3;
-
-        Debug.Log("P1 Extra3 Selected");
+        selectL(3);
     }
     public void button14()
     {
-        if (CountL == 1)
-        {
-            extraL1 = 4;
-            CountL++;
-        }
-        else extraL2 = 4;
-
-        Debug.Log("P1 Extra4 Selected");
+        selectL(4);
+    }
+    public void button15()
+    {
+        selectL(5);
+    }
+    public void button16()
+    {
+        selectL(6);
     }
     public void button21()
     {
-        if (CountR == 1)
-        {
-            extraR1 = 1;
-            CountR++;
-        }
-        else extraR2 = 1;
-
-        Debug.Log("P2 Extra1 Selected");
+        selectR(1);
     }
     public void button22()
     {
-        if (CountR == 1)
-        {
-            extraR1 = 2;
-            CountR++;
-        }
-        else extraR2 = 2;
-
-        Debug.Log("P2 Extra2 Selected");
+        selectR(2);
     }
     public void button23()
     {
-        if (CountR == 1)
-        {
-            extraR1 = 3;
-            CountR++;
-        }
-        else extraR2 = 3;
-
-        Debug.Log("P2 Extra3 Selected");
+        selectR(3);
     }
     public void button24()
     {
-        if (CountR == 1)
-        {
-            extraR1 = 4;
-            CountR++;
-        }
-        else extraR2 = 4;
-
-        Debug.Log("P2 Extra4 Selected");
+        selectR(4);
+    }
+    public void button25()
+    {
+        selectR(5);
+    }
+    public void button26()
+    {
+        selectR(6);
     }
 
     private void Start()
@@ -109,26 +78,144 @@ public class SelectExtra : MonoBehaviour
         extraL2 = 0;
         extraR1 = 0;
         extraR2 = 0;
+        p1Buttons.SetActive(true);
+        p2Buttons.SetActive(true);
         selectionCheck.SetActive(false);
+
+        framePos = new List<Vector3>();
+        for (int i = 1; i <= 6; i++)
+        {
+            framePos.Add(p1Buttons.transform.GetChild(i).transform.position);
+        }
+        for (int i = 1; i <= 6; i++)
+        {
+            framePos.Add(p2Buttons.transform.GetChild(i).transform.position);
+        }
     }
     private void Update()
     {
         if (extraL2 != 0 && extraR2 != 0)
         {
+            p1Buttons.SetActive(false);
+            p2Buttons.SetActive(false);
             selectionCheck.SetActive(true);
+        }
+        if (frameL1 != null && extraL1 != 0)
+        {
+            frameL1.transform.position = Vector3.Lerp(frameL1.transform.position, framePos[extraL1 - 1], 0.1f);
+        }
+        if (frameL2 != null && extraL2 != 0)
+        {
+            frameL2.transform.position = Vector3.Lerp(frameL2.transform.position, framePos[extraL2 - 1], 0.1f);
+        }
+        if (frameR1 != null && extraR1 != 0)
+        {
+            frameR1.transform.position = Vector3.Lerp(frameR1.transform.position, framePos[6 + extraR1 - 1], 0.1f);
+        }
+        if (frameR2 != null && extraR2 != 0)
+        {
+            frameR2.transform.position = Vector3.Lerp(frameR2.transform.position, framePos[6 + extraR2 - 1], 0.1f);
         }
     }
     public void ReSelectB()
     {
-        CountL--;
-        CountR--;
+        CountL = 1;
+        CountR = 1;
         extraL1 = 0;
         extraL2 = 0;
         extraR1 = 0;
         extraR2 = 0;
+
+        p1Buttons.SetActive(true);
+        p2Buttons.SetActive(true);
+        selectionCheck.SetActive(false);
+
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
     }
     public void GameStartB()
     {
         SceneManager.LoadScene("InGame");
+
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
+    }
+
+    private void selectL(int i)
+    {
+        if (CountL == 1)
+        {
+            extraL1 = i;
+            CountL++;
+            if (frameL1 != null)
+            {
+                Destroy(frameL1);
+            }
+            frameL1 = Instantiate(frameImagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            frameL1.transform.SetParent(p1Buttons.transform, false);
+        }
+        else if (CountL == 2)
+        {
+            if (frameL2 != null)
+            {
+                Destroy(frameL2);
+            }
+            frameL2 = Instantiate(frameImagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            frameL2.transform.SetParent(p1Buttons.transform, false);
+            extraL2 = i;
+            CountL++;
+        }
+        else
+        {
+            extraL2 = i;
+        }
+
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
+
+        Debug.Log("P1 Extra" + i + " Selected");
+    }
+
+    private void selectR(int i)
+    {
+        if (CountR == 1)
+        {
+            extraR1 = i;
+            CountR++;
+            if (frameR1 != null)
+            {
+                Destroy(frameR1);
+            }
+            frameR1 = Instantiate(frameImagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            frameR1.transform.SetParent(p2Buttons.transform, false);
+        }
+        else if (CountR == 2)
+        {
+            if (frameR2 != null)
+            {
+                Destroy(frameR2);
+            }
+            frameR2 = Instantiate(frameImagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            frameR2.transform.SetParent(p2Buttons.transform, false);
+            extraR2 = i;
+            CountR++;
+        }
+        else
+        {
+            extraR2 = i;
+        }
+
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
+
+        Debug.Log("P2 Extra" + i + " Selected");
     }
 }

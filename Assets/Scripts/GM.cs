@@ -7,19 +7,23 @@ using UnityEngine.SceneManagement;
 public class GM : MonoBehaviour
 {
     public int winScore;
+    [HideInInspector]
     public int scoreL;
+    [HideInInspector]
     public int scoreR;
-    public int chanceL;
-    public int chanceR;
+    private int chanceL;
+    private int chanceR;
 
-    public float dragForceL;
-    public float dragForceR;
+    private float dragForceL;
+    private float dragForceR;
     public float ropeSpeed;
 
+    [HideInInspector]
     public float timer; //Main Timer
-    public float timer2; //Extra Timer
+    private float timer2; //Extra Timer
+    [HideInInspector]
     public float timerSpeed;
-    public float tikInterval;
+    private float tikInterval;
     private float tik;
 
     private GameObject rope;
@@ -28,48 +32,52 @@ public class GM : MonoBehaviour
 
     public GameObject mainCamera;
 
-    public int characterCnt;
-    public GameObject character1;
-    public GameObject character2;
-    public GameObject character3;
+    [SerializeField] GameObject[] characterLst;
+    [HideInInspector]
     public GameObject characterL;
+    [HideInInspector]
     public GameObject characterR;
-    List<GameObject> characterList;
 
     public GameObject miniControl;
 
-    public bool isTikStop;
-    public bool isMovable;
-    public bool isTimerStop;
+    private bool isTikStop;
+    private bool isMovable;
+    private bool isTimerStop;
 
+    [HideInInspector]
     public int phase; // -1:ResetGame 0:StartScreen, 1:GameReady, 2:InGame, 3:EndGame
+    [HideInInspector]
+    public bool isReady = false;
 
     private bool isPlayerFreeze;
     private bool isGameFreeze;
 
+    [HideInInspector]
     public List<int> extraLstL = new List<int>();
+    [HideInInspector]
     public List<int> extraLstR = new List<int>();
+
+    public Text tempTextBoxL;
+    public Text tempTextBoxR;
+    public Text textPrefab;
+    public Vector2 nextPositionL;
+    public Vector2 nextPositionR;
+    public Canvas locateCanvas;
 
     void Awake()// before the first frame update
     {
-        ropeInitPos = new Vector3(0, -3.5f, 0);
-        characterCnt = 3;
+        ropeInitPos = new Vector3(0, -4f, 0);
         isPlayerFreeze = false;
         isGameFreeze = false;
 
-        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterCnt)
+        if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterLst.Length)
         {
             SelectMenu.selectionL = 1;
         }
-        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterCnt)
+        if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterLst.Length)
         {
             SelectMenu.selectionR = 3;
         }
-
-        characterList = new List<GameObject>();
-        characterList.Add(character1); //Student
-        characterList.Add(character2); //Rhythm
-        characterList.Add(character3); //Anubis
 
         if (SelectExtra.extraL1 == 0 || SelectExtra.extraL1 > 6)
         {
@@ -107,6 +115,7 @@ public class GM : MonoBehaviour
             SetCharacter("L", SelectMenu.selectionL);
             SetCharacter("R", SelectMenu.selectionR);
 
+            isReady = true;
             FreezeAllFor(3.0f);
             SetPhase(2);
         }
@@ -132,6 +141,7 @@ public class GM : MonoBehaviour
             SetDragForce();
             //Debug.Log("1P Force : " + dragForceL.ToString("N2"));
             //Debug.Log("2P Force : " + dragForceR.ToString("N2"));
+            DisplayDragForce();
         }
 
         if (timer2 > 0.0f)
@@ -157,7 +167,7 @@ public class GM : MonoBehaviour
     {
         FreezeAll();
 
-        winScore = 2;
+        winScore = 3;
         chanceL = 4;
         chanceR = 4;
         timer = 30.0f;
@@ -197,6 +207,26 @@ public class GM : MonoBehaviour
     {
         dragForceL = characterL.GetComponent<Character>().returnForce();
         dragForceR = characterR.GetComponent<Character>().returnForce();
+    }
+
+    private void DisplayDragForce()
+    {
+        nextPositionL.x = Random.Range(-450, -350);
+        nextPositionL.y = Random.Range(50, 150);
+        nextPositionR.x = Random.Range(350, 450);
+        nextPositionR.y = Random.Range(50, 150);
+
+        tempTextBoxL = Instantiate(textPrefab, nextPositionL, transform.rotation, locateCanvas.transform) as Text;
+        tempTextBoxL.transform.SetParent(locateCanvas.transform, false);
+        tempTextBoxL.GetComponent<RectTransform>().localPosition = nextPositionL;
+        tempTextBoxL.text = dragForceL.ToString();
+        Destroy(tempTextBoxL.gameObject, 2f);
+
+        tempTextBoxR = Instantiate(textPrefab, nextPositionR, transform.rotation, locateCanvas.transform) as Text;
+        tempTextBoxR.transform.SetParent(locateCanvas.transform, false);
+        tempTextBoxR.GetComponent<RectTransform>().localPosition = nextPositionR;
+        tempTextBoxR.text = dragForceR.ToString();
+        Destroy(tempTextBoxR.gameObject, 2f);
     }
 
     private void EventCheck() //for events, freeze...
@@ -243,7 +273,6 @@ public class GM : MonoBehaviour
             {
                 chanceL--;
                 miniControl.SetActive(true);
-                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos <= -50 && chanceL == 0)
             {
@@ -255,7 +284,6 @@ public class GM : MonoBehaviour
             {
                 chanceR--;
                 miniControl.SetActive(true);
-                timer2 = 2.0f; //Timer for Auto-Disable
             }
             else if (comPos >= 50 && chanceR == 0)
             {
@@ -348,12 +376,14 @@ public class GM : MonoBehaviour
         {
             FreezeAll();
             Debug.Log("1P Win!");
+            timer = 0.0f;
             SetPhase(3);
         }
         else if (scoreR == winScore)
         {
             FreezeAll();
             Debug.Log("2P Win!");
+            timer = 0.0f;
             SetPhase(3);
         }
         else
@@ -589,7 +619,7 @@ public class GM : MonoBehaviour
 
         if (pos == "L" || pos == "Left")
         {
-            if (0 < character && character <= characterCnt)
+            if (0 < character && character <= characterLst.Length)
             {
                 SelectMenu.selectionL = character;
 
@@ -598,21 +628,21 @@ public class GM : MonoBehaviour
                     Destroy(characterL);
                 }
 
-                characterL = Instantiate(characterList[character - 1]);
+                characterL = Instantiate(characterLst[character - 1]);
 
                 SetExtra("L", 0);
 
                 Debug.Log("1P Character: " + SelectMenu.selectionL);
 
                 characterL.transform.SetParent(rope.transform, false);
-                characterL.transform.localPosition = new Vector3(-5, 0.62f, 0);
-                characterL.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterL.transform.localPosition = new Vector3(-4, 0.79f, 0);
+                characterL.transform.localScale = new Vector3(1.9f, 1.9f, 1);
                 characterL.GetComponent<Character>().player = 0;
             }
         }
         else if (pos == "R" || pos == "Right")
         {
-            if (0 < character && character <= characterCnt)
+            if (0 < character && character <= characterLst.Length)
             {
                 SelectMenu.selectionR = character;
 
@@ -621,15 +651,15 @@ public class GM : MonoBehaviour
                     Destroy(characterR);
                 }
 
-                characterR = Instantiate(characterList[character - 1]);
+                characterR = Instantiate(characterLst[character - 1]);
 
                 SetExtra("R", 0);
 
                 Debug.Log("2P Character: " + SelectMenu.selectionR);
 
                 characterR.transform.SetParent(rope.transform, false);
-                characterR.transform.localPosition = new Vector3(5, 0.62f, 0);
-                characterR.transform.localScale = new Vector3(2.2f, 2.2f, 1);
+                characterR.transform.localPosition = new Vector3(4, 0.79f, 0);
+                characterR.transform.localScale = new Vector3(1.9f, 1.9f, 1);
                 characterR.GetComponent<SpriteRenderer>().flipX = true;
                 characterR.GetComponent<Character>().player = 1;
             }

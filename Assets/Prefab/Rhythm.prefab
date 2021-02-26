@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8484436533109723774}
   - component: {fileID: 1176119142556117155}
   - component: {fileID: 8797192384066081539}
+  - component: {fileID: 1036881431020423673}
   m_Layer: 0
   m_Name: Rhythm
   m_TagString: Untagged
@@ -72,15 +73,16 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 4130640169021434097, guid: 16f0958126c362248b630445435451a5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.48, y: 2.69}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8797192384066081539
@@ -97,6 +99,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   freeze: 0
   gage: {fileID: 5374800827368568904}
+--- !u!95 &1036881431020423673
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3676365422635524986}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84c89945495c9b84dbffa9d031772f4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3750729837309578900
 GameObject:
   m_ObjectHideFlags: 0

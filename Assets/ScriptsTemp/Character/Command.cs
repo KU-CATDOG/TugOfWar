@@ -22,11 +22,17 @@ public class Command : Character
     public Attack down;
     public Attack left;
     public Attack right;
-    public Attack comboUDLR;
+    public Attack comboA;
+    public Attack comboB;
+    public Attack comboC;
+    public Attack comboD;
 
     protected List<Combo> combos = new List<Combo>();
     Combo A = new Combo();
-    public float comboLeeway = 0.2f;
+    Combo B = new Combo();
+    Combo C = new Combo();
+    Combo D = new Combo();
+    private float comboLeeway = 0.3f;
 
     Attack curAttack = null;
     ComboInput lastInput = null;
@@ -36,27 +42,78 @@ public class Command : Character
     float leeway = 0;
     bool skip = false;
 
+    int count = 0;
+
     protected override void Start()
     {
         base.Start();
         player = 0;
-        force = 14;
+        force = 1;
         up.strength = 0.1f;
         down.strength = 0.1f;
         left.strength = 0.1f;
         right.strength = 0.1f;
-        comboUDLR.strength = 1f;
+
+        comboA.strength = 45f;
+        comboB.strength = 65f;
+        comboC.strength = 100f;
+        comboD.strength = 160f;
 
         A.inputs = new List<ComboInput>() {  
-            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.down),
             new ComboInput(AttackType.down),
             new ComboInput(AttackType.left),
             new ComboInput(AttackType.right)
         };
-        A.comboAttack = comboUDLR;
+        A.comboAttack = comboA;
         A.onInputted = new UnityEvent();
 
         combos.Add(A);
+
+        B.inputs = new List<ComboInput>() {
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.right)
+        };
+        B.comboAttack = comboB;
+        B.onInputted = new UnityEvent();
+
+        combos.Add(B);
+
+        C.inputs = new List<ComboInput>() {
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.down)
+        };
+        C.comboAttack = comboC;
+        C.onInputted = new UnityEvent();
+
+        combos.Add(C);
+
+        D.inputs = new List<ComboInput>() {
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.up),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.right),
+            new ComboInput(AttackType.down),
+            new ComboInput(AttackType.left),
+            new ComboInput(AttackType.right)
+        };
+        D.comboAttack = comboD;
+        D.onInputted = new UnityEvent();
+
+        combos.Add(D);
 
 
         PrimeCombos();
@@ -130,7 +187,12 @@ public class Command : Character
             if (Input.GetKeyDown(p2Right))
                 input = new ComboInput(AttackType.right);
         }
-        
+
+        //if(count == 0) input = new ComboInput(AttackType.down);
+        //if(count == 1) input = new ComboInput(AttackType.down);
+        //if(count == 2) input = new ComboInput(AttackType.left);
+        //if(count == 3) input = new ComboInput(AttackType.down);
+
 
         if (input == null) return;
         lastInput = input;
@@ -160,12 +222,22 @@ public class Command : Character
                 leeway = 0;
             }
         }
+        
+        //foreach (int i in remove)
+        //{
+        //    currentCombos.RemoveAt(i);
+        //    //Debug.Log(currentCombos[i]);
+        //}
 
-        foreach (int i in remove)
-            currentCombos.RemoveAt(i);
+        for(int i=remove.Count - 1; i>0; i--)
+        {
+            currentCombos.RemoveAt(remove[i]);
+        }
 
         if (currentCombos.Count <= 0)
             Attack(getAttackFromType(input.type));
+
+        count++;
     }
 
     void ResetCombos()
@@ -183,7 +255,7 @@ public class Command : Character
     {
         curAttack = att;
         timer = att.length;
-        Debug.Log(curAttack.strength * force);
+        Debug.Log("Attack: " + curAttack.strength * force);
     }
 
     Attack getAttackFromType(AttackType t)

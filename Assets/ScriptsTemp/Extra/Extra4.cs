@@ -6,6 +6,7 @@ public class Extra4 : MonoBehaviour
 {
     float startTime;
     public GameObject blind;
+    float t;
 
     // Start is called before the first frame update
     void Start()
@@ -18,23 +19,34 @@ public class Extra4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float t = Time.time - startTime;
-        if (t >= 20 )
+        if (GetComponent<Character>().freeze)
         {
-            startTime = Time.time;
-            t = 0;
-            blind.SetActive(false);
+            startTime = Time.time - t;
         }
+        else
+        {
+            t = Time.time - startTime;
+            if (t >= 8)
+            {
+                startTime = Time.time;
+                t = 0;
+                blind.SetActive(false);
+            }
 
-        if (t > 10 && t < 20)
-        {
-            blind.SetActive(true);
+            if (t > 5 && t < 8)
+            {
+                blind.SetActive(true);
+            }
         }
+        
         
     }
 
     void OnDisable()
     {
-        blind.SetActive(false);
+        if (blind != null)
+        {
+            blind.SetActive(false);
+        }
     }
 }
