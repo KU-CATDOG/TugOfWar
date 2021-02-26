@@ -12,6 +12,8 @@ public class startgamescript : MonoBehaviour
 
     public GameObject buttons;
     public GameObject optionScreen;
+    private GameObject bgi;
+    private float t;
 
     public void startgame()
     {
@@ -49,5 +51,29 @@ public class startgamescript : MonoBehaviour
     public void volumeChangeSound()
     {
         SoundManager.instance.playButtonSound();
+    }
+
+    private void Start()
+    {
+        bgi = GameObject.Find("Canvas").transform.Find("BackGroundImage").gameObject;
+        bgi.transform.localPosition = new Vector3(0, 0, 0);
+        t = 0;
+    }
+
+    private void Update()
+    {
+        t += Time.deltaTime;
+        if (t < 2 || 2.5f < t && t < 3 || 7 < t && t < 7.5f || 8 < t && t < 10)
+        {
+            bgi.transform.localPosition += 20 * Vector3.right * Time.deltaTime;
+        }
+        else
+        {
+            bgi.transform.localPosition += 20 * Vector3.left * Time.deltaTime;
+            if (t >= 10)
+            {
+                t = 0;
+            }
+        }
     }
 }
