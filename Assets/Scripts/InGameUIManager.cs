@@ -54,6 +54,7 @@ public class InGameUIManager : MonoBehaviour
         extraObjLstL = new List<GameObject>();
         extraObjLstR = new List<GameObject>();
 
+        #region 엑스트라위치설정
         extraPosL = new List<Vector3>();
         extraPosL.Add(new Vector3(-400, -200, 0));
         extraPosL.Add(new Vector3(-300, -200, 0));
@@ -69,6 +70,7 @@ public class InGameUIManager : MonoBehaviour
         extraPosR.Add(new Vector3(300, 200, 0));
         extraPosR.Add(new Vector3(200, 200, 0));
         extraPosR.Add(new Vector3(0, 0, 0));
+        #endregion
     }
 
     void Update()
@@ -117,17 +119,17 @@ public class InGameUIManager : MonoBehaviour
 
             if (gm.scoreL == gm.winScore)
             {
-                endUI.transform.GetChild(0).gameObject.SetActive(true);
-                endUI.transform.GetChild(1).gameObject.SetActive(false);
+                endUI.transform.GetChild(1).gameObject.SetActive(true);
+                endUI.transform.GetChild(2).gameObject.SetActive(false);
             }
             else if (gm.scoreR == gm.winScore)
             {
-                endUI.transform.GetChild(0).gameObject.SetActive(false);
-                endUI.transform.GetChild(1).gameObject.SetActive(true);
+                endUI.transform.GetChild(1).gameObject.SetActive(false);
+                endUI.transform.GetChild(2).gameObject.SetActive(true);
             }
 
-            endUI.transform.GetChild(2).gameObject.SetActive(false);
             endUI.transform.GetChild(3).gameObject.SetActive(false);
+            endUI.transform.GetChild(4).gameObject.SetActive(false);
 
             endTimer = 3.0f;
 
@@ -159,8 +161,8 @@ public class InGameUIManager : MonoBehaviour
             if (endTimer <= 0.0f)
             {
                 endTimer = 0.0f;
-                endUI.transform.GetChild(2).gameObject.SetActive(true);
                 endUI.transform.GetChild(3).gameObject.SetActive(true);
+                endUI.transform.GetChild(4).gameObject.SetActive(true);
             }
         }
     }
