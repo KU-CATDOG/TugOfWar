@@ -133,12 +133,12 @@ public class SoundManager : MonoBehaviour
 
     /*===========================Can Be Used At Other Scripts==============================*/
 
-    public void playSoundClip(AudioClip clip, float volumeRatio = 1f)
+    public void PlaySoundClip(AudioClip clip, float volumeRatio = 1f)
     {
         sePlayer.PlayOneShot(clip, sePlayer.volume * volumeRatio);
     }
 
-    public void playSoundDic(string clipName, float volumeRatio = 1f)
+    public void PlaySoundDic(string clipName, float volumeRatio = 1f)
     {
         if (audioClipDic.ContainsKey(clipName))
         {
@@ -150,7 +150,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void playSoundIdx(int clipIdx, float volumeRatio = 1f)
+    public void PlaySoundIdx(int clipIdx, float volumeRatio = 1f)
     {
         if (0 < clipIdx && clipIdx < SEClip.Length)
         {
@@ -162,7 +162,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void playRandomSoundDic(string[] clipNameArray, float volumeRatio = 1f)
+    public void PlayRandomSoundDic(string[] clipNameArray, float volumeRatio = 1f)
     {
         string clipName = clipNameArray[Random.Range(0, clipNameArray.Length)];
 
@@ -176,7 +176,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void playRandomSoundIdx(int[] clipIdxArray, float volumeRatio = 1f)
+    public void PlayRandomSoundIdx(int[] clipIdxArray, float volumeRatio = 1f)
     {
         int clipIdx = clipIdxArray[Random.Range(0, clipIdxArray.Length)];
 
@@ -192,6 +192,6 @@ public class SoundManager : MonoBehaviour
 
     public void playButtonSound()
     {
-        playSoundClip(buttonSoundClip);
+        PlaySoundClip(buttonSoundClip);
     }
 }

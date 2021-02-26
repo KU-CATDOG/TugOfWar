@@ -20,6 +20,10 @@ public class InGameUIManager : MonoBehaviour
     public Sprite scoreOffSprite;
     public Sprite readySprite;
     public Sprite startSprite;
+    public Sprite startGunReadySprite;
+    public Sprite startGunShootSprite;
+
+    private bool isReadySpriteChanged;
 
     public GameObject blindImage;
 
@@ -71,6 +75,8 @@ public class InGameUIManager : MonoBehaviour
         extraPosR.Add(new Vector3(200, 200, 0));
         extraPosR.Add(new Vector3(0, 0, 0));
         #endregion
+
+        isReadySpriteChanged = false;
     }
 
     void Update()
@@ -300,9 +306,11 @@ public class InGameUIManager : MonoBehaviour
         if (gm.isReady)
         {
             gm.isReady = false;
+            isReadySpriteChanged = false;
             readyTimer = 4.0f;
             readyImage.SetActive(true);
             readyImage.GetComponent<Image>().sprite = readySprite;
+            readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunReadySprite;
         }
         if (readyTimer > 0.0f)
         {
@@ -312,10 +320,17 @@ public class InGameUIManager : MonoBehaviour
                 readyTimer = 0.0f;
                 readyImage.SetActive(false);
                 readyImage.GetComponent<Image>().sprite = readySprite;
+                readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunReadySprite;
             }
-            else if (readyTimer <= 1.0f)
+            else if (readyTimer <= 1.0f && !isReadySpriteChanged)
             {
+                isReadySpriteChanged = true;
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("PistolSound");
+                }
                 readyImage.GetComponent<Image>().sprite = startSprite;
+                readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunShootSprite;
             }
         }
     }
