@@ -23,6 +23,9 @@ public class SelectExtra : MonoBehaviour
     private GameObject frameR1;
     private GameObject frameR2;
 
+    private float t = 0;
+    private float t2 = 0;
+
     public void button11()
     {
         selectL(1);
@@ -83,39 +86,15 @@ public class SelectExtra : MonoBehaviour
         selectionCheck.SetActive(false);
 
         framePos = new List<Vector3>();
-        for (int i = 1; i <= 6; i++)
-        {
-            framePos.Add(p1Buttons.transform.GetChild(i).transform.position);
-        }
-        for (int i = 1; i <= 6; i++)
-        {
-            framePos.Add(p2Buttons.transform.GetChild(i).transform.position);
-        }
+
+        MoveFrame(true);
+        PopUp(true);
     }
     private void Update()
     {
-        if (extraL2 != 0 && extraR2 != 0)
-        {
-            p1Buttons.SetActive(false);
-            p2Buttons.SetActive(false);
-            selectionCheck.SetActive(true);
-        }
-        if (frameL1 != null && extraL1 != 0)
-        {
-            frameL1.transform.position = Vector3.Lerp(frameL1.transform.position, framePos[extraL1 - 1], 0.1f);
-        }
-        if (frameL2 != null && extraL2 != 0)
-        {
-            frameL2.transform.position = Vector3.Lerp(frameL2.transform.position, framePos[extraL2 - 1], 0.1f);
-        }
-        if (frameR1 != null && extraR1 != 0)
-        {
-            frameR1.transform.position = Vector3.Lerp(frameR1.transform.position, framePos[6 + extraR1 - 1], 0.1f);
-        }
-        if (frameR2 != null && extraR2 != 0)
-        {
-            frameR2.transform.position = Vector3.Lerp(frameR2.transform.position, framePos[6 + extraR2 - 1], 0.1f);
-        }
+        SlowSelectionCheck();
+        PopUp();
+        MoveFrame();
     }
     public void ReSelectB()
     {
@@ -172,6 +151,7 @@ public class SelectExtra : MonoBehaviour
         else
         {
             extraL2 = i;
+            CountR = 3;
         }
 
         if (GameObject.Find("SoundManageObject") != null)
@@ -209,6 +189,7 @@ public class SelectExtra : MonoBehaviour
         else
         {
             extraR2 = i;
+            CountR = 3;
         }
 
         if (GameObject.Find("SoundManageObject") != null)
@@ -217,5 +198,108 @@ public class SelectExtra : MonoBehaviour
         }
 
         Debug.Log("P2 Extra" + i + " Selected");
+    }
+
+    private void SlowSelectionCheck(bool isSlow = true)
+    {
+        if (isSlow)
+        {
+            if (extraL2 != 0 && extraR2 != 0)
+            {
+                if (CountL == 3 || CountR == 3)
+                {
+                    t = 1.0f;
+                    CountL = 0;
+                    CountR = 0;
+                }
+            }
+            if (t > 0)
+            {
+                t -= Time.deltaTime;
+                if (t <= 0)
+                {
+                    t = 0;
+                    p1Buttons.SetActive(false);
+                    p2Buttons.SetActive(false);
+                    selectionCheck.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            if (extraL2 != 0 && extraR2 != 0)
+            {
+                p1Buttons.SetActive(false);
+                p2Buttons.SetActive(false);
+                selectionCheck.SetActive(true);
+            }
+        }
+    }
+
+    private void PopUp(bool isReset = false)
+    {
+        if (isReset)
+        {
+            for (int i = 1; i <= 6; i++)
+            {
+                p1Buttons.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
+                p1Buttons.transform.GetChild(i).gameObject.SetActive(false);
+
+                p2Buttons.transform.GetChild(i).transform.localScale = 0.1f * new Vector3(1, 1, 1);
+                p2Buttons.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            t2 += Time.deltaTime;
+
+            for (int i = 1; i < 7; i++)
+            {
+                if (t2 > i * 0.5f)
+                {
+                    if (!p1Buttons.transform.GetChild(i).gameObject.activeSelf) p1Buttons.transform.GetChild(i).gameObject.SetActive(true);
+                    if (!p2Buttons.transform.GetChild(i).gameObject.activeSelf) p2Buttons.transform.GetChild(i).gameObject.SetActive(true);
+                    if (p1Buttons.transform.GetChild(i).transform.localScale.x < 1)
+                    {
+                        p1Buttons.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
+                        p2Buttons.transform.GetChild(i).transform.localScale += 1.0f * new Vector3(1, 1, 1) * Time.deltaTime;
+                    }
+                }
+            }
+        }
+    }
+
+    private void MoveFrame(bool isReset = false)
+    {
+        if (isReset)
+        {
+            for (int i = 1; i <= 6; i++)
+            {
+                framePos.Add(p1Buttons.transform.GetChild(i).transform.position);
+            }
+            for (int i = 1; i <= 6; i++)
+            {
+                framePos.Add(p2Buttons.transform.GetChild(i).transform.position);
+            }
+        }
+        else
+        {
+            if (frameL1 != null && extraL1 != 0)
+            {
+                frameL1.transform.position = Vector3.Lerp(frameL1.transform.position, framePos[extraL1 - 1], 0.1f);
+            }
+            if (frameL2 != null && extraL2 != 0)
+            {
+                frameL2.transform.position = Vector3.Lerp(frameL2.transform.position, framePos[extraL2 - 1], 0.1f);
+            }
+            if (frameR1 != null && extraR1 != 0)
+            {
+                frameR1.transform.position = Vector3.Lerp(frameR1.transform.position, framePos[6 + extraR1 - 1], 0.1f);
+            }
+            if (frameR2 != null && extraR2 != 0)
+            {
+                frameR2.transform.position = Vector3.Lerp(frameR2.transform.position, framePos[6 + extraR2 - 1], 0.1f);
+            }
+        }
     }
 }
