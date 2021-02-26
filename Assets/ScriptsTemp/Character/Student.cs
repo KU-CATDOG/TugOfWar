@@ -15,14 +15,14 @@ public class Student : Character
     {
         if (player == 0)    //Player1
         {
-            if (Input.GetKeyDown("a") || Input.GetKeyDown("a") && !freeze){
+            if ((Input.GetKeyDown("a") || Input.GetKeyDown("a")) && !freeze){
                 count++;
                 //Debug.Log(returnForce());
             }
         }
         if (player == 1)    //Player2
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) && !freeze){
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) && !freeze){
                 count++;
                 //Debug.Log(returnForce());
             }
