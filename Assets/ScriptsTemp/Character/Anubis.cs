@@ -60,6 +60,11 @@ public class Anubis : Character
             if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && mode == 1 && !freeze){
                 count++;
                 //Debug.Log(returnForce());
+
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("Water Drop Low");
+                }
             }
         }
         if (player == 1)    //Player2
@@ -77,6 +82,11 @@ public class Anubis : Character
             if ((Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d") || Input.GetKeyDown("w")) && mode == 1 && !freeze){
                 count++;
                 //Debug.Log(returnForce());
+
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("Water Drop Low");
+                }
             }
         }
 

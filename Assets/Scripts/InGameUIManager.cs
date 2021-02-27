@@ -140,6 +140,11 @@ public class InGameUIManager : MonoBehaviour
             endTimer = 3.0f;
 
             InGameScreenUI();
+
+            if (GameObject.Find("SoundManageObject") != null)
+            {
+                SoundManager.instance.PlaySoundDic("Applause");
+            }
         }
     }
 
@@ -338,13 +343,18 @@ public class InGameUIManager : MonoBehaviour
     public void RestartB()
     {
         gm.SetPhase(-1);
-
-        SoundManager.instance.playButtonSound();
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
     }
 
     public void TitleB()
     {
-        SoundManager.instance.playButtonSound();
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
 
         SceneManager.LoadScene("StartMenu");
     }
