@@ -4,34 +4,48 @@ using UnityEngine;
 
 public class Extra6 : MonoBehaviour
 {
-    public int count;
     public int player;
     float startTime;
+    public bool freeze;
+    float t;
 
     // Start is called before the first frame update
     void Start()
     {
+        freeze = GetComponent<Character>().freeze;
         player = GetComponent<Character>().player;
-        if (player == 0)
-        {
-            count = GameObject.Find("GMObject").GetComponent<GM>().characterR.GetComponent<Character>().count;
-        }
-        else
-        {
-            count = GameObject.Find("GMObject").GetComponent<GM>().characterL.GetComponent<Character>().count;
-        }
         startTime = Time.time;
+        t = Time.time - startTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float t = Time.time - startTime;
-        if (t >= 1)
+        if (!freeze)
         {
-            startTime = Time.time;
-            t = 0;
-            count -= 1;
+            t = Time.time - startTime;
+            if (player == 0)
+            {
+                if (t >= 1)
+                {
+                    startTime = Time.time;
+                    t = 0;
+                    GameObject.Find("GMObject").GetComponent<GM>().dragForceL -= 1;
+                    //count -= 1;
+                }
+            }
+            if (player == 1)
+            {
+                if (t >= 1)
+                {
+                    startTime = Time.time;
+                    t = 0;
+                    GameObject.Find("GMObject").GetComponent<GM>().dragForceR -= 1;
+                    //count -= 1;
+                }
+            }
+            
         }
+        
     }
 }

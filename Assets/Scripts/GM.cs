@@ -14,8 +14,8 @@ public class GM : MonoBehaviour
     private int chanceL;
     private int chanceR;
 
-    private float dragForceL;
-    private float dragForceR;
+    public float dragForceL;
+    public float dragForceR;
     public float ropeSpeed;
 
     [HideInInspector]
