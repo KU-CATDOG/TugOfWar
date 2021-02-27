@@ -13,12 +13,14 @@ public class startgamescript : MonoBehaviour
     public GameObject buttons;
     public GameObject optionScreen;
     public GameObject helpScreen;
+    public GameObject helpScreen2;
 
     void Start()
     {
         buttons.SetActive(true);
         optionScreen.SetActive(false);
         helpScreen.SetActive(false);
+        helpScreen2.SetActive(false);
     }
 
     void Update()
@@ -34,6 +36,11 @@ public class startgamescript : MonoBehaviour
             {
                 buttons.SetActive(true);
                 helpScreen.SetActive(false);
+            }
+            else if (helpScreen2.activeSelf)
+            {
+                buttons.SetActive(true);
+                helpScreen2.SetActive(false);
             }
         }
     }
@@ -84,7 +91,27 @@ public class startgamescript : MonoBehaviour
 
     public void CloseHelpScreen()
     {
-        buttons.SetActive(true);
+        if (helpScreen.activeSelf)
+        {
+            buttons.SetActive(true);
+            helpScreen.SetActive(false);
+        }
+        else if (helpScreen2.activeSelf)
+        {
+            buttons.SetActive(true);
+            helpScreen2.SetActive(false);
+        }
+    }
+
+    public void NextHelpPage()
+    {
         helpScreen.SetActive(false);
+        helpScreen2.SetActive(true);
+    }
+
+    public void PreviousHelpPage()
+    {
+        helpScreen.SetActive(true);
+        helpScreen2.SetActive(false);
     }
 }
