@@ -60,10 +60,10 @@ public class Command : Character
         left.strength = 0.1f;
         right.strength = 0.1f;
 
-        comboA.strength = 45f;
-        comboB.strength = 65f;
-        comboC.strength = 100f;
-        comboD.strength = 160f;
+        comboA.strength = 25f;
+        comboB.strength = 40f;
+        comboC.strength = 70f;
+        comboD.strength = 100f;
 
         A.inputs = new List<ComboInput>() {  
             new ComboInput(AttackType.down),

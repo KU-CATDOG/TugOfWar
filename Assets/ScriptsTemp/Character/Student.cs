@@ -7,7 +7,7 @@ public class Student : Character
     protected override void Start()
     {
         base.Start();
-        force = 10;
+        force = 5;
         //player = 1; //temp
     }
 
