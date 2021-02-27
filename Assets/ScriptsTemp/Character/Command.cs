@@ -207,8 +207,15 @@ public class Command : Character
         for(int i=0; i<currentCombos.Count; i++)
         {
             Combo c = combos[currentCombos[i]];
-            if (c.continueCombo(input)) 
+            if (c.continueCombo(input))
+            {
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlayRandomSoundDic(new string[] { "Click On", "Button", "Button Click On" });
+                }
                 leeway = 0;
+            }
+                
             else
                 remove.Add(i);
         }
@@ -224,6 +231,10 @@ public class Command : Character
             if (currentCombos.Contains(i)) continue;
             if (combos[i].continueCombo(input))
             {
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlayRandomSoundDic(new string[] { "Click On", "Button", "Button Click On" });
+                }
                 currentCombos.Add(i);
                 leeway = 0;
             }
