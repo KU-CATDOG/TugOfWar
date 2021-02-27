@@ -26,7 +26,7 @@ public class GM : MonoBehaviour
     private float tikInterval;
     private float tik;
 
-    private GameObject rope;
+    public GameObject rope;
     public GameObject ropePrefab;
     private Vector3 ropeInitPos;
 

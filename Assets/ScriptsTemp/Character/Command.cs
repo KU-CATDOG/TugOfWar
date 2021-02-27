@@ -27,6 +27,11 @@ public class Command : Character
     public Attack comboC;
     public Attack comboD;
 
+    public GameObject incorrectCombo;
+    public GameObject inGame;
+    public GameObject gameManager;
+    public GameObject rope;
+
     protected List<Combo> combos = new List<Combo>();
     Combo A = new Combo();
     Combo B = new Combo();
@@ -42,12 +47,13 @@ public class Command : Character
     float leeway = 0;
     bool skip = false;
 
-    int count = 0;
-
     protected override void Start()
     {
+        gameManager = GameObject.Find("GMObject");
+
+        rope = gameManager.GetComponent<GM>().rope;
+
         base.Start();
-        player = 0;
         force = 1;
         up.strength = 0.1f;
         down.strength = 0.1f;
@@ -165,7 +171,7 @@ public class Command : Character
 
         ComboInput input = null;
 
-        if(player == 0)
+        if(player == 0 && !freeze)
         {
             if (Input.GetKeyDown(p1Up))
                 input = new ComboInput(AttackType.up);
@@ -176,7 +182,7 @@ public class Command : Character
             if (Input.GetKeyDown(p1Right))
                 input = new ComboInput(AttackType.right);
         }
-        else
+        else if(player == 1 && !freeze)
         {
             if (Input.GetKeyDown(p2Up))
                 input = new ComboInput(AttackType.up);
@@ -237,7 +243,6 @@ public class Command : Character
         if (currentCombos.Count <= 0)
             Attack(getAttackFromType(input.type));
 
-        count++;
     }
 
     void ResetCombos()
@@ -255,12 +260,26 @@ public class Command : Character
     {
         curAttack = att;
         timer = att.length;
-        if(curAttack.strength > 10f)
+        if (curAttack.strength > 1f)
         {
             count++;
             force = curAttack.strength;
+            Debug.Log("count: " + count);
+            Debug.Log("force: " + force);
         }
-        Debug.Log("Attack: " + curAttack.strength * force);
+        else
+        {
+            GameObject temp = null;
+
+            Vector3 p1 = new Vector3(-3.7f + rope.transform.position.x, 2f, 0);
+            Vector3 p2 = new Vector3(3.7f + rope.transform.position.x, 2f, 0);
+
+            if (player == 0) { temp = Instantiate(incorrectCombo, p1, Quaternion.identity, rope.transform); }
+            if (player == 1) { temp = Instantiate(incorrectCombo, p2, Quaternion.identity, rope.transform); }
+
+            Destroy(temp, 0.5f);
+        }
+        //Debug.Log("Attack: " + curAttack.strength * force);
     }
 
     Attack getAttackFromType(AttackType t)
