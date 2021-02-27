@@ -298,6 +298,11 @@ public class GM : MonoBehaviour
             int winnerIdx = miniControl.GetComponent<minigame>().miniWin;
             if (winnerIdx != 0)
             {
+                if (GameObject.Find("SoundManagerObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("스테이지 클리어");
+                }
+
                 if (winnerIdx == 1)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");

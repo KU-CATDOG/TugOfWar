@@ -2610,6 +2610,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9155d7a7fc5ec4e4a948d83d0324acc2, type: 3}
   SEClip:
   - {fileID: 8300000, guid: 71b6ec34b01f0104192173a24af3fa43, type: 3}
+  - {fileID: 8300000, guid: f4d9d43b8dbe1394586d941f5049cff1, type: 3}
+  - {fileID: 8300000, guid: 035658350cb061d45aa884fbb5cc350a, type: 3}
+  - {fileID: 8300000, guid: 793bb9fcb41a3714d9f923f89c424c9f, type: 3}
+  - {fileID: 8300000, guid: 107850bb3de9ad044836f975749ae7ba, type: 3}
+  - {fileID: 8300000, guid: 31efe8a3673da284186724271e47214a, type: 3}
+  - {fileID: 8300000, guid: f690b707554509b4c8b5c82286cfb064, type: 3}
+  - {fileID: 8300000, guid: c752ad05de8860b428057704627a4d01, type: 3}
+  - {fileID: 8300000, guid: 704133700e26589448bc3b2080fbde1e, type: 3}
+  - {fileID: 8300000, guid: 324b4aafa707a3b4bab0d7be6a274e6f, type: 3}
+  - {fileID: 8300000, guid: 7fa9c2216b9cc2045b7648edd1da09b3, type: 3}
+  - {fileID: 8300000, guid: 8ae71076475da834b8b8e7b6f86bf07c, type: 3}
   buttonSoundClip: {fileID: 8300000, guid: f833c4e6ae96b0e4f8c2e3c71f532ccd, type: 3}
 --- !u!1 &944129112
 GameObject:

@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class Cow : Character
 {
     float startTime;
     float t;
+
+    public SpriteAtlas spriteA;
+    public GameObject timerBarUI;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -14,12 +19,31 @@ public class Cow : Character
         force = 0;
         //player = 1; //temp
         startTime = Time.time;
+
+        if (player == 0)
+        {
+            timerBarUI.transform.localPosition = new Vector3(-250, 100, 0);
+        }
+        else
+        {
+            timerBarUI.transform.localPosition = new Vector3(250, 100, 0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float sub_t = t;
+        if (sub_t > 1.0f)
+        {
+            sub_t = 0.0f;
+        }
+        int num = (int)(12 * sub_t);
+        if (0 <= num && num <= 12)
+        {
+            timerBarUI.GetComponent<Image>().sprite = spriteA.GetSprite("anubisUIsheet_" + num);
+        }
+
         if (player == 0)    //Player1
         {
             if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")) && !freeze)
@@ -57,7 +81,7 @@ public class Cow : Character
                     force = 0;
                 }
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
 
             }
 
@@ -101,7 +125,7 @@ public class Cow : Character
                     force = 0;
                 }
                 count++;
-                Debug.Log(returnForce());
+                //Debug.Log(returnForce());
             }
 
         }
