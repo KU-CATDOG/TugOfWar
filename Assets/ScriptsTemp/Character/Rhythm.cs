@@ -72,7 +72,7 @@ public class Rhythm : Character
                         {
                             force = 0;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("Rhythm_0");
                             }
@@ -81,7 +81,7 @@ public class Rhythm : Character
                         {
                             force = 5;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("tiny button push");
                             }
@@ -90,7 +90,7 @@ public class Rhythm : Character
                         {
                             force = 8;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("tiny button push");
                             }
@@ -99,7 +99,7 @@ public class Rhythm : Character
                         {
                             force = 12;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("Rhythm_1");
                             }
@@ -121,7 +121,7 @@ public class Rhythm : Character
                         {
                             force = 0;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("Rhythm_0");
                             }
@@ -130,7 +130,7 @@ public class Rhythm : Character
                         {
                             force = 5;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("tiny button push");
                             }
@@ -139,7 +139,7 @@ public class Rhythm : Character
                         {
                             force = 8;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("tiny button push");
                             }
@@ -148,7 +148,7 @@ public class Rhythm : Character
                         {
                             force = 12;
 
-                            if (GameObject.Find("SoundManagerObject") != null)
+                            if (GameObject.Find("SoundManageObject") != null)
                             {
                                 SoundManager.instance.PlaySoundDic("Rhythm_1");
                             }

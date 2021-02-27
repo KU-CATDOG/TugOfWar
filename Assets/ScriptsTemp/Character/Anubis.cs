@@ -61,7 +61,7 @@ public class Anubis : Character
                 count++;
                 //Debug.Log(returnForce());
 
-                if (GameObject.Find("SoundManagerObject") != null)
+                if (GameObject.Find("SoundManageObject") != null)
                 {
                     SoundManager.instance.PlaySoundDic("water drop low");
                 }
@@ -83,7 +83,7 @@ public class Anubis : Character
                 count++;
                 //Debug.Log(returnForce());
 
-                if (GameObject.Find("SoundManagerObject") != null)
+                if (GameObject.Find("SoundManageObject") != null)
                 {
                     SoundManager.instance.PlaySoundDic("water drop low");
                 }

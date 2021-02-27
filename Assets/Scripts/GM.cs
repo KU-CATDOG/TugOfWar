@@ -298,7 +298,7 @@ public class GM : MonoBehaviour
             int winnerIdx = miniControl.GetComponent<minigame>().miniWin;
             if (winnerIdx != 0)
             {
-                if (GameObject.Find("SoundManagerObject") != null)
+                if (GameObject.Find("SoundManageObject") != null)
                 {
                     SoundManager.instance.PlaySoundDic("스테이지 클리어");
                 }

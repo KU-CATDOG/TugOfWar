@@ -76,7 +76,7 @@ public class Cow : Character
                 {
                     force = 7;
 
-                    if (GameObject.Find("SoundManagerObject") != null)
+                    if (GameObject.Find("SoundManageObject") != null)
                     {
                         SoundManager.instance.PlaySoundDic("swipe whoosh");
                     }
@@ -85,7 +85,7 @@ public class Cow : Character
                 {
                     force = 0;
 
-                    if (GameObject.Find("SoundManagerObject") != null)
+                    if (GameObject.Find("SoundManageObject") != null)
                     {
                         SoundManager.instance.PlaySoundDic("tick");
                     }
