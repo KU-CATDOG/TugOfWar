@@ -117,10 +117,20 @@ MonoBehaviour:
   right:
     length: 0
     strength: 0
-  comboUDLR:
+  comboA:
     length: 0
     strength: 0
-  comboLeeway: 0.2
+  comboB:
+    length: 0
+    strength: 0
+  comboC:
+    length: 0
+    strength: 0
+  comboD:
+    length: 0
+    strength: 0
+  incorrectCombo: {fileID: 4596816008965594805, guid: df6376e8bf83e564092287b9ff697154,
+    type: 3}
 --- !u!95 &6404189867563527526
 Animator:
   serializedVersion: 3
