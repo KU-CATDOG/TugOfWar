@@ -30,14 +30,11 @@ public class Anubis : Character
     public SpriteAtlas spriteA;
     public GameObject energyBarUI;
 
+    // Update is called once per frame
     void Update()
     {
         energyBarUI.GetComponent<Image>().sprite = spriteA.GetSprite("anubisUIsheet_" + energy);
-    }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
         float t = Time.time - changetime;
         if (t > 1 && mode == 1){
             mode = 0;
