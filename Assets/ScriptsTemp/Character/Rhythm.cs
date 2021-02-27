@@ -71,18 +71,38 @@ public class Rhythm : Character
                         if (t < 0.2 || t > 0.8)         //judge miss
                         {
                             force = 0;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("Rhythm_0");
+                            }
                         }
                         else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
                             force = 5;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("tiny button push");
+                            }
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
                             force = 8;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("tiny button push");
+                            }
                         }
                         else        //judge perfect
                         {
                             force = 12;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("Rhythm_1");
+                            }
                         }
                         count++;
                         keyCount++;
@@ -100,18 +120,38 @@ public class Rhythm : Character
                         if (t < 0.2 || t > 0.8)         //judge miss
                         {
                             force = 0;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("Rhythm_0");
+                            }
                         }
                         else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
                             force = 5;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("tiny button push");
+                            }
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
                             force = 8;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("tiny button push");
+                            }
                         }
                         else        //judge perfect
                         {
                             force = 12;
+
+                            if (GameObject.Find("SoundManagerObject") != null)
+                            {
+                                SoundManager.instance.PlaySoundDic("Rhythm_1");
+                            }
                         }
                         count++;
                         keyCount++;

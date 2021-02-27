@@ -75,10 +75,20 @@ public class Cow : Character
                 else if (t < 1.0)
                 {
                     force = 7;
+
+                    if (GameObject.Find("SoundManagerObject") != null)
+                    {
+                        SoundManager.instance.PlaySoundDic("swipe whoosh");
+                    }
                 }
                 else if (t >= 1.0)
                 {
                     force = 0;
+
+                    if (GameObject.Find("SoundManagerObject") != null)
+                    {
+                        SoundManager.instance.PlaySoundDic("tick");
+                    }
                 }
                 count++;
                 //Debug.Log(returnForce());

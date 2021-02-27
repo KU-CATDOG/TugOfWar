@@ -140,6 +140,11 @@ public class InGameUIManager : MonoBehaviour
             endTimer = 3.0f;
 
             InGameScreenUI();
+
+            if (GameObject.Find("SoundManagerObject") != null)
+            {
+                SoundManager.instance.PlaySoundDic("applause");
+            }
         }
     }
 
