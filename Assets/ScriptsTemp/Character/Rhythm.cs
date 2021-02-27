@@ -83,7 +83,7 @@ public class Rhythm : Character
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
-                                SoundManager.instance.PlaySoundDic("tiny button push");
+                                SoundManager.instance.PlaySoundDic("Tiny Button Push");
                             }
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
@@ -92,7 +92,7 @@ public class Rhythm : Character
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
-                                SoundManager.instance.PlaySoundDic("tiny button push");
+                                SoundManager.instance.PlaySoundDic("Tiny Button Push");
                             }
                         }
                         else        //judge perfect
@@ -132,7 +132,7 @@ public class Rhythm : Character
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
-                                SoundManager.instance.PlaySoundDic("tiny button push");
+                                SoundManager.instance.PlaySoundDic("Tiny Button Push");
                             }
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
@@ -141,7 +141,7 @@ public class Rhythm : Character
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
-                                SoundManager.instance.PlaySoundDic("tiny button push");
+                                SoundManager.instance.PlaySoundDic("Tiny Button Push");
                             }
                         }
                         else        //judge perfect

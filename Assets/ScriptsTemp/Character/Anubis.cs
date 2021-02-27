@@ -63,7 +63,7 @@ public class Anubis : Character
 
                 if (GameObject.Find("SoundManageObject") != null)
                 {
-                    SoundManager.instance.PlaySoundDic("water drop low");
+                    SoundManager.instance.PlaySoundDic("Water Drop Low");
                 }
             }
         }
@@ -85,7 +85,7 @@ public class Anubis : Character
 
                 if (GameObject.Find("SoundManageObject") != null)
                 {
-                    SoundManager.instance.PlaySoundDic("water drop low");
+                    SoundManager.instance.PlaySoundDic("Water Drop Low");
                 }
             }
         }

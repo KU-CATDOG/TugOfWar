@@ -78,7 +78,7 @@ public class Cow : Character
 
                     if (GameObject.Find("SoundManageObject") != null)
                     {
-                        SoundManager.instance.PlaySoundDic("swipe whoosh");
+                        SoundManager.instance.PlaySoundDic("swipe-whoosh");
                     }
                 }
                 else if (t >= 1.0)
@@ -87,7 +87,7 @@ public class Cow : Character
 
                     if (GameObject.Find("SoundManageObject") != null)
                     {
-                        SoundManager.instance.PlaySoundDic("tick");
+                        SoundManager.instance.PlaySoundDic("Tick");
                     }
                 }
                 count++;
@@ -129,10 +129,20 @@ public class Cow : Character
                 else if (t < 1.0)
                 {
                     force = 7;
+
+                    if (GameObject.Find("SoundManageObject") != null)
+                    {
+                        SoundManager.instance.PlaySoundDic("swipe-whoosh");
+                    }
                 }
                 else if (t >= 1.0)
                 {
                     force = 0;
+
+                    if (GameObject.Find("SoundManageObject") != null)
+                    {
+                        SoundManager.instance.PlaySoundDic("Tick");
+                    }
                 }
                 count++;
                 //Debug.Log(returnForce());

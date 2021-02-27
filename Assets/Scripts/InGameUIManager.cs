@@ -143,7 +143,7 @@ public class InGameUIManager : MonoBehaviour
 
             if (GameObject.Find("SoundManageObject") != null)
             {
-                SoundManager.instance.PlaySoundDic("applause");
+                SoundManager.instance.PlaySoundDic("Applause");
             }
         }
     }
@@ -353,7 +353,7 @@ public class InGameUIManager : MonoBehaviour
     {
         if (GameObject.Find("SoundManageObject") != null)
         {
-            SoundManager.instance.playButtonSound;
+            SoundManager.instance.playButtonSound();
         }
 
         SceneManager.LoadScene("StartMenu");
