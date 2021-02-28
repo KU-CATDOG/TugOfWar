@@ -148,7 +148,7 @@ public class SelectExtra : MonoBehaviour
         else
         {
             extraL2 = i;
-            CountR = 3;
+            CountL = 3;
         }
 
         if (GameObject.Find("SoundManageObject") != null)

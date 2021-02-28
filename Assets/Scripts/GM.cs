@@ -339,7 +339,7 @@ public class GM : MonoBehaviour
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 2P!");
 
-                    if (chanceL == 0)
+                    if (chanceR == 0)
                     {
                         for (int i = Random.Range(1, 7); ; i = Random.Range(1, 7))
                         {
