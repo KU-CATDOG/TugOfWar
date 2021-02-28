@@ -32,7 +32,7 @@ public class Extra5 : MonoBehaviour
                 {
                     startTime = Time.time;
                     t = 0;
-                    GameObject.Find("GMObject").GetComponent<GM>().dragForceL += 3;
+                    GameObject.Find("GMObject").GetComponent<GM>().dragForceL += 15;
                     //count += 3;
                 }
             }
@@ -42,7 +42,7 @@ public class Extra5 : MonoBehaviour
                 {
                     startTime = Time.time;
                     t = 0;
-                    GameObject.Find("GMObject").GetComponent<GM>().dragForceR += 3;
+                    GameObject.Find("GMObject").GetComponent<GM>().dragForceR += 15;
                     //count += 3;
                 }
             }

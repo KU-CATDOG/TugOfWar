@@ -21,7 +21,7 @@ public class Extra1 : MonoBehaviour
         {
             if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")) && !freeze)
             {
-                GameObject.Find("GMObject").GetComponent<GM>().dragForceL += 1;
+                GameObject.Find("GMObject").GetComponent<GM>().dragForceL += 3;
                 //count++;
             }
         }
@@ -29,7 +29,7 @@ public class Extra1 : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) && !freeze)
             {
-                GameObject.Find("GMObject").GetComponent<GM>().dragForceR += 1;
+                GameObject.Find("GMObject").GetComponent<GM>().dragForceR += 3;
                 //count++;
             }
         }
