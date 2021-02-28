@@ -250,8 +250,8 @@ public class InGameUIManager : MonoBehaviour
     {
         if (timerBoard.activeSelf)
         {
-            int sec = Mathf.RoundToInt(gm.timer * 100) - Mathf.FloorToInt(gm.timer) * 100;
-            string tempStr = gm.timer.ToString("00") + " : " + sec.ToString("00");
+            int sec = Mathf.FloorToInt(gm.timer * 100) - Mathf.FloorToInt(gm.timer) * 100;
+            string tempStr = Mathf.FloorToInt(gm.timer).ToString("00") + " : " + sec.ToString("00");
             if (gm.timer < 10.0f)
             {
                 tempStr = "<color=#ff0000>" + tempStr + "</color>";
