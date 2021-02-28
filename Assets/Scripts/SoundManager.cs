@@ -103,6 +103,13 @@ public class SoundManager : MonoBehaviour
             SetupVolumeSlider();
             SetupBGMPlayer();
             SetupSEPlayer();
+
+            if (bgmPlayer != null && bgmPlayer.clip == bgmClip[1])
+            {
+                bgmPlayer.Stop();
+                bgmPlayer.clip = bgmClip[0];
+                bgmPlayer.Play();
+            }
         }
         else if (scene.name == "SelectMenu")
         {
