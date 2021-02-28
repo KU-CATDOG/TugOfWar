@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour
     [HideInInspector]
     public float seVolume = 0.5f;
     [HideInInspector]
-    public float bgmVolume = 0.5f;
+    public float bgmVolume = 0.2f;
 
     private AudioSource bgmPlayer;
     private AudioSource sePlayer;
@@ -68,7 +68,7 @@ public class SoundManager : MonoBehaviour
     {
         sePlayer = transform.GetChild(1).GetComponent<AudioSource>();
         sePlayer.volume = seVolume;
-        bgmPlayer.loop = false;
+        sePlayer.loop = false;
     }
 
     void Start()
@@ -84,7 +84,7 @@ public class SoundManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "StartMenu")
         {
-            if (seVolumeSlider.activeSelf)
+            if (GameObject.Find("Canvas").transform.Find("OptionScreenImage").gameObject.activeSelf)
             {
                 seVolume = seVolumeSlider.GetComponent<Slider>().value;
                 bgmVolume = bgmVolumeSlider.GetComponent<Slider>().value;
