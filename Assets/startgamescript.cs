@@ -59,6 +59,12 @@ public class startgamescript : MonoBehaviour
         Debug.Log("option");
         buttons.SetActive(false);
         optionScreen.SetActive(true);
+
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            optionScreen.transform.Find("SEVolumeSlider").gameObject.GetComponent<Slider>().value = SoundManager.instance.seVolume;
+            optionScreen.transform.Find("BGMVolumeSlider").gameObject.GetComponent<Slider>().value = SoundManager.instance.bgmVolume;
+        }
     }
     public void exitbutton()
     {

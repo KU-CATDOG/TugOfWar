@@ -25,6 +25,8 @@ public class SelectExtra : MonoBehaviour
 
     private float t = 0;
 
+    public GameObject pauseScreen;
+
     public void button11()
     {
         selectL(1);
@@ -87,11 +89,25 @@ public class SelectExtra : MonoBehaviour
         framePos = new List<Vector3>();
 
         MoveFrame(true);
+
+        pauseScreen.SetActive(false);
     }
     private void Update()
     {
         SlowSelectionCheck();
         MoveFrame();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseScreen.activeSelf)
+            {
+                pauseScreen.SetActive(false);
+            }
+            else
+            {
+                pauseScreen.SetActive(true);
+            }
+        }
     }
     public void ReSelectB()
     {
@@ -265,5 +281,15 @@ public class SelectExtra : MonoBehaviour
                 frameR2.transform.position = Vector3.Lerp(frameR2.transform.position, framePos[6 + extraR2 - 1], 0.1f);
             }
         }
+    }
+
+    public void ClosePauseScreen()
+    {
+        pauseScreen.SetActive(false);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 }

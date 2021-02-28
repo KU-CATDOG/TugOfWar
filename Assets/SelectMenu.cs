@@ -26,6 +26,8 @@ public class SelectMenu : MonoBehaviour
 
     private float t = 0;
 
+    public GameObject pauseScreen;
+
     public void Start()
     {
         selectCntL = 1;
@@ -41,12 +43,26 @@ public class SelectMenu : MonoBehaviour
         framePos = new List<Vector3>();
 
         MoveFrame(true);
+
+        pauseScreen.SetActive(false);
     }
 
     public void Update()
     {
         SlowSelectionCheck();
         MoveFrame();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseScreen.activeSelf)
+            {
+                pauseScreen.SetActive(false);
+            }
+            else
+            {
+                pauseScreen.SetActive(true);
+            }
+        }
     }
 
     public void button1()
@@ -253,5 +269,15 @@ public class SelectMenu : MonoBehaviour
         }
 
         SceneManager.LoadScene("SelectExtra");
+    }
+
+    public void ClosePauseScreen()
+    {
+        pauseScreen.SetActive(false);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 }

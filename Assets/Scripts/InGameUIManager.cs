@@ -41,6 +41,8 @@ public class InGameUIManager : MonoBehaviour
     private List<Vector3> extraPosL;
     private List<Vector3> extraPosR;
 
+    public GameObject pauseScreen;
+
     void Start()
     {
         gm = gameManager.GetComponent<GM>();
@@ -77,6 +79,8 @@ public class InGameUIManager : MonoBehaviour
         #endregion
 
         isReadySpriteChanged = false;
+
+        pauseScreen.SetActive(false);
     }
 
     void Update()
@@ -98,6 +102,27 @@ public class InGameUIManager : MonoBehaviour
         else if (gm.phase == 3) //EndGame
         {
             EndScreenUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseScreen.activeSelf)
+            {
+                ClosePauseScreen();
+            }
+            else
+            {
+                pauseScreen.SetActive(true);
+            }
+        }
+
+        if (pauseScreen.activeSelf)
+        {
+            gm.FreezeAll();
+            if (readyTimer > 0.0f)
+            {
+                readyTimer += Time.deltaTime;
+            }
         }
     }
 
@@ -150,7 +175,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void StartScreenUI()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
         {
             gm.SetPhase(1);
         }
@@ -356,6 +381,21 @@ public class InGameUIManager : MonoBehaviour
             SoundManager.instance.playButtonSound();
         }
 
+        SceneManager.LoadScene("StartMenu");
+    }
+
+    public void ClosePauseScreen()
+    {
+        pauseScreen.SetActive(false);
+        if (gm.phase == 2)
+        {
+            gm.FreezeAllFor(3.0f);
+            gm.isReady = true;
+        }
+    }
+
+    public void ReturnToMainMenu()
+    {
         SceneManager.LoadScene("StartMenu");
     }
 }
