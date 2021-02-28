@@ -20,6 +20,10 @@ public class InGameUIManager : MonoBehaviour
     public Sprite scoreOffSprite;
     public Sprite readySprite;
     public Sprite startSprite;
+    public Sprite startGunReadySprite;
+    public Sprite startGunShootSprite;
+
+    private bool isReadySpriteChanged;
 
     public GameObject blindImage;
 
@@ -54,6 +58,7 @@ public class InGameUIManager : MonoBehaviour
         extraObjLstL = new List<GameObject>();
         extraObjLstR = new List<GameObject>();
 
+        #region 엑스트라위치설정
         extraPosL = new List<Vector3>();
         extraPosL.Add(new Vector3(-400, -200, 0));
         extraPosL.Add(new Vector3(-300, -200, 0));
@@ -69,6 +74,9 @@ public class InGameUIManager : MonoBehaviour
         extraPosR.Add(new Vector3(300, 200, 0));
         extraPosR.Add(new Vector3(200, 200, 0));
         extraPosR.Add(new Vector3(0, 0, 0));
+        #endregion
+
+        isReadySpriteChanged = false;
     }
 
     void Update()
@@ -117,21 +125,26 @@ public class InGameUIManager : MonoBehaviour
 
             if (gm.scoreL == gm.winScore)
             {
-                endUI.transform.GetChild(0).gameObject.SetActive(true);
-                endUI.transform.GetChild(1).gameObject.SetActive(false);
+                endUI.transform.GetChild(1).gameObject.SetActive(true);
+                endUI.transform.GetChild(2).gameObject.SetActive(false);
             }
             else if (gm.scoreR == gm.winScore)
             {
-                endUI.transform.GetChild(0).gameObject.SetActive(false);
-                endUI.transform.GetChild(1).gameObject.SetActive(true);
+                endUI.transform.GetChild(1).gameObject.SetActive(false);
+                endUI.transform.GetChild(2).gameObject.SetActive(true);
             }
 
-            endUI.transform.GetChild(2).gameObject.SetActive(false);
             endUI.transform.GetChild(3).gameObject.SetActive(false);
+            endUI.transform.GetChild(4).gameObject.SetActive(false);
 
             endTimer = 3.0f;
 
             InGameScreenUI();
+
+            if (GameObject.Find("SoundManageObject") != null)
+            {
+                SoundManager.instance.PlaySoundDic("Applause");
+            }
         }
     }
 
@@ -159,8 +172,8 @@ public class InGameUIManager : MonoBehaviour
             if (endTimer <= 0.0f)
             {
                 endTimer = 0.0f;
-                endUI.transform.GetChild(2).gameObject.SetActive(true);
                 endUI.transform.GetChild(3).gameObject.SetActive(true);
+                endUI.transform.GetChild(4).gameObject.SetActive(true);
             }
         }
     }
@@ -298,9 +311,11 @@ public class InGameUIManager : MonoBehaviour
         if (gm.isReady)
         {
             gm.isReady = false;
+            isReadySpriteChanged = false;
             readyTimer = 4.0f;
             readyImage.SetActive(true);
             readyImage.GetComponent<Image>().sprite = readySprite;
+            readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunReadySprite;
         }
         if (readyTimer > 0.0f)
         {
@@ -310,10 +325,17 @@ public class InGameUIManager : MonoBehaviour
                 readyTimer = 0.0f;
                 readyImage.SetActive(false);
                 readyImage.GetComponent<Image>().sprite = readySprite;
+                readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunReadySprite;
             }
-            else if (readyTimer <= 1.0f)
+            else if (readyTimer <= 1.0f && !isReadySpriteChanged)
             {
+                isReadySpriteChanged = true;
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("PistolSound");
+                }
                 readyImage.GetComponent<Image>().sprite = startSprite;
+                readyImage.transform.GetChild(0).GetComponent<Image>().sprite = startGunShootSprite;
             }
         }
     }
@@ -321,13 +343,18 @@ public class InGameUIManager : MonoBehaviour
     public void RestartB()
     {
         gm.SetPhase(-1);
-
-        SoundManager.instance.playButtonSound();
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
     }
 
     public void TitleB()
     {
-        SoundManager.instance.playButtonSound();
+        if (GameObject.Find("SoundManageObject") != null)
+        {
+            SoundManager.instance.playButtonSound();
+        }
 
         SceneManager.LoadScene("StartMenu");
     }

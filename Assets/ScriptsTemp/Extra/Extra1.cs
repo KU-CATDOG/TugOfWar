@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Extra1 : MonoBehaviour
 {
-    public int count;
     public bool freeze;
     public int player;
 
     // Start is called before the first frame update
     void Start()
     {
-        count = GetComponent<Character>().count;
         freeze = GetComponent<Character>().freeze;
         player = GetComponent<Character>().player;
     }
@@ -23,14 +21,16 @@ public class Extra1 : MonoBehaviour
         {
             if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")) && !freeze)
             {
-                count++;
+                GameObject.Find("GMObject").GetComponent<GM>().dragForceL += 1;
+                //count++;
             }
         }
         if (player == 1)
         {
             if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) && !freeze)
             {
-                count++;
+                GameObject.Find("GMObject").GetComponent<GM>().dragForceR += 1;
+                //count++;
             }
         }
     }

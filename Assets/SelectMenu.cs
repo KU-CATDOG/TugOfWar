@@ -24,6 +24,8 @@ public class SelectMenu : MonoBehaviour
     private GameObject frameL;
     private GameObject frameR;
 
+    private float t = 0;
+
     public void Start()
     {
         selectCntL = 1;
@@ -37,32 +39,14 @@ public class SelectMenu : MonoBehaviour
         selectionCheck.SetActive(false);
 
         framePos = new List<Vector3>();
-        for (int i = 1; i <= 6; i++)
-        {
-            framePos.Add(player1.transform.GetChild(i).transform.position);
-        }
-        for (int i = 1; i <= 6; i++)
-        {
-            framePos.Add(player2.transform.GetChild(i).transform.position);
-        }
+
+        MoveFrame(true);
     }
 
     public void Update()
     {
-        if (selectCntL == 0 && selectCntR == 0)
-        {
-            player1.SetActive(false);
-            player2.SetActive(false);
-            selectionCheck.SetActive(true);
-        }
-        if (frameL != null && selectionL != 0)
-        {
-            frameL.transform.position = Vector3.Lerp(frameL.transform.position, framePos[selectionL - 1], 0.1f);
-        }
-        if (frameR != null && selectionR != 0)
-        {
-            frameR.transform.position = Vector3.Lerp(frameR.transform.position, framePos[6 + selectionR - 1], 0.1f);
-        }
+        SlowSelectionCheck();
+        MoveFrame();
     }
 
     public void button1()
@@ -182,6 +166,65 @@ public class SelectMenu : MonoBehaviour
         {
             Debug.Log("이미 고르셨습니다. 다시 한 번 누르면 해당 캐릭터로 변경됩니다.(2P)");
             checkR = i;
+        }
+    }
+
+    private void SlowSelectionCheck(bool isSlow = true)
+    {
+        if (isSlow)
+        {
+            if (selectCntL == 0 && selectCntR == 0)
+            {
+                t = 1.0f;
+                selectCntL = -1;
+                selectCntR = -1;
+            }
+            if (t > 0)
+            {
+                t -= Time.deltaTime;
+                if (t <= 0)
+                {
+                    t = 0;
+                    player1.SetActive(false);
+                    player2.SetActive(false);
+                    selectionCheck.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            if (selectCntL == 0 && selectCntR == 0)
+            {
+                player1.SetActive(false);
+                player2.SetActive(false);
+                selectionCheck.SetActive(true);
+            }
+        }
+    }
+
+    private void MoveFrame(bool isReset = false)
+    {
+        if (isReset)
+        {
+            for (int i = 1; i <= 6; i++)
+            {
+                framePos.Add(player1.transform.GetChild(i).transform.position);
+            }
+            for (int i = 1; i <= 6; i++)
+            {
+                framePos.Add(player2.transform.GetChild(i).transform.position);
+            }
+        }
+        else
+        {
+            if (frameL != null && selectionL != 0)
+            {
+                frameL.transform.position = Vector3.Lerp(frameL.transform.position, framePos[selectionL - 1], 0.1f);
+            }
+            if (frameR != null && selectionR != 0)
+            {
+                frameR.transform.position = Vector3.Lerp(frameR.transform.position, framePos[6 + selectionR - 1], 0.1f);
+            }
         }
     }
     

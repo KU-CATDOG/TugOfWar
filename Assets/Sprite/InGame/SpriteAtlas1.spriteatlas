@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpriteAtlas1
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 6758440488891910809, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -835691285003725762, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 5272857549587802650, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -2849898413701519776, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -2884231142201154600, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 1900878097334640449, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 3292079433380573546, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -3568043490926158464, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -7727984381638208860, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 1094711526813276596, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 8341968849221595533, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: -8614211188808038963, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  - {fileID: 989865849902553770, guid: 2a6c2e81ef520fe4496b6c82524a2da9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - anubisUIsheet_7
+  - anubisUIsheet_6
+  - anubisUIsheet_5
+  - anubisUIsheet_4
+  - anubisUIsheet_3
+  - anubisUIsheet_2
+  - anubisUIsheet_1
+  - anubisUIsheet_0
+  - anubisUIsheet_9
+  - anubisUIsheet_8
+  - anubisUIsheet_12
+  - anubisUIsheet_10
+  - anubisUIsheet_11
+  m_Tag: SpriteAtlas1
+  m_IsVariant: 0

@@ -12,6 +12,38 @@ public class startgamescript : MonoBehaviour
 
     public GameObject buttons;
     public GameObject optionScreen;
+    public GameObject helpScreen;
+    public GameObject helpScreen2;
+
+    void Start()
+    {
+        buttons.SetActive(true);
+        optionScreen.SetActive(false);
+        helpScreen.SetActive(false);
+        helpScreen2.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionScreen.activeSelf)
+            {
+                buttons.SetActive(true);
+                optionScreen.SetActive(false);
+            }
+            if (helpScreen.activeSelf)
+            {
+                buttons.SetActive(true);
+                helpScreen.SetActive(false);
+            }
+            else if (helpScreen2.activeSelf)
+            {
+                buttons.SetActive(true);
+                helpScreen2.SetActive(false);
+            }
+        }
+    }
 
     public void startgame()
     {
@@ -49,5 +81,37 @@ public class startgamescript : MonoBehaviour
     public void volumeChangeSound()
     {
         SoundManager.instance.playButtonSound();
+    }
+
+    public void OpenHelpScreen()
+    {
+        buttons.SetActive(false);
+        helpScreen.SetActive(true);
+    }
+
+    public void CloseHelpScreen()
+    {
+        if (helpScreen.activeSelf)
+        {
+            buttons.SetActive(true);
+            helpScreen.SetActive(false);
+        }
+        else if (helpScreen2.activeSelf)
+        {
+            buttons.SetActive(true);
+            helpScreen2.SetActive(false);
+        }
+    }
+
+    public void NextHelpPage()
+    {
+        helpScreen.SetActive(false);
+        helpScreen2.SetActive(true);
+    }
+
+    public void PreviousHelpPage()
+    {
+        helpScreen.SetActive(true);
+        helpScreen2.SetActive(false);
     }
 }

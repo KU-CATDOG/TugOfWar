@@ -27,6 +27,11 @@ public class Command : Character
     public Attack comboC;
     public Attack comboD;
 
+    public GameObject incorrectCombo;
+    public GameObject inGame;
+    public GameObject gameManager;
+    public GameObject rope;
+
     protected List<Combo> combos = new List<Combo>();
     Combo A = new Combo();
     Combo B = new Combo();
@@ -42,22 +47,23 @@ public class Command : Character
     float leeway = 0;
     bool skip = false;
 
-    int count = 0;
-
     protected override void Start()
     {
+        gameManager = GameObject.Find("GMObject");
+
+        rope = gameManager.GetComponent<GM>().rope;
+
         base.Start();
-        player = 0;
         force = 1;
         up.strength = 0.1f;
         down.strength = 0.1f;
         left.strength = 0.1f;
         right.strength = 0.1f;
 
-        comboA.strength = 45f;
-        comboB.strength = 65f;
-        comboC.strength = 100f;
-        comboD.strength = 160f;
+        comboA.strength = 25f;
+        comboB.strength = 40f;
+        comboC.strength = 70f;
+        comboD.strength = 100f;
 
         A.inputs = new List<ComboInput>() {  
             new ComboInput(AttackType.down),
@@ -165,7 +171,7 @@ public class Command : Character
 
         ComboInput input = null;
 
-        if(player == 0)
+        if(player == 0 && !freeze)
         {
             if (Input.GetKeyDown(p1Up))
                 input = new ComboInput(AttackType.up);
@@ -176,7 +182,7 @@ public class Command : Character
             if (Input.GetKeyDown(p1Right))
                 input = new ComboInput(AttackType.right);
         }
-        else
+        else if(player == 1 && !freeze)
         {
             if (Input.GetKeyDown(p2Up))
                 input = new ComboInput(AttackType.up);
@@ -201,8 +207,15 @@ public class Command : Character
         for(int i=0; i<currentCombos.Count; i++)
         {
             Combo c = combos[currentCombos[i]];
-            if (c.continueCombo(input)) 
+            if (c.continueCombo(input))
+            {
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlayRandomSoundDic(new string[] { "Click On", "Button", "Button Click On" });
+                }
                 leeway = 0;
+            }
+                
             else
                 remove.Add(i);
         }
@@ -218,6 +231,10 @@ public class Command : Character
             if (currentCombos.Contains(i)) continue;
             if (combos[i].continueCombo(input))
             {
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlayRandomSoundDic(new string[] { "Click On", "Button", "Button Click On" });
+                }
                 currentCombos.Add(i);
                 leeway = 0;
             }
@@ -237,7 +254,6 @@ public class Command : Character
         if (currentCombos.Count <= 0)
             Attack(getAttackFromType(input.type));
 
-        count++;
     }
 
     void ResetCombos()
@@ -255,7 +271,26 @@ public class Command : Character
     {
         curAttack = att;
         timer = att.length;
-        Debug.Log("Attack: " + curAttack.strength * force);
+        if (curAttack.strength > 1f)
+        {
+            count++;
+            force = curAttack.strength;
+            Debug.Log("count: " + count);
+            Debug.Log("force: " + force);
+        }
+        else
+        {
+            GameObject temp = null;
+
+            Vector3 p1 = new Vector3(-3.7f + rope.transform.position.x, 2f, 0);
+            Vector3 p2 = new Vector3(3.7f + rope.transform.position.x, 2f, 0);
+
+            if (player == 0) { temp = Instantiate(incorrectCombo, p1, Quaternion.identity, rope.transform); }
+            if (player == 1) { temp = Instantiate(incorrectCombo, p2, Quaternion.identity, rope.transform); }
+
+            Destroy(temp, 0.5f);
+        }
+        //Debug.Log("Attack: " + curAttack.strength * force);
     }
 
     Attack getAttackFromType(AttackType t)

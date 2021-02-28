@@ -14,8 +14,8 @@ public class GM : MonoBehaviour
     private int chanceL;
     private int chanceR;
 
-    private float dragForceL;
-    private float dragForceR;
+    public float dragForceL;
+    public float dragForceR;
     public float ropeSpeed;
 
     [HideInInspector]
@@ -26,7 +26,7 @@ public class GM : MonoBehaviour
     private float tikInterval;
     private float tik;
 
-    private GameObject rope;
+    public GameObject rope;
     public GameObject ropePrefab;
     private Vector3 ropeInitPos;
 
@@ -72,7 +72,7 @@ public class GM : MonoBehaviour
 
         if (SelectMenu.selectionL == 0 || SelectMenu.selectionL > characterLst.Length)
         {
-            SelectMenu.selectionL = 1;
+            SelectMenu.selectionL = 2;
         }
         if (SelectMenu.selectionR == 0 || SelectMenu.selectionR > characterLst.Length)
         {
@@ -298,6 +298,11 @@ public class GM : MonoBehaviour
             int winnerIdx = miniControl.GetComponent<minigame>().miniWin;
             if (winnerIdx != 0)
             {
+                if (GameObject.Find("SoundManageObject") != null)
+                {
+                    SoundManager.instance.PlaySoundDic("스테이지 클리어");
+                }
+
                 if (winnerIdx == 1)
                 {
                     UnityEngine.Debug.Log("미니게임의 승자는 1P!");
