@@ -16,8 +16,8 @@ public class SelectMenu : MonoBehaviour
     private int selectCntR;
     public static int selectionL;
     public static int selectionR;
-    private int checkL;
-    private int checkR;
+    private int CountL;
+    private int CountR;
 
     private List<Vector3> framePos;
     public GameObject frameImagePrefab;
@@ -34,8 +34,8 @@ public class SelectMenu : MonoBehaviour
         selectCntR = 1;
         selectionL = 0;
         selectionR = 0;
-        checkL = 0;
-        checkR = 0;
+        CountL = 0;
+        CountR = 0;
         player1.SetActive(true);
         player2.SetActive(true);
         selectionCheck.SetActive(false);
@@ -132,21 +132,17 @@ public class SelectMenu : MonoBehaviour
             }
             frameL = Instantiate(frameImagePrefab, new Vector3 (0, 0, 0), Quaternion.identity);
             frameL.transform.SetParent(player1.transform, false);
+            CountL = 1;
         }
         else if (selectionL == i)
         {
             Debug.Log("이미 선택된 캐릭터입니다.(1P)");
         }
-        else if (checkL == i)
-        {
-            Debug.Log("캐릭터가 변경되었습니다.(1P)");
-            checkL = 0;
-            selectionL = i;
-        }
         else
         {
-            Debug.Log("이미 고르셨습니다. 다시 한 번 누르면 해당 캐릭터로 변경됩니다.(1P)");
-            checkL = i;
+            Debug.Log("캐릭터가 변경되었습니다.(1P)");
+            selectionL = i;
+            CountL = 1;
         }
     }
     private void ActiveR(int i)
@@ -167,21 +163,17 @@ public class SelectMenu : MonoBehaviour
             }
             frameR = Instantiate(frameImagePrefab, new Vector3(0, 0, 0), Quaternion.identity);
             frameR.transform.SetParent(player2.transform, false);
+            CountR = 1;
         }
         else if (selectionR == i)
         {
             Debug.Log("이미 선택된 캐릭터입니다.(2P)");
         }
-        else if (checkR == i)
-        {
-            Debug.Log("캐릭터가 변경되었습니다.(2P)");
-            checkR = 0;
-            selectionR = i;
-        }
         else
         {
-            Debug.Log("이미 고르셨습니다. 다시 한 번 누르면 해당 캐릭터로 변경됩니다.(2P)");
-            checkR = i;
+            Debug.Log("캐릭터가 변경되었습니다.(2P)");
+            selectionR = i;
+            CountR = 1;
         }
     }
 
@@ -191,9 +183,12 @@ public class SelectMenu : MonoBehaviour
         {
             if (selectCntL == 0 && selectCntR == 0)
             {
-                t = 1.0f;
-                selectCntL = -1;
-                selectCntR = -1;
+                if (CountL == 1 || CountR == 1)
+                {
+                    t = 1.0f;
+                    CountL = 0;
+                    CountR = 0;
+                }
             }
             if (t > 0)
             {
@@ -255,8 +250,6 @@ public class SelectMenu : MonoBehaviour
         selectCntR = 1;
         selectionL = 0;
         selectionR = 0;
-        checkL = 0;
-        checkR = 0;
         player1.SetActive(true);
         player2.SetActive(true);
         selectionCheck.SetActive(false);
