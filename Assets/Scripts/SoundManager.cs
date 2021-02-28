@@ -12,9 +12,9 @@ public class SoundManager : MonoBehaviour
     private GameObject bgmVolumeSlider;
 
     [HideInInspector]
-    public float seVolume = 0.5f;
+    public float seVolume;
     [HideInInspector]
-    public float bgmVolume = 0.2f;
+    public float bgmVolume;
 
     private AudioSource bgmPlayer;
     private AudioSource sePlayer;
@@ -30,6 +30,8 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            seVolume = 0.5f;
+            bgmVolume = 0.2f;
         }
         else if (instance != this)
         {
