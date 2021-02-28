@@ -79,7 +79,7 @@ public class Rhythm : Character
                         }
                         else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
-                            force = 5;
+                            force = 30;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
@@ -88,7 +88,7 @@ public class Rhythm : Character
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
-                            force = 8;
+                            force = 50;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
@@ -97,7 +97,7 @@ public class Rhythm : Character
                         }
                         else        //judge perfect
                         {
-                            force = 12;
+                            force = 80;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
@@ -128,7 +128,7 @@ public class Rhythm : Character
                         }
                         else if ((t >= 0.2 && t < 0.35) || (t > 0.65 && t <= 0.8))       //judge good
                         {
-                            force = 5;
+                            force = 30;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
@@ -137,7 +137,7 @@ public class Rhythm : Character
                         }
                         else if ((t >= 0.35 && t < 0.45) || (t > 0.55 && t <= 0.65))       //judge great
                         {
-                            force = 8;
+                            force = 50;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {
@@ -146,7 +146,7 @@ public class Rhythm : Character
                         }
                         else        //judge perfect
                         {
-                            force = 12;
+                            force = 80;
 
                             if (GameObject.Find("SoundManageObject") != null)
                             {

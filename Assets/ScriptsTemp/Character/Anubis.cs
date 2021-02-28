@@ -48,7 +48,7 @@ public class Anubis : Character
                 energy++;
                 if (energy >= 12) {
                     mode = 1;
-                    force = 5;
+                    force = 20;
                     count += 2;
                     changetime = Time.time;
                 }
@@ -70,7 +70,7 @@ public class Anubis : Character
                 energy++;
                 if (energy >= 12) {
                     mode = 1;
-                    force = 5;
+                    force = 20;
                     count += 2;
                     changetime = Time.time;
                 }

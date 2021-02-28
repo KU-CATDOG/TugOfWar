@@ -62,19 +62,19 @@ public class Cow : Character
             {
                 if (t < 0.25)
                 {
-                    force = 1;
+                    force = 4;
                 }
                 else if (t < 0.5)
                 {
-                    force = 3;
+                    force = 15;
                 }
                 else if (t < 0.75)
                 {
-                    force = 5;
+                    force = 30;
                 }
                 else if (t < 1.0)
                 {
-                    force = 7;
+                    force = 70;
 
                     if (GameObject.Find("SoundManageObject") != null)
                     {
@@ -116,19 +116,19 @@ public class Cow : Character
             {
                 if (t < 0.25)
                 {
-                    force = 1;
+                    force = 4;
                 }
                 else if (t < 0.5)
                 {
-                    force = 3;
+                    force = 15;
                 }
                 else if (t < 0.75)
                 {
-                    force = 5;
+                    force = 30;
                 }
                 else if (t < 1.0)
                 {
-                    force = 7;
+                    force = 70;
 
                     if (GameObject.Find("SoundManageObject") != null)
                     {
